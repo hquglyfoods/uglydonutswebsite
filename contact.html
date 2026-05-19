@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F5EFE3">
+<title>Contact · Ugly Donuts &amp; Corn Dogs</title>
+<meta name="description" content="Get in touch with Ugly Donuts & Corn Dogs. Questions, feedback, press, partnerships.">
+<meta name="robots" content="index, follow">
+
+<!-- Netlify Identity (so invite tokens work site-wide) -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  (function() {
+    if (window.location.hash && (
+      window.location.hash.indexOf('invite_token=') > -1 ||
+      window.location.hash.indexOf('recovery_token=') > -1 ||
+      window.location.hash.indexOf('confirmation_token=') > -1
+    )) {
+      window.location.href = '/admin/' + window.location.hash;
+    }
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-navy: #0F1A2E;
+  --bg-navy-deep: #08111F;
+  --bg-black: #050810;
+  --bg-cream: #F5EFE3;
+  --bg-cream-deep: #EDE5D3;
+  --border-cream: rgba(15, 26, 46, 0.08);
+  --border-form: rgba(15, 26, 46, 0.15);
+  --text-light: #F5EFE3;
+  --text-light-soft: rgba(245, 240, 230, 0.72);
+  --text-light-mute: rgba(245, 240, 230, 0.42);
+  --text-dark: #1A2438;
+  --text-dark-soft: rgba(26, 36, 56, 0.72);
+  --text-dark-mute: rgba(26, 36, 56, 0.5);
+  --orange: #E1661A;
+  --orange-light: #F07A2D;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', -apple-system, system-ui, sans-serif;
+  --hand: 'Caveat', cursive;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--sans);
+  background: var(--bg-cream);
+  color: var(--text-dark);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+button { font-family: inherit; cursor: pointer; border: none; background: transparent; color: inherit; }
+
+.container {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+@media (max-width: 640px) { .container { padding: 0 20px; } }
+.container-wide { max-width: 1280px; }
+
+/* Typography helpers */
+.serif-italic { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--orange); }
+.hand { font-family: var(--hand); font-weight: 500; color: var(--orange); }
+.eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--orange);
+}
+
+/* ============== NAV ============== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 22px 36px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(245, 239, 227, 0);
+  backdrop-filter: blur(0);
+  transition: all 0.4s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+  background: rgba(245, 239, 227, 0.94);
+  backdrop-filter: blur(20px);
+  padding: 14px 36px;
+  border-bottom-color: var(--border-cream);
+}
+.nav-left, .nav-right { display: flex; align-items: center; gap: 32px; flex: 1; }
+.nav-right { justify-content: flex-end; }
+.nav-center { flex: 0 0 auto; text-align: center; }
+.nav-brand {
+  font-family: var(--serif); font-size: 22px; font-weight: 500;
+  letter-spacing: 0.04em; color: var(--orange); line-height: 1;
+}
+.nav-brand-sub {
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-dark-soft); margin-top: 4px;
+}
+.nav-link {
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-dark-soft);
+  transition: color 0.2s ease;
+}
+.nav-link:hover { color: var(--orange); }
+.nav-cta {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--orange);
+  border-bottom: 1.5px solid var(--orange);
+  padding-bottom: 4px;
+}
+.nav-toggle { display: none; font-size: 22px; color: var(--text-dark); }
+@media (max-width: 960px) {
+  .nav { padding: 16px 20px; }
+  .nav.scrolled { padding: 12px 20px; }
+  .nav-left, .nav-right { display: none; }
+  .nav-center { flex: 1; text-align: left; }
+  .nav-toggle { display: block; }
+  .nav.open .nav-left, .nav.open .nav-right {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    padding: 24px; gap: 18px;
+    background: var(--bg-cream);
+    border-bottom: 1px solid var(--border-cream);
+    align-items: flex-start;
+  }
+  .nav.open .nav-right { top: calc(100% + 200px); }
+}
+
+/* ============== BUTTONS ============== */
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 16px 32px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  border-radius: 100px;
+  transition: all 0.25s var(--ease);
+  white-space: nowrap; cursor: pointer;
+  text-align: center;
+}
+.btn-primary { background: var(--orange); color: #fff; border: none; }
+.btn-primary:hover:not(:disabled) {
+  background: var(--orange-light); transform: translateY(-2px);
+  box-shadow: 0 12px 32px -8px rgba(225, 102, 26, 0.5);
+}
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-outline {
+  background: transparent; color: var(--orange);
+  border: 1.5px solid var(--orange);
+}
+.btn-outline:hover { background: var(--orange); color: #fff; }
+.btn-arrow::after { content: '\2192'; margin-left: 4px; transition: transform 0.25s var(--ease); }
+.btn-arrow:hover::after { transform: translateX(4px); }
+
+/* ============== PAGE HEADER ============== */
+.page-header {
+  padding: 160px 0 60px;
+  text-align: center;
+}
+.page-header .eyebrow { margin-bottom: 20px; }
+.page-header h1 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  line-height: 1.05; letter-spacing: -0.025em;
+  margin-bottom: 20px;
+}
+.page-header .lede {
+  font-size: clamp(15px, 1.3vw, 17px);
+  color: var(--text-dark-soft);
+  line-height: 1.65;
+  max-width: 60ch;
+  margin: 0 auto;
+}
+
+/* ============== FORM ============== */
+.form-wrap {
+  padding: 0 0 120px;
+}
+.form-section {
+  margin-bottom: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border-cream);
+}
+.form-section:last-of-type { border-bottom: none; }
+.form-section-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+  color: var(--text-dark);
+}
+.form-section-desc {
+  font-size: 13px;
+  color: var(--text-dark-mute);
+  margin-bottom: 28px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+.form-label .req { color: var(--orange); margin-left: 2px; }
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--text-dark);
+  background: #fff;
+  border: 1px solid var(--border-form);
+  border-radius: 4px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-weight: 400;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(225, 102, 26, 0.12);
+}
+.form-input::placeholder, .form-textarea::placeholder {
+  color: var(--text-dark-mute);
+}
+.form-textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.5;
+  font-family: var(--sans);
+}
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%231A2438' stroke-width='1.5'><path d='M1 1L6 6L11 1'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 44px;
+  cursor: pointer;
+}
+.form-radios, .form-checks {
+  display: flex; flex-direction: column;
+  gap: 8px;
+}
+.form-radios.row, .form-checks.row {
+  flex-direction: row; flex-wrap: wrap; gap: 12px;
+}
+.form-radio, .form-check {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px;
+  background: #fff;
+  border: 1px solid var(--border-form);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-dark);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.form-radio:hover, .form-check:hover { border-color: rgba(225, 102, 26, 0.4); }
+.form-radio input, .form-check input {
+  accent-color: var(--orange);
+  width: 16px; height: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.form-radio.checked, .form-check.checked {
+  border-color: var(--orange);
+  background: rgba(225, 102, 26, 0.04);
+}
+.form-hint {
+  font-size: 12px;
+  color: var(--text-dark-mute);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.form-file {
+  display: block;
+  padding: 18px;
+  background: #fff;
+  border: 1.5px dashed var(--border-form);
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: var(--text-dark-soft);
+}
+.form-file:hover {
+  border-color: var(--orange);
+  background: rgba(225, 102, 26, 0.03);
+}
+.form-file input[type=file] { display: none; }
+.form-file-label .filename {
+  display: block;
+  margin-top: 6px;
+  color: var(--orange);
+  font-weight: 500;
+}
+.form-submit {
+  text-align: center;
+  padding-top: 12px;
+}
+.form-submit .btn { min-width: 240px; }
+.form-note {
+  font-size: 12px;
+  color: var(--text-dark-mute);
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.6;
+}
+
+/* Success state */
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 80px 32px;
+  background: rgba(225, 102, 26, 0.04);
+  border: 1px solid rgba(225, 102, 26, 0.2);
+  border-radius: 8px;
+  margin: 40px 0;
+}
+.form-success.shown { display: block; }
+.form-success .hand {
+  font-family: var(--hand);
+  font-size: 36px;
+  color: var(--orange);
+  display: block;
+  margin-bottom: 12px;
+}
+.form-success h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin-bottom: 14px;
+}
+.form-success p {
+  color: var(--text-dark-soft);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 48ch;
+  margin: 0 auto;
+}
+
+/* ============== FOOTER ============== */
+.footer {
+  background: var(--bg-black);
+  color: var(--text-light);
+  padding: 80px 0 36px;
+}
+.footer .container { max-width: 1280px; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 56px;
+  margin-bottom: 56px;
+}
+@media (max-width: 880px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
+@media (max-width: 540px) { .footer-grid { grid-template-columns: 1fr; } }
+.footer-brand-name {
+  font-family: var(--serif); font-size: 22px; font-weight: 500;
+  color: var(--orange); margin-bottom: 6px; letter-spacing: 0.04em;
+}
+.footer-brand-sub {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-light-soft); margin-bottom: 20px;
+}
+.footer-tagline {
+  font-size: 13px; color: var(--text-light-soft);
+  line-height: 1.65; max-width: 30ch;
+}
+.footer-col h4 {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-light); margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-col a {
+  font-size: 13px; color: var(--text-light-soft);
+  transition: color 0.2s ease;
+}
+.footer-col a:hover { color: var(--orange); }
+.footer-bottom {
+  padding-top: 28px;
+  border-top: 1px solid rgba(245, 240, 230, 0.08);
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--text-light-mute);
+}
+@media (max-width: 540px) {
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-left">
+    <a href="/#menu" class="nav-link">Menu</a>
+    <a href="/#story" class="nav-link">Our Story</a>
+    <a href="/#locations" class="nav-link">Locations</a>
+  </div>
+  <div class="nav-center">
+    <a href="/" class="nav-brand-link">
+      <div class="nav-brand">UGLY</div>
+      <div class="nav-brand-sub">Donuts &amp; Corn Dogs</div>
+    </a>
+  </div>
+  <div class="nav-right">
+    <a href="https://uglydonutsncorndogs.com/order?utm_source=undefined&utm_content=home&utm_medium=toast_sites&utm_campaign=undefined&utm_term=nav" class="nav-cta">Order Online</a>
+  </div>
+  <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
+</nav>
+
+
+<section class="page-header">
+  <div class="container">
+    <div class="eyebrow">Contact</div>
+    <h1>Say <span class="serif-italic">hello.</span></h1>
+    <p class="lede">
+      Questions, feedback, press, partnerships — anything else. Drop a note and
+      the right person on our team will get back to you.
+    </p>
+  </div>
+</section>
+
+<section class="form-wrap">
+  <div class="container">
+    <form action="https://formspree.io/f/maqkqdll" method="POST" data-formspree>
+      <input type="hidden" name="_subject" value="New Contact Form Submission">
+
+      <div class="form-section">
+        <div class="form-section-title">Your Information</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name <span class="req">*</span></label>
+            <input class="form-input" type="text" name="first_name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name <span class="req">*</span></label>
+            <input class="form-input" type="text" name="last_name" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email <span class="req">*</span></label>
+            <input class="form-input" type="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input class="form-input" type="tel" name="phone">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company / Organization</label>
+          <input class="form-input" type="text" name="company">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">What is this about?</div>
+
+        <div class="form-group">
+          <label class="form-label">Inquiry Type <span class="req">*</span></label>
+          <select class="form-select" name="inquiry_type" required>
+    <option value="" disabled selected>Select inquiry type</option>
+    <option value="General Question">General Question</option>
+    <option value="Customer Feedback">Customer Feedback</option>
+    <option value="Real Estate / Landlord Inquiry">Real Estate / Landlord Inquiry</option>
+    <option value="Vendor / Supplier">Vendor / Supplier</option>
+    <option value="Press / Media">Press / Media</option>
+    <option value="Partnership">Partnership</option>
+    <option value="Other">Other</option>
+  </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Location Related To</label>
+          <select class="form-select" name="location">
+    <option value="" disabled selected>Select location</option>
+    <option value="American Dream">American Dream</option>
+    <option value="Brooklyn (Bushwick)">Brooklyn (Bushwick)</option>
+    <option value="Forest Hills (Queens)">Forest Hills (Queens)</option>
+    <option value="Pearland (TX)">Pearland (TX)</option>
+    <option value="Other / Not location-specific">Other / Not location-specific</option>
+  </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Subject <span class="req">*</span></label>
+          <input class="form-input" type="text" name="subject" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Message <span class="req">*</span></label>
+          <textarea class="form-textarea" name="message" placeholder="Tell us more…" required></textarea>
+        </div>
+      </div>
+
+      <div class="form-submit">
+        <button type="submit" class="btn btn-primary btn-arrow">Send Message</button>
+        <p class="form-note">We typically reply within two business days.</p>
+      </div>
+    </form>
+
+    <div class="form-success">
+      <span class="hand">thank you.</span>
+      <h3>Message received.</h3>
+      <p>The right person on our team will get back to you, typically within two business days.</p>
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">UGLY</div>
+        <div class="footer-brand-sub">Donuts &amp; Corn Dogs</div>
+        <p class="footer-tagline">
+          Premium Korean corn dogs and handmade donuts. Made to order.
+          Fried in 100% avocado oil.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="/#locations">Locations</a></li>
+          <li><a href="/#menu">Menu</a></li>
+          <li><a href="https://uglydonutsncorndogs.com/order?utm_source=undefined&utm_content=home&utm_medium=toast_sites&utm_campaign=undefined&utm_term=footer">Order Online</a></li>
+          <li><a href="/catering.html">Catering</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Brand</h4>
+        <ul>
+          <li><a href="/#story">Our Story</a></li>
+          <li><a href="/#journal">Journal</a></li>
+          <li><a href="/careers.html">Careers</a></li>
+          <li><a href="/#franchise">Franchise</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="mailto:hq@uglydonutsncorndogs.com">hq@uglydonutsncorndogs.com</a></li>
+          <li><a href="https://www.instagram.com/uglydonutsncorndogs" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://franchise.uglydonutsncorndogs.com" target="_blank" rel="noopener">Franchise Portal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Ugly Donuts &amp; Corn Dogs · All rights reserved</span>
+      <span>Belleville, NJ · USA</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function() {
+  // Nav scroll
+  var nav = document.getElementById('nav');
+  function onScroll() {
+    if (window.scrollY > 30) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile toggle
+  var toggle = document.querySelector('.nav-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function() { nav.classList.toggle('open'); });
+  }
+
+  // Radio/check visual state
+  function syncChecks() {
+    document.querySelectorAll('.form-radio input, .form-check input').forEach(function(input) {
+      var label = input.closest('.form-radio, .form-check');
+      if (!label) return;
+      if (input.type === 'radio') {
+        // For radios, sync all in same group
+        document.querySelectorAll('input[name="' + input.name + '"]').forEach(function(other) {
+          var l = other.closest('.form-radio, .form-check');
+          if (l) l.classList.toggle('checked', other.checked);
+        });
+      } else {
+        label.classList.toggle('checked', input.checked);
+      }
+    });
+  }
+  document.addEventListener('change', function(e) {
+    if (e.target.matches('.form-radio input, .form-check input')) syncChecks();
+  });
+  syncChecks();
+
+  // File upload label
+  document.querySelectorAll('.form-file input[type=file]').forEach(function(input) {
+    input.addEventListener('change', function() {
+      var label = input.closest('.form-file');
+      var fn = label.querySelector('.filename');
+      if (input.files && input.files[0]) {
+        if (!fn) {
+          fn = document.createElement('span');
+          fn.className = 'filename';
+          label.querySelector('.form-file-label').appendChild(fn);
+        }
+        fn.textContent = input.files[0].name;
+      }
+    });
+  });
+
+  // AJAX form submit
+  document.querySelectorAll('form[data-formspree]').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type=submit]');
+      var originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      var formData = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(function(r) {
+        if (r.ok) {
+          form.style.display = 'none';
+          var success = document.querySelector('.form-success');
+          if (success) {
+            success.classList.add('shown');
+            success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          throw new Error('Submit failed');
+        }
+      }).catch(function() {
+        alert('Something went wrong. Please try emailing us at hq@uglydonutsncorndogs.com');
+        btn.disabled = false;
+        btn.textContent = originalText;
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
