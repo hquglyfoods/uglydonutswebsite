@@ -1,5 +1,5 @@
 # Decap CMS Configuration
-# This file defines what content the team can manage through /admin
+# Defines what content the team can manage through /admin
 
 backend:
   name: git-gateway
@@ -10,17 +10,17 @@ media_folder: "uploads"
 public_folder: "/uploads"
 
 # Site URL for previews
-site_url: https://uglydonutsweb사이트.netlify.app
-display_url: https://uglydonutsweb사이트.netlify.app
-logo_url: https://uglydonutsweb사이트.netlify.app/og-image.jpg
+site_url: https://uglydonutswebsite.netlify.app
+display_url: https://uglydonutswebsite.netlify.app
+logo_url: https://uglydonutswebsite.netlify.app/og-image.jpg
 
 # ============================================================
-# COLLECTIONS — what content types can be managed
+# COLLECTIONS
 # ============================================================
 collections:
 
   # ----------------------------------------
-  # MENU ITEMS
+  # MENU ITEMS - simplified
   # ----------------------------------------
   - name: "menu"
     label: "Menu Items"
@@ -29,8 +29,8 @@ collections:
     create: true
     delete: true
     slug: "{{slug}}"
-    summary: "{{name}} · {{category}} · ${{price}}"
-    sortable_fields: ["order", "name", "category"]
+    summary: "{{name}} · {{category}}"
+    sortable_fields: ["name", "category"]
     view_filters:
       - label: "Corn Dogs"
         field: category
@@ -48,19 +48,8 @@ collections:
         widget: "select"
         options: ["Corn Dog", "Donut", "Beverage"]
         default: "Corn Dog"
-      - {label: "Price (USD)", name: "price", widget: "number", value_type: "float", step: 0.01, hint: "Just the number, e.g. 8.50"}
       - {label: "Photo", name: "photo", widget: "image", required: false, hint: "Square photo works best (1:1 ratio)"}
-      - {label: "Description", name: "description", widget: "text", hint: "1-2 sentences. Keep it short and tasty."}
-      - {label: "Bestseller?", name: "bestseller", widget: "boolean", default: false, required: false, hint: "Shows a 'Bestseller' tag on the card"}
-      - label: "Available at"
-        name: "available_at"
-        widget: "select"
-        multiple: true
-        required: false
-        options: ["American Dream", "Bushwick", "Forest Hills", "Pearland"]
-        default: ["American Dream", "Bushwick", "Forest Hills", "Pearland"]
-        hint: "Pick stores where this item is sold"
-      - {label: "Display Order", name: "order", widget: "number", value_type: "int", default: 100, hint: "Lower number = shows first. Use 1-10 for top items."}
+      - {label: "Description", name: "description", widget: "text", required: false, hint: "1-2 sentences. Keep it short and tasty."}
 
   # ----------------------------------------
   # ARTICLES / JOURNAL
@@ -82,16 +71,14 @@ collections:
         widget: "select"
         options: ["The Brand", "Menu", "The Team", "Behind the Scenes", "Press"]
         default: "The Brand"
-      - {label: "Author", name: "author", widget: "string", default: "The Ugly Donuts Team"}
       - {label: "Cover Photo", name: "cover", widget: "image", required: false, hint: "16:9 or 4:3 works best"}
-      - {label: "Excerpt", name: "excerpt", widget: "text", hint: "1-2 sentences shown on the home page and listing"}
+      - {label: "Excerpt", name: "excerpt", widget: "text", hint: "1-2 sentences shown on the home page"}
       - {label: "Read Time", name: "read_time", widget: "string", default: "3 min read", hint: "e.g. '3 min read'"}
-      - {label: "Body", name: "body", widget: "markdown", hint: "Full article content. Supports formatting and images."}
-      - {label: "Featured on Home?", name: "featured", widget: "boolean", default: true, required: false, hint: "Show on the home page (latest 3 featured articles appear)"}
-      - {label: "Draft?", name: "draft", widget: "boolean", default: false, required: false, hint: "If checked, this article will NOT show on the live site"}
+      - {label: "Body", name: "body", widget: "markdown", hint: "Full article content"}
+      - {label: "Draft?", name: "draft", widget: "boolean", default: false, required: false, hint: "If checked, NOT shown on the live site"}
 
   # ----------------------------------------
-  # LOCATIONS
+  # LOCATIONS - simplified
   # ----------------------------------------
   - name: "locations"
     label: "Store Locations"
@@ -101,24 +88,18 @@ collections:
     delete: true
     slug: "{{slug}}"
     summary: "{{name}} · {{city}}, {{state}}"
-    sortable_fields: ["order", "name"]
+    sortable_fields: ["name"]
     fields:
       - {label: "Store Name", name: "name", widget: "string", hint: "e.g. American Dream"}
       - {label: "City", name: "city", widget: "string"}
       - {label: "State", name: "state", widget: "string", hint: "Two-letter abbreviation, e.g. NJ"}
-      - {label: "Full Address", name: "address", widget: "string", required: false, hint: "Street address — used for Google Maps link"}
+      - {label: "Full Address", name: "address", widget: "string", required: false, hint: "Street address"}
       - label: "Type"
         name: "store_type"
         widget: "select"
         options: ["Flagship", "Standalone store", "Mall, Level 1", "Mall, Level 2", "Food Hall", "Other"]
         default: "Standalone store"
-      - label: "Region Tag"
-        name: "region_tag"
-        widget: "select"
-        options: ["Flagship", "New York", "New Jersey", "Texas", "Other"]
-        default: "New Jersey"
       - {label: "Photo", name: "photo", widget: "image", required: false}
       - {label: "Phone", name: "phone", widget: "string", required: false}
-      - {label: "Hours", name: "hours", widget: "text", required: false, hint: "e.g. Mon-Fri: 11am-9pm, Sat-Sun: 10am-10pm"}
-      - {label: "Google Maps URL", name: "maps_url", widget: "string", required: false, hint: "Full Google Maps link to this exact location"}
-      - {label: "Display Order", name: "order", widget: "number", value_type: "int", default: 100, hint: "Lower = shows first. Flagship usually 1."}
+      - {label: "Hours", name: "hours", widget: "text", required: false, hint: "e.g. Mon-Fri: 11am-9pm"}
+      - {label: "Google Maps URL", name: "maps_url", widget: "string", required: false, hint: "Full Google Maps link"}
