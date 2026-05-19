@@ -55,3 +55,4 @@ For Decap CMS to work, you need:
 1. Netlify Identity enabled in Netlify dashboard
 2. Git Gateway enabled
 3. Team members invited via Netlify Identity → Invite users
+
