@@ -1,0 +1,31 @@
+# Netlify build configuration
+# Triggers the index builder on every deploy so the site
+# can find newly-added menu items and articles.
+
+[build]
+  command = "node build-index.js"
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache markdown content files briefly so updates show within 5 minutes
+[[headers]]
+  for = "/content/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
+
+# Pretty URLs
+[[redirects]]
+  from = "/order"
+  to = "https://uglydonutsncorndogs.com/order?utm_source=undefined&utm_content=home&utm_medium=toast_sites&utm_campaign=undefined&utm_term=direct"
+  status = 302
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200

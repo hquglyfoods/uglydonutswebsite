@@ -627,6 +627,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   border-color: rgba(253, 94, 15, 0.3);
 }
 
+.menu-card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.menu-card-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(5, 8, 16, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(253, 94, 15, 0.5);
+  padding: 5px 10px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border-radius: 100px;
+  z-index: 2;
+}
+
 .menu-card-photo .placeholder-icon {
   width: 40px;
   height: 40px;
@@ -1386,13 +1408,194 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
     els.forEach(el => el.classList.add('in'));
   }
 
-  // Menu tabs (visual only — CMS will wire actual filter)
+  // Menu tabs (visual filter — wired below if menu items are loaded)
   document.querySelectorAll('.menu-tab').forEach(b => {
     b.addEventListener('click', () => {
       document.querySelectorAll('.menu-tab').forEach(x => x.classList.remove('active'));
       b.classList.add('active');
+      const cat = b.dataset.cat;
+      document.querySelectorAll('.menu-card[data-cat]').forEach(card => {
+        if (cat === 'all' || card.dataset.cat === cat) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
     });
   });
+
+  // ===================================================================
+  // CMS CONTENT LOADER
+  // Loads menu items and articles from /content/ folder at page load.
+  // Hides "Coming Soon" placeholder once real content exists.
+  // ===================================================================
+
+  // Tiny front-matter parser (handles --- delimited YAML-ish blocks)
+  function parseFrontmatter(text) {
+    const m = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
+    if (!m) return { data: {}, body: text };
+    const data = {};
+    const lines = m[1].split('\n');
+    let currentKey = null;
+    let currentList = null;
+    for (const line of lines) {
+      if (/^\s*-\s+/.test(line) && currentList !== null) {
+        currentList.push(line.replace(/^\s*-\s+/, '').replace(/^["']|["']$/g, ''));
+        continue;
+      }
+      const kv = line.match(/^([a-z_]+):\s*(.*)$/i);
+      if (!kv) continue;
+      const key = kv[1].trim();
+      let val = kv[2].trim();
+      if (val === '') {
+        // Could be the start of a list
+        currentList = [];
+        data[key] = currentList;
+        currentKey = key;
+      } else {
+        // Strip quotes
+        val = val.replace(/^["']|["']$/g, '');
+        if (val === 'true') val = true;
+        else if (val === 'false') val = false;
+        else if (!isNaN(parseFloat(val)) && /^-?\d/.test(val)) {
+          val = parseFloat(val);
+        }
+        data[key] = val;
+        currentList = null;
+      }
+    }
+    return { data, body: m[2].trim() };
+  }
+
+  // Load a list of content files from a manifest
+  async function loadManifest(path) {
+    try {
+      const res = await fetch(path);
+      if (!res.ok) return [];
+      return await res.json();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  // Fetch and parse a single markdown file
+  async function loadMarkdown(path) {
+    try {
+      const res = await fetch(path);
+      if (!res.ok) return null;
+      const text = await res.text();
+      return parseFrontmatter(text);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // -------- MENU --------
+  async function renderMenu() {
+    const files = await loadManifest('/content/menu/_index.json');
+    if (!files || files.length === 0) return;
+
+    const items = [];
+    for (const file of files) {
+      const item = await loadMarkdown('/content/menu/' + file);
+      if (item && item.data && item.data.name) items.push(item.data);
+    }
+    if (items.length === 0) return;
+
+    // Sort by order field
+    items.sort((a, b) => (a.order || 100) - (b.order || 100));
+
+    // Build cards
+    const grid = document.createElement('div');
+    grid.className = 'menu-grid fade-up in';
+    items.forEach(item => {
+      const cat = (item.category || '').toLowerCase().replace(/\s+/g, '-') + 's';
+      const photoHtml = item.photo
+        ? '<img src="' + item.photo + '" alt="' + (item.name || '') + '" loading="lazy">'
+        : '<div class="placeholder-icon">+</div>';
+      const bestseller = item.bestseller
+        ? '<div class="menu-card-tag">No. 1</div>'
+        : '';
+      const card = document.createElement('a');
+      card.className = 'menu-card';
+      card.href = '#menu';
+      card.dataset.cat = cat;
+      card.innerHTML =
+        '<div class="menu-card-photo">' + bestseller + photoHtml + '</div>' +
+        '<div class="menu-card-meta"><span>' + (item.category || '') + '</span>' +
+        '<span class="price">$' + (item.price ? Number(item.price).toFixed(2) : '0.00') + '</span></div>' +
+        '<h4 class="menu-card-name">' + (item.name || '') + '</h4>' +
+        '<p class="menu-card-desc">' + (item.description || '') + '</p>';
+      grid.appendChild(card);
+    });
+
+    // Replace "Coming Soon" with real grid
+    const coming = document.querySelector('.menu-coming');
+    if (coming) {
+      coming.replaceWith(grid);
+      // Show category tabs now that we have items
+      const tabsHTML = '<div class="menu-tabs fade-up in">' +
+        '<button class="menu-tab active" data-cat="all">All</button>' +
+        '<button class="menu-tab" data-cat="corn-dogs">Corn Dogs</button>' +
+        '<button class="menu-tab" data-cat="donuts">Donuts</button>' +
+        '<button class="menu-tab" data-cat="beverages">Beverages</button>' +
+        '</div>';
+      grid.insertAdjacentHTML('beforebegin', tabsHTML);
+      // Wire up the new tabs
+      document.querySelectorAll('.menu-tab').forEach(b => {
+        b.addEventListener('click', () => {
+          document.querySelectorAll('.menu-tab').forEach(x => x.classList.remove('active'));
+          b.classList.add('active');
+          const cat = b.dataset.cat;
+          document.querySelectorAll('.menu-card[data-cat]').forEach(card => {
+            card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+          });
+        });
+      });
+    }
+  }
+
+  // -------- ARTICLES --------
+  async function renderArticles() {
+    const files = await loadManifest('/content/articles/_index.json');
+    if (!files || files.length === 0) return;
+
+    const items = [];
+    for (const file of files) {
+      const item = await loadMarkdown('/content/articles/' + file);
+      if (item && item.data && item.data.title && !item.data.draft) items.push(item.data);
+    }
+    if (items.length === 0) return;
+
+    // Sort by date desc, take 3 latest featured
+    items.sort((a, b) => new Date(b.published_date || 0) - new Date(a.published_date || 0));
+    const featured = items.filter(a => a.featured !== false).slice(0, 3);
+    if (featured.length === 0) return;
+
+    const grid = document.createElement('div');
+    grid.className = 'articles-grid fade-up in';
+    featured.forEach((a, i) => {
+      const coverHtml = a.cover
+        ? '<img src="' + a.cover + '" alt="' + (a.title || '') + '" loading="lazy">'
+        : '<div class="placeholder-icon">+</div>';
+      const card = document.createElement('a');
+      card.className = 'article-card' + (i > 0 ? ' delay-' + i : '');
+      card.href = '#journal';
+      card.innerHTML =
+        '<div class="article-photo' + (a.cover ? '' : ' placeholder') + '">' + coverHtml + '</div>' +
+        '<div class="article-meta">' + (a.category || '') + ' <span class="dot">·</span> ' + (a.read_time || '3 min read') + '</div>' +
+        '<h3>' + (a.title || '') + '</h3>' +
+        '<p>' + (a.excerpt || '') + '</p>';
+      grid.appendChild(card);
+    });
+
+    const coming = document.querySelector('.journal-coming');
+    if (coming) coming.replaceWith(grid);
+  }
+
+  // Run CMS loaders (silently fail if no content yet — placeholders stay)
+  renderMenu();
+  renderArticles();
 })();
 </script>
 </body>
