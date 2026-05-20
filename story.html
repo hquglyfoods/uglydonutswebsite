@@ -251,6 +251,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.9s var(--ease),transform 0.9s var(--ease)}
 .fade-up.in{opacity:1;transform:translateY(0)}
 .delay-1{transition-delay:0.1s}.delay-2{transition-delay:0.2s}.delay-3{transition-delay:0.3s}
+
+/* ============ PAGE IMAGE (cream background) ============ */
+.page-image{background:var(--bg-cream);padding:0 0 60px;overflow:hidden}
+.page-image-inner{max-width:980px;margin:0 auto;padding:0 36px}
+.page-image img{display:block;width:100%;height:auto;max-height:75vh;object-fit:contain;margin:0 auto;border-radius:8px}
+@media(max-width:960px){
+  .page-image{padding:0 0 40px}
+  .page-image-inner{padding:0 20px}
+}
 </style>
 
 <style>
@@ -261,14 +270,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .page-header .lede{font-size:clamp(15px,1.3vw,18px);color:var(--text-dark-soft);line-height:1.7;max-width:580px;margin:0 auto}
 @media(max-width:960px){.page-header{padding:96px 0 60px}}
 
-/* ============ STORY HERO IMAGE ============ */
-.story-hero-image{background:var(--bg-navy-deep);padding:60px 0;overflow:hidden}
-.story-hero-image-inner{max-width:720px;margin:0 auto;padding:0 36px}
-.story-hero-image img{display:block;width:100%;height:auto;max-height:80vh;object-fit:contain;margin:0 auto}
-@media(max-width:960px){
-  .story-hero-image{padding:40px 0}
-  .story-hero-image-inner{padding:0 20px}
-}
 .page-section{padding:96px 0}
 .page-section-narrow{max-width:720px;margin:0 auto}
 .back-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);margin-bottom:36px;transition:transform 0.2s}
@@ -349,8 +350,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   </div>
 </section>
 
-<section class="story-hero-image">
-  <div class="story-hero-image-inner">
+<section class="page-image">
+  <div class="page-image-inner">
     <img src="/images/cheese-pull.jpg" alt="A potato corn dog being pulled apart, mozzarella stretching, steam rising" loading="lazy">
   </div>
 </section>
@@ -382,8 +383,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   </div>
 </section>
 
-<section class="story-hero-image">
-  <div class="story-hero-image-inner">
+<section class="page-image">
+  <div class="page-image-inner">
     <img src="/images/korean-war.jpg" alt="American troops sharing food supplies with Korean children during the Korean War" loading="lazy">
   </div>
 </section>
