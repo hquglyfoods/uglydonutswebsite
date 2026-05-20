@@ -419,6 +419,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 @media (max-width: 540px) {
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
 }
+
+/* ============ NAV WORDMARK ============ */
+.nav-wordmark{display:inline-block}
+.nav-wordmark img{width:130px;height:auto;display:block}
+@media(max-width:960px){.nav-wordmark img{width:72px}}
+
+/* ============ FOOTER WORDMARK ============ */
+.footer-wordmark img{width:220px;height:auto;display:block;margin-bottom:18px}
+@media(max-width:540px){.footer-wordmark{text-align:center}.footer-wordmark img{margin-left:auto;margin-right:auto}}
+
+/* ============ HERO IMAGE (cinematic) ============ */
+.hero-image{background:var(--bg-navy-deep);padding:60px 0;overflow:hidden}
+.hero-image-inner{max-width:980px;margin:0 auto;padding:0 36px}
+.hero-image img{display:block;width:100%;height:auto;max-height:80vh;object-fit:contain;margin:0 auto}
+@media(max-width:960px){
+  .hero-image{padding:40px 0}
+  .hero-image-inner{padding:0 20px}
+}
 </style>
 </head>
 <body>
@@ -430,9 +448,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
     <a href="/#locations" class="nav-link">Locations</a>
   </div>
   <div class="nav-center">
-    <a href="/" class="nav-brand-link">
-      <div class="nav-brand">UGLY</div>
-      <div class="nav-brand-sub">Donuts &amp; Corn Dogs</div>
+    <a href="/" class="nav-wordmark">
+      <img src="/images/wordmark.png" alt="Ugly Donuts &amp; Corn Dogs">
     </a>
   </div>
   <div class="nav-right">
@@ -453,6 +470,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
     </p>
   </div>
 </section>
+<section class="hero-image">
+  <div class="hero-image-inner">
+    <img src="/images/catering-donuts.jpg" alt="Trays of fresh handmade cream donuts ready for catering" loading="lazy">
+  </div>
+</section>
+
 
 <section class="form-wrap">
   <div class="container">
@@ -595,16 +618,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 </section>
 
 
-<footer class="footer">
+<footer class="footer section-black">
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand-name">UGLY</div>
-        <div class="footer-brand-sub">Donuts &amp; Corn Dogs</div>
-        <p class="footer-tagline">
-          Premium Korean corn dogs and handmade donuts. Made to order.
-          Fried in 100% avocado oil.
-        </p>
+        <div class="footer-brand">
+          <div class="footer-wordmark">
+            <img src="/images/wordmark.png" alt="Ugly Donuts &amp; Corn Dogs">
+          </div>
+          <p class="footer-tagline">
+            Premium Korean corn dogs and handmade donuts. Made to order. Fried in 100% avocado oil.
+          </p>
+        </div>
       </div>
       <div class="footer-col">
         <h4>Visit</h4>
@@ -635,8 +660,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2026 Ugly Donuts &amp; Corn Dogs · All rights reserved</span>
-      <span>Belleville, NJ · USA</span>
+      <span>&copy; 2026 Ugly Donuts &amp; Corn Dogs. All rights reserved.</span>
+      <span>Belleville, NJ. USA.</span>
     </div>
   </div>
 </footer>
