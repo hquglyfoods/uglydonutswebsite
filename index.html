@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#F5EFE3">
-<title>Korean Corn Dogs &amp; Handmade Donuts · Ugly Donuts &amp; Corn Dogs · NJ, NYC, TX</title>
-<meta name="description" content="Premium Korean corn dogs and handmade donuts, made to order. Fried in 100% avocado oil. Locations in New Jersey, New York, and Texas.">
-<meta name="keywords" content="Korean corn dog, premium corn dogs, handmade donuts, Hot Cheetos corn dog, avocado oil, NJ, NYC, TX">
+<title>Korean Corn Dogs &amp; Handmade Donuts · Ugly Donuts &amp; Corn Dogs</title>
+<meta name="description" content="Premium Korean corn dogs and handmade donuts, made to order. Fried in 100% avocado oil.">
+<meta name="keywords" content="Korean corn dog, premium corn dogs, handmade donuts, Hot Cheetos corn dog, avocado oil">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://www.uglydonutsncorndogs.com/">
 <meta property="og:type" content="website">
@@ -113,6 +113,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   .hero-visual{margin:0 auto;max-width:90%;aspect-ratio:4/5}
 }
 
+/* ============ BRAND ANCHOR ============ */
+.brand-anchor{padding:120px 0;text-align:center;border-top:1px solid var(--border-cream)}
+.brand-anchor-statement{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.1;letter-spacing:-0.02em;color:var(--text-dark);margin:0;font-weight:400}
+@media(max-width:600px){.brand-anchor{padding:80px 0}}
+
 /* ============ PILLARS ============ */
 .pillars{padding:96px 0;border-top:1px solid var(--border-cream)}
 .pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
@@ -184,6 +189,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .menu-card-desc{font-size:13px;color:var(--text-dark-soft);line-height:1.5}
 .menu-empty{text-align:center;padding:32px;max-width:560px;margin:0 auto}
 .menu-empty p{font-size:15px;color:var(--text-dark-soft);line-height:1.7;margin-bottom:28px}
+.text-link{color:var(--orange);border-bottom:1px solid var(--orange);padding-bottom:1px;transition:opacity 0.2s}
+.text-link:hover{opacity:0.7}
 
 /* ============ LOCATIONS ============ */
 .findus{padding:120px 0;position:relative;overflow:hidden}
@@ -298,6 +305,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   </div>
 </section>
 
+<!-- BRAND ANCHOR -->
+<section class="brand-anchor section-cream-warm">
+  <div class="container">
+    <p class="brand-anchor-statement fade-up">Good things <span class="serif-italic">stay forever.</span></p>
+  </div>
+</section>
+
 <!-- PILLARS -->
 <section class="pillars section-cream">
   <div class="container">
@@ -393,8 +407,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
         She bought him one, placed it warm in his small hands, and smiled down at him.
       </p>
       <p class="fade-up delay-2">
-        He doesn't remember the taste. He remembers the way she looked at him.
-        He remembers feeling loved.
+        Thirty years later, he still remembers that moment. The warmth in his hands. The way she
+        looked at him. The feeling that he was loved.
       </p>
       <p class="fade-up delay-2">
         That moment never left him. Years later, it became the reason Ugly Donuts exists.
@@ -406,7 +420,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
         later, the Korean version came back to America as something entirely its own.
       </p>
       <div class="cta-wrap fade-up delay-3">
-        <a href="#story" class="btn btn-outline-light btn-arrow">Read Our Story</a>
+        <a href="/story.html" class="btn btn-outline-light btn-arrow">Read Our Story</a>
       </div>
     </div>
   </div>
@@ -448,8 +462,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
       </p>
     </div>
     <div class="menu-empty fade-up" id="menu-empty">
-      <p>The full menu is coming soon. For now, order online from your nearest store.</p>
-      <a href="https://uglydonutsncorndogs.com/order?utm_source=undefined&utm_content=home&utm_medium=toast_sites&utm_campaign=undefined&utm_term=menu_coming" class="btn btn-primary btn-arrow">Order Online</a>
+      <p>The full menu is coming soon. Until then, <a href="/locations.html" class="text-link">visit one of our stores</a>.</p>
     </div>
     <div class="menu-grid" id="menu-grid" style="display:none"></div>
     <div class="section-cta" id="menu-see-all" style="display:none">
@@ -463,10 +476,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   <div class="container">
     <div class="findus-inner">
       <div class="eyebrow fade-up">Locations</div>
-      <h2 class="fade-up delay-1">Four stores. <span class="serif-italic">Same standard.</span></h2>
+      <h2 class="fade-up delay-1">Every store. <span class="serif-italic">Same standard.</span></h2>
       <p class="findus-sub fade-up delay-2">
-        New Jersey, New York, and Texas. Every store opens to the same recipes, the same training,
-        and the same made-to-order promise.
+        Every store opens to the same recipes, the same training, and the same made-to-order promise.
       </p>
     </div>
     <div class="locations-row" id="locations-row">
