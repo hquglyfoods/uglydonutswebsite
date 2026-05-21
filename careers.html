@@ -479,7 +479,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 
 <section class="form-wrap">
   <div class="container">
-    <form name="careers" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data" data-formspree>
+    <form name="careers" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" data-formspree>
       <input type="hidden" name="form-name" value="careers">
       <p class="hidden-honeypot" style="position:absolute;left:-9999px"><label>Don't fill this out: <input name="bot-field"></label></p>
 
@@ -637,19 +637,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
         </div>
       </div>
 
-      <!-- Resume -->
+      <!-- Resume note -->
       <div class="form-section">
         <div class="form-section-title">Resume</div>
-        <div class="form-section-desc">Optional, but helps us learn more about you. PDF preferred.</div>
-
-        <div class="form-group">
-          <label class="form-file">
-            <input type="file" name="resume" accept=".pdf,.doc,.docx">
-            <div class="form-file-label">
-              <span>Click to upload resume (PDF or Word)</span>
-            </div>
-          </label>
-        </div>
+        <div class="form-section-desc">If your background looks like a fit, we will reach out by email and request your resume directly. No need to attach it here.</div>
       </div>
 
       <div class="form-submit">
@@ -780,12 +771,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
       btn.textContent = 'Sending…';
 
       var formData = new FormData(form);
-      // Netlify Forms는 같은 페이지 경로로 POST (파일 업로드는 multipart 유지)
+      // Netlify Forms는 사이트 루트로 POST하면 form name으로 라우팅
       fetch('/', {
         method: 'POST',
-        body: formData
+        body: new URLSearchParams(formData).toString(),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }).then(function(r) {
-        if (r.ok) {
+        console.log('Form response status:', r.status, r.statusText);
+        if (r.ok || r.status === 200) {
           form.style.display = 'none';
           var success = document.querySelector('.form-success');
           if (success) {
@@ -793,9 +786,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
             success.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
         } else {
-          throw new Error('Submit failed');
+          throw new Error('Submit failed with status: ' + r.status);
         }
-      }).catch(function() {
+      }).catch(function(err) {
+        console.error('Form submission error:', err);
         alert('Something went wrong. Please try emailing us at hq@uglydonutsncorndogs.com');
         btn.disabled = false;
         btn.textContent = originalText;
