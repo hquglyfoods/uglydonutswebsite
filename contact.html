@@ -479,7 +479,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 
 <section class="form-wrap">
   <div class="container">
-    <form action="https://formspree.io/f/maqkqdll" method="POST" data-formspree>
+    <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" data-formspree>
+      <input type="hidden" name="form-name" value="contact">
+      <p class="hidden-honeypot" style="position:absolute;left:-9999px"><label>Don't fill this out: <input name="bot-field"></label></p>
+
       <input type="hidden" name="_subject" value="New Contact Form Submission">
 
       <div class="form-section">
@@ -679,10 +682,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
       btn.textContent = 'Sending…';
 
       var formData = new FormData(form);
-      fetch(form.action, {
+      // Netlify Forms는 같은 페이지 경로로 POST
+      fetch('/', {
         method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
+        body: new URLSearchParams(formData).toString(),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }).then(function(r) {
         if (r.ok) {
           form.style.display = 'none';
