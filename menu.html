@@ -307,58 +307,65 @@ nav.nav .nav-order-mobile{display:none !important}
 .story-page-section .eyebrow{margin-bottom:20px}
 .story-quote{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.2vw,28px);line-height:1.4;color:var(--text-dark);max-width:580px;margin:48px auto;text-align:center;padding:32px 0;border-top:1px solid var(--border-cream);border-bottom:1px solid var(--border-cream)}
 
-/* Menu page */
-.menu-page-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 28px;align-items:start}
-@media(max-width:1200px){.menu-page-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:720px){.menu-page-grid{grid-template-columns:repeat(2,1fr);gap:24px 12px}}
-@media(max-width:420px){.menu-page-grid{grid-template-columns:repeat(2,1fr);gap:20px 10px}}
+/* =========================================
+   MENU PAGE - 완전 재작성 (깨끗하게)
+   ========================================= */
 
-/* 모바일 카드 - 작게 */
-@media(max-width:720px){
-  .menu-card-photo{margin-bottom:12px;border-radius:3px}
-  .menu-card-cat{font-size:9px;letter-spacing:0.14em;margin-bottom:4px}
-  .menu-card-name{font-size:0.95rem;margin-bottom:4px;line-height:1.2}
-  .menu-card-desc{font-size:11px;line-height:1.45;-webkit-line-clamp:2}
+/* 레이아웃: 데스크탑은 사이드바 + 메인, 모바일은 1열 (탭 위, 그리드 아래) */
+.menu-layout { display: grid; grid-template-columns: 240px 1fr; gap: 64px; max-width: 1320px; margin: 0 auto; }
+.menu-sidebar { position: relative; }
+.menu-sidebar-inner { position: sticky; top: 120px; }
+.menu-main { min-width: 0; }
+
+/* 데스크탑 사이드바 세로 탭 */
+.menu-tabs { display: flex; flex-direction: column; gap: 2px; align-items: stretch; }
+.menu-tab { background: transparent; border: none; border-left: 2px solid transparent; border-radius: 0; padding: 12px 0 12px 20px; font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.04em; color: var(--text-dark-soft); cursor: pointer; transition: all 0.2s var(--ease); text-align: left; white-space: nowrap; line-height: 1.3; }
+.menu-tab:hover { color: var(--text-dark); border-left-color: var(--border-cream); }
+.menu-tab.is-active { color: var(--orange); border-left-color: var(--orange); font-weight: 600; }
+
+/* 메뉴 그리드 - 데스크탑 3열 */
+.menu-page-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 28px; align-items: start; width: 100%; }
+
+/* 태블릿: 사이드바 폭 축소 + 그리드 2열 */
+@media (max-width: 1100px) {
+  .menu-layout { grid-template-columns: 200px 1fr; gap: 40px; }
+  .menu-tab { font-size: 12px; padding: 11px 0 11px 16px; }
+  .menu-page-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* MENU LAYOUT - sidebar + main */
-.menu-layout{display:grid;grid-template-columns:240px 1fr;gap:64px;max-width:1320px;margin:0 auto}
-.menu-sidebar{position:relative}
-.menu-sidebar-inner{position:sticky;top:120px}
-.menu-main{min-width:0}
-
-/* DESKTOP - sidebar 세로 탭 */
-.menu-tabs{display:flex;flex-direction:column;gap:2px;align-items:stretch}
-.menu-tab{background:transparent;border:none;border-left:2px solid transparent;border-radius:0;padding:12px 0 12px 20px;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:0.04em;color:var(--text-dark-soft);cursor:pointer;transition:all 0.2s var(--ease);text-align:left;white-space:nowrap;line-height:1.3}
-.menu-tab:hover{color:var(--text-dark);border-left-color:var(--border-cream)}
-.menu-tab.is-active{color:var(--orange);border-left-color:var(--orange);font-weight:600}
-
-/* TABLET - sidebar 폭 축소 */
-@media(max-width:1100px){
-  .menu-layout{grid-template-columns:200px 1fr;gap:40px}
-  .menu-tab{font-size:12px;padding:11px 0 11px 16px}
+/* 모바일 (880px 이하): 사이드바 → 가로 스크롤 탭, 그리드는 2열 강제 */
+@media (max-width: 880px) {
+  /* 레이아웃: 1열 (탭 위, 그리드 아래) */
+  .menu-layout { display: block; max-width: 100%; margin: 0; }
+  .menu-sidebar { width: 100%; margin-bottom: 32px; }
+  .menu-sidebar-inner { position: static; padding: 0; }
+  
+  /* 가로 스크롤 탭 */
+  .menu-tabs-mobile-wrap { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; width: 100%; }
+  .menu-tabs-mobile-wrap::-webkit-scrollbar { display: none; }
+  .menu-tabs { flex-direction: row; gap: 4px; align-items: center; padding: 4px 0; min-width: max-content; width: max-content; }
+  .menu-tab { border: 1px solid var(--border-cream); border-radius: 100px; padding: 9px 16px; font-size: 12px; letter-spacing: 0.04em; flex-shrink: 0; line-height: 1; }
+  .menu-tab:hover { border-color: var(--text-dark-soft); }
+  .menu-tab.is-active { background: var(--text-dark); color: var(--bg-cream); border-color: var(--text-dark); border-left: 1px solid var(--text-dark); }
+  
+  /* 메인 영역 + 그리드 (강제 2열) */
+  .menu-main { width: 100%; min-width: 0; }
+  .menu-page-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 20px 12px; width: 100%; max-width: 100%; }
+  
+  /* 카드 - 작게 */
+  .menu-card-photo { margin-bottom: 10px; border-radius: 3px; }
+  .menu-card-cat { font-size: 9px; letter-spacing: 0.14em; margin-bottom: 4px; }
+  .menu-card-name { font-size: 0.85rem; margin-bottom: 4px; line-height: 1.2; }
+  .menu-card-desc { font-size: 10.5px; line-height: 1.45; -webkit-line-clamp: 2; }
 }
 
-/* MOBILE - 사이드바를 가로 스크롤 탭으로 변환 (음수 마진 없이) */
-@media(max-width:880px){
-  .menu-layout{grid-template-columns:1fr;gap:32px;max-width:none;width:100%}
-  .menu-sidebar{position:relative;width:100%}
-  .menu-sidebar-inner{position:static;padding:0}
-  .menu-tabs-mobile-wrap{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;width:100%;position:relative}
-  .menu-tabs-mobile-wrap::-webkit-scrollbar{display:none}
-  .menu-tabs{flex-direction:row;gap:4px;align-items:center;padding:4px 0;min-width:max-content;width:max-content}
-  .menu-tab{border:1px solid var(--border-cream);border-radius:100px;padding:9px 16px;font-size:12px;letter-spacing:0.04em;flex-shrink:0;line-height:1}
-  .menu-tab:hover{border-color:var(--text-dark-soft)}
-  .menu-tab.is-active{background:var(--text-dark);color:var(--bg-cream);border-color:var(--text-dark);border-left:1px solid var(--text-dark)}
-  /* 그리드를 부모 container 폭에 정확히 맞춤 */
-  .menu-main{width:100%;min-width:0;max-width:100%;overflow:hidden}
-  .menu-page-grid{width:100%;max-width:100%}
+@media (max-width: 540px) {
+  .menu-tab { padding: 8px 14px; font-size: 11px; }
+  .menu-page-grid { gap: 16px 10px; }
 }
-@media(max-width:540px){
-  .menu-tab{padding:8px 14px;font-size:11px}
-}
-@media(max-width:380px){
-  .menu-tab{padding:7px 12px;font-size:10.5px}
+
+@media (max-width: 380px) {
+  .menu-tab { padding: 7px 12px; font-size: 10.5px; }
 }
 
 /* ============ MENU CATEGORY ============ */
@@ -411,10 +418,10 @@ nav.nav .nav-order-mobile{display:none !important}
     <div class="nav-more">
       <button class="nav-link nav-more-btn" type="button" aria-expanded="false" aria-haspopup="true">More <span class="nav-more-arrow">&#9662;</span></button>
       <div class="nav-more-menu">
-        <a href="/catering.html" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Catering</a>
-        <a href="/careers.html" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Careers</a>
-        <a href="https://uglydonutsncorndogsfranchise.com/" target="_blank" rel="noopener" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Franchise</a>
-        <a href="/contact.html" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Contact</a>
+        <a href="/catering.html" class="nav-more-link" style="display:block;color:#0F1A2E;font-weight:700;font-size:15px;padding:12px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:6px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">Catering</a>
+        <a href="/careers.html" class="nav-more-link" style="display:block;color:#0F1A2E;font-weight:700;font-size:15px;padding:12px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:6px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">Careers</a>
+        <a href="https://uglydonutsncorndogsfranchise.com/" target="_blank" rel="noopener" class="nav-more-link" style="display:block;color:#0F1A2E;font-weight:700;font-size:15px;padding:12px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:6px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">Franchise</a>
+        <a href="/contact.html" class="nav-more-link" style="display:block;color:#0F1A2E;font-weight:700;font-size:15px;padding:12px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:6px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">Contact</a>
       </div>
     </div>
   </div>
