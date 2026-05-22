@@ -74,8 +74,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   .nav-center{flex:1;text-align:left}
   .nav-toggle{display:block}
   .nav.open{background:var(--bg-cream)}
-  .nav.open .nav-left,.nav.open .nav-right{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;padding:24px;gap:18px;background:var(--bg-cream);border-bottom:1px solid var(--border-cream);align-items:flex-start}
-  .nav.open .nav-right{top:calc(100% + 200px)}
+  .nav.open .nav-left,.nav.open .nav-right{display:flex;flex-direction:column;position:absolute;left:0;right:0;gap:18px;background:var(--bg-cream);align-items:flex-start}
+  .nav.open .nav-left{top:100%;padding:24px 24px 12px}
+  .nav.open .nav-right{top:calc(100% + 156px);padding:12px 24px 24px;border-bottom:1px solid var(--border-cream)}
 }
 
 /* ============ BUTTONS ============ */
@@ -433,7 +434,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
         <h4>Connect</h4>
         <ul>
           <li><a href="/contact.html">Contact</a></li>
-          <li><a href="mailto:hq@uglydonutsncorndogs.com">hq@uglydonutsncorndogs.com</a></li>
           <li><a href="https://www.instagram.com/uglydonutsncorndogs" target="_blank" rel="noopener">Instagram</a></li>
           <li><a href="https://franchise.uglydonutsncorndogs.com" target="_blank" rel="noopener">Franchise Portal</a></li>
         </ul>
