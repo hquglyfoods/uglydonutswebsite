@@ -137,7 +137,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
     align-items: flex-start;
   }
   .nav.open .nav-left { top: 100%; padding: 24px 24px 12px; }
-  .nav.open .nav-right { top: calc(100% + 156px); padding: 12px 24px 24px; border-bottom: 1px solid var(--border-cream); }
+  .nav.open .nav-right { top: calc(100% + 220px); padding: 12px 24px 24px; border-bottom: 1px solid var(--border-cream); }
+}
+
+
+/* ============ MORE DROPDOWN ============ */
+.nav-more { position: relative; }
+.nav-more-btn { background: none; border: none; color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.nav-more-btn:hover { color: var(--orange); }
+.nav-more-arrow { font-size: 9px; transition: transform 0.25s var(--ease); line-height: 1; display: inline-block; }
+.nav-more.open .nav-more-arrow { transform: rotate(180deg); }
+.nav-more-menu { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-8px); background: var(--bg-cream); border: 1px solid var(--border-cream); border-radius: 8px; padding: 10px 0; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity 0.2s, transform 0.2s, visibility 0.2s; box-shadow: 0 8px 24px rgba(15,26,46,0.08); z-index: 100; }
+.nav-more.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+.nav-more-link { display: block; padding: 10px 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dark-soft); transition: background 0.15s, color 0.15s; white-space: nowrap; }
+.nav-more-link:hover { background: rgba(225,102,26,0.06); color: var(--orange); }
+
+@media (max-width: 960px) {
+  .nav-more { width: 100%; }
+  .nav-more-btn { width: 100%; justify-content: flex-start; padding: 0; }
+  .nav-more-menu { position: static; transform: none; opacity: 1; visibility: visible; background: none; border: none; box-shadow: none; padding: 0; margin-top: 0; max-height: 0; overflow: hidden; transition: max-height 0.3s var(--ease); }
+  .nav-more.open .nav-more-menu { max-height: 280px; }
+  .nav-more-link { padding: 10px 0 10px 18px; font-size: 11px; }
 }
 
 /* ============== BUTTONS ============== */
@@ -447,6 +467,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
     <a href="/menu.html" class="nav-link">Menu</a>
     <a href="/story.html" class="nav-link">Our Story</a>
     <a href="/locations.html" class="nav-link">Locations</a>
+    <a href="/journal.html" class="nav-link">Journal</a>
+    <div class="nav-more">
+      <button class="nav-link nav-more-btn" type="button" aria-expanded="false" aria-haspopup="true">More <span class="nav-more-arrow">&#9662;</span></button>
+      <div class="nav-more-menu">
+        <a href="/catering.html" class="nav-more-link">Catering</a>
+        <a href="/careers.html" class="nav-more-link">Careers</a>
+        <a href="https://uglydonutsncorndogsfranchise.com/" target="_blank" rel="noopener" class="nav-more-link">Franchise</a>
+        <a href="/contact.html" class="nav-more-link">Contact</a>
+      </div>
+    </div>
   </div>
   <div class="nav-center">
     <a href="/" class="nav-wordmark">
@@ -633,6 +663,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   if (toggle) {
     toggle.addEventListener('click', function() { nav.classList.toggle('open'); });
   }
+
+  // More dropdown 토글
+  var moreEl = document.querySelector('.nav-more');
+  var moreBtn = document.querySelector('.nav-more-btn');
+  if (moreEl && moreBtn) {
+    moreBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      moreEl.classList.toggle('open');
+      moreBtn.setAttribute('aria-expanded', moreEl.classList.contains('open') ? 'true' : 'false');
+    });
+    document.addEventListener('click', function(e) {
+      if (!moreEl.contains(e.target) && window.innerWidth > 960) {
+        moreEl.classList.remove('open');
+        moreBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
 
   // Radio/check visual state
   function syncChecks() {
