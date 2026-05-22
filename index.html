@@ -100,9 +100,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 @media(max-width:960px){
   .nav-more{width:100%}
   .nav-more-btn{width:100%;justify-content:flex-start;padding:0}
-  .nav-more-menu{position:static;transform:none;opacity:1;visibility:visible;background:none;border:none;box-shadow:none;padding:0;margin-top:0;max-height:0;overflow:hidden;transition:max-height 0.3s var(--ease)}
-  .nav-more.open .nav-more-menu{max-height:280px;margin-top:12px;padding-left:16px;border-left:2px solid var(--border-cream)}
-  .nav-more-link{padding:10px 0 !important;font-size:14px !important;color:#0F1A2E !important;font-weight:600 !important;letter-spacing:0.08em !important;text-transform:uppercase !important;display:block !important;opacity:1 !important;visibility:visible !important}
+  .nav-more-menu{position:static !important;transform:none !important;opacity:1 !important;visibility:visible !important;background:none !important;border:none !important;box-shadow:none !important;padding:0 !important;margin:0 !important;left:0 !important;right:0 !important;width:100% !important;max-height:0;overflow:hidden;transition:max-height 0.3s var(--ease)}
+  .nav-more-menu{display:flex;flex-direction:column;gap:18px}
+  .nav-more.open .nav-more-menu{max-height:320px;margin-top:18px !important;padding-top:0 !important}
+  .nav-more-link{display:block;padding:0;font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dark-soft);background:transparent;border:none;text-decoration:none}
   .nav-more-link:hover{background:transparent;color:var(--orange)}
 }
 
@@ -319,10 +320,10 @@ nav.nav .nav-order-mobile{display:none !important}
     <div class="nav-more">
       <button class="nav-link nav-more-btn" type="button" aria-expanded="false" aria-haspopup="true">More <span class="nav-more-arrow">&#9662;</span></button>
       <div class="nav-more-menu">
-        <a href="/catering.html" class="nav-more-link" style="display:block;color:#0F1A2E;font-weight:700;font-size:15px;padding:12px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:6px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">Catering</a>
-        <a href="/careers.html" class="nav-more-link" style="display:block;color:#0F1A2E;font-weight:700;font-size:15px;padding:12px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:6px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">Careers</a>
-        <a href="https://uglydonutsncorndogsfranchise.com/" target="_blank" rel="noopener" class="nav-more-link" style="display:block;color:#0F1A2E;font-weight:700;font-size:15px;padding:12px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:6px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">Franchise</a>
-        <a href="/contact.html" class="nav-more-link" style="display:block;color:#0F1A2E;font-weight:700;font-size:15px;padding:12px 16px;background:#fff;border:1px solid #e8e0d0;border-radius:6px;margin-bottom:6px;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase">Contact</a>
+        <a href="/catering.html" class="nav-more-link">Catering</a>
+        <a href="/careers.html" class="nav-more-link">Careers</a>
+        <a href="https://uglydonutsncorndogsfranchise.com/" target="_blank" rel="noopener" class="nav-more-link">Franchise</a>
+        <a href="/contact.html" class="nav-more-link">Contact</a>
       </div>
     </div>
   </div>
