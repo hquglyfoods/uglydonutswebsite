@@ -50,6 +50,11 @@ collections:
         default: "Corn Dog"
       - {label: "Photo", name: "photo", widget: "image", required: false, hint: "Square photo works best (1:1 ratio)"}
       - {label: "Description", name: "description", widget: "text", required: false, hint: "1-2 sentences. Keep it short and tasty."}
+      - label: "Best Seller"
+        name: "best_seller"
+        widget: "boolean"
+        default: false
+        hint: "Toggle on to show this item on the homepage Best Sellers section (max 4 displayed)"
 
   # ----------------------------------------
   # ARTICLES / JOURNAL
