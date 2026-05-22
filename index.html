@@ -177,6 +177,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .menu-section-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4.2vw,3.2rem);line-height:1.1;letter-spacing:-0.022em;margin-bottom:24px}
 .menu-section-head p{font-size:clamp(15px,1.2vw,17px);color:var(--text-dark-soft);line-height:1.65}
 .menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:36px 28px;max-width:1240px;margin:0 auto}
+
+/* ============ MENU TABS ============ */
+.menu-tabs{display:flex;justify-content:center;gap:8px;margin:0 auto 48px;max-width:1240px;flex-wrap:wrap}
+.menu-tab{background:transparent;border:1px solid var(--border-cream);border-radius:100px;padding:10px 22px;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dark-soft);cursor:pointer;transition:all 0.25s var(--ease);white-space:nowrap}
+.menu-tab:hover{color:var(--text-dark);border-color:var(--text-dark-soft)}
+.menu-tab.is-active{background:var(--text-dark);color:var(--bg-cream);border-color:var(--text-dark)}
+@media(max-width:540px){
+  .menu-tabs{gap:6px;margin-bottom:36px}
+  .menu-tab{padding:8px 16px;font-size:11px;letter-spacing:0.12em}
+}
 @media(max-width:1000px){.menu-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:720px){.menu-grid{grid-template-columns:repeat(2,1fr);gap:24px 16px}}
 @media(max-width:420px){.menu-grid{grid-template-columns:1fr}}
@@ -464,6 +474,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
     <div class="menu-empty fade-up" id="menu-empty">
       <p>The full menu is coming soon. Until then, <a href="/locations.html" class="text-link">visit one of our stores</a>.</p>
     </div>
+    <div class="menu-tabs fade-up" id="menu-tabs" style="display:none">
+      <button class="menu-tab is-active" data-cat="all">All</button>
+      <button class="menu-tab" data-cat="Corn Dog">Corn Dogs</button>
+      <button class="menu-tab" data-cat="Donut">Donuts</button>
+      <button class="menu-tab" data-cat="Beverage">Drinks</button>
+    </div>
     <div class="menu-grid" id="menu-grid" style="display:none"></div>
     <div class="section-cta" id="menu-see-all" style="display:none">
       <a href="/menu.html" class="btn btn-outline btn-arrow">See Full Menu</a>
@@ -642,24 +658,62 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
     return Promise.all(files.map(function(f){return loadMd('/content/menu/'+f);})).then(function(items){
       items = items.filter(function(i){return i && i.data && i.data.name;});
       if(!items.length) return;
-      var total = items.length;
-      var display = items.slice(0, 8);
+      
       var grid = document.getElementById('menu-grid');
       var empty = document.getElementById('menu-empty');
+      var tabs = document.getElementById('menu-tabs');
       var seeAll = document.getElementById('menu-see-all');
-      grid.innerHTML = display.map(function(it){
-        var d = it.data;
-        var photo = d.photo ? '<img src="'+d.photo+'" alt="'+(d.name||'')+'" loading="lazy">' : '';
-        return '<a href="#menu" class="menu-card">' +
-          '<div class="menu-card-photo">' + photo + '</div>' +
-          '<div class="menu-card-cat">' + (d.category||'') + '</div>' +
-          '<h4 class="menu-card-name">' + (d.name||'') + '</h4>' +
-          '<p class="menu-card-desc">' + (d.description||'') + '</p>' +
-          '</a>';
-      }).join('');
+      
+      // 현재 선택된 카테고리 (기본: 'all')
+      var currentCat = 'all';
+      
+      function renderCards(cat){
+        var filtered = (cat === 'all') ? items : items.filter(function(it){
+          return (it.data.category || '') === cat;
+        });
+        var total = filtered.length;
+        var display = filtered.slice(0, 8);
+        
+        if(!display.length){
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 24px;color:var(--text-dark-soft)">No items in this category yet.</div>';
+        } else {
+          grid.innerHTML = display.map(function(it){
+            var d = it.data;
+            var photo = d.photo ? '<img src="'+d.photo+'" alt="'+(d.name||'')+'" loading="lazy">' : '';
+            return '<a href="/menu.html" class="menu-card">' +
+              '<div class="menu-card-photo">' + photo + '</div>' +
+              '<div class="menu-card-cat">' + (d.category||'') + '</div>' +
+              '<h4 class="menu-card-name">' + (d.name||'') + '</h4>' +
+              '<p class="menu-card-desc">' + (d.description||'') + '</p>' +
+              '</a>';
+          }).join('');
+        }
+        
+        // See Full Menu 버튼: 현재 카테고리에 8개 이상 있을 때만
+        if(seeAll) seeAll.style.display = (total > 8) ? '' : 'none';
+      }
+      
+      // 초기 렌더
       grid.style.display = '';
       if(empty) empty.style.display = 'none';
-      if(total > 8 && seeAll) seeAll.style.display = '';
+      if(tabs) tabs.style.display = '';
+      renderCards('all');
+      
+      // 탭 클릭 핸들러
+      if(tabs){
+        tabs.addEventListener('click', function(e){
+          var btn = e.target.closest('.menu-tab');
+          if(!btn) return;
+          var cat = btn.getAttribute('data-cat');
+          if(cat === currentCat) return;
+          currentCat = cat;
+          // 활성 상태 토글
+          tabs.querySelectorAll('.menu-tab').forEach(function(b){b.classList.remove('is-active');});
+          btn.classList.add('is-active');
+          // 재렌더
+          renderCards(cat);
+        });
+      }
     });
   });
 
