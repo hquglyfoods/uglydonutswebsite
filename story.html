@@ -256,8 +256,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .page-image{background:var(--bg-cream);padding:0 0 60px;overflow:hidden}
 .page-image-inner{max-width:980px;margin:0 auto;padding:0 36px}
 .page-image img{display:block;width:100%;height:auto;max-height:75vh;object-fit:contain;margin:0 auto;border-radius:8px}
+/* page-image 바로 다음 page-section: 위쪽 빈 공간 줄이기 */
+.page-image + .page-section{padding-top:32px}
+.page-image{padding-bottom:24px}
 @media(max-width:960px){
-  .page-image{padding:0 0 40px}
+  .page-image{padding:0 0 20px}
+  .page-image + .page-section{padding-top:24px}
   .page-image-inner{padding:0 20px}
 }
 </style>
@@ -272,7 +276,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 
 .page-section{padding:96px 0}
 .page-section-narrow{max-width:720px;margin:0 auto}
-.back-link{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);margin-bottom:36px;transition:transform 0.2s}
+.back-link{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);margin-bottom:40px;transition:transform 0.2s;padding:8px 0}
+.back-link-wrap{padding:32px 0 24px;background:var(--bg-cream)}
+.back-link-wrap .back-link{margin-bottom:0}
+@media(max-width:960px){.back-link-wrap{padding:24px 0 16px}}
 .back-link:hover{transform:translateX(-3px)}
 .back-link::before{content:'\2190';margin-right:4px}
 
@@ -350,6 +357,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   </div>
 </section>
 
+<div class="back-link-wrap section-cream">
+  <div class="container">
+    <a href="/" class="back-link">Back to home</a>
+  </div>
+</div>
+
 <section class="page-image">
   <div class="page-image-inner">
     <img src="/images/cheese-pull.jpg" alt="A potato corn dog being pulled apart, mozzarella stretching, steam rising" loading="lazy">
@@ -358,7 +371,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 
 <section class="page-section section-cream">
   <div class="container">
-    <a href="/" class="back-link">Back to home</a>
 
     <div class="story-page-section">
       <div class="eyebrow">Founder's Memory</div>

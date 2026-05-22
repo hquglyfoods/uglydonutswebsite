@@ -327,8 +327,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 </head>
 <style>
 /* ============ ARTICLE PAGE ============ */
-.article-page{padding:140px 0 100px;max-width:760px;margin:0 auto;background:var(--bg-cream)}
-@media(max-width:960px){.article-page{padding:90px 0 60px}}
+.article-page{padding:32px 0 100px;max-width:760px;margin:0 auto;background:var(--bg-cream)}
+@media(max-width:960px){.article-page{padding:24px 0 60px}}
 
 .article-page .container{padding:0 36px}
 @media(max-width:960px){.article-page .container{padding:0 24px}}
@@ -361,8 +361,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .article-body code{background:rgba(15,26,46,0.06);padding:2px 6px;border-radius:3px;font-family:monospace;font-size:0.9em}
 
 .article-back{margin-top:80px;padding-top:40px;border-top:1px solid var(--border-cream)}
-.article-back a{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dark);transition:color 0.2s}
+.article-back a{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dark);transition:color 0.2s;padding:8px 0}
 .article-back a:hover{color:var(--orange)}
+
+/* back-link 상단 - 다른 페이지와 일관 */
+.back-link{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);transition:transform 0.2s;padding:8px 0}
+.back-link:hover{transform:translateX(-3px)}
+.back-link-wrap{padding:90px 0 0;background:var(--bg-cream)}
+@media(max-width:960px){.back-link-wrap{padding:80px 0 0}}
 
 .article-loading,.article-error{text-align:center;padding:60px 24px;color:var(--text-dark-soft)}
 .article-error h1{font-family:var(--serif);font-weight:400;font-size:2rem;margin-bottom:16px;color:var(--text-dark)}
@@ -387,13 +393,19 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
 </nav>
 
+<div class="back-link-wrap section-cream">
+  <div class="container">
+    <a href="/journal.html" class="back-link">Back to Journal</a>
+  </div>
+</div>
+
 <section class="article-page">
   <div class="container">
     <div id="article-content">
       <div class="article-loading">Loading article...</div>
     </div>
     <div class="article-back">
-      <a href="/journal.html">← Back to Journal</a>
+      <a href="/journal.html">&larr; Back to Journal</a>
     </div>
   </div>
 </section>
