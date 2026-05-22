@@ -556,6 +556,22 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
       items = items.filter(function(i){return i && i.data && i.data.name;});
       if(!items.length) return;
 
+      // 옛 카테고리 → 새 카테고리 자동 매핑 (CMS 데이터 정리 전까지 사이트 작동 보장)
+      var categoryMap = {
+        'Corn Dog': 'Korean Corn Dogs',
+        'Corn Dogs': 'Korean Corn Dogs',
+        'Donut': 'Donuts',
+        'Beverage': 'Fruit Refreshers',
+        'Beverages': 'Fruit Refreshers',
+        'Drink': 'Fruit Refreshers',
+        'Drinks': 'Fruit Refreshers'
+      };
+      items.forEach(function(it){
+        if(it.data && it.data.category && categoryMap[it.data.category]){
+          it.data.category = categoryMap[it.data.category];
+        }
+      });
+
       // ALL 탭에서 표시할 때 카테고리 순서 정렬
       var catOrder = {
         'Korean Corn Dogs': 0,
