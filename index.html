@@ -149,8 +149,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .pillar:not(:last-child)::after{content:'';position:absolute;right:0;top:18%;bottom:18%;width:1px;background:var(--border-cream)}
 @media(max-width:900px){.pillar:nth-child(2n)::after{display:none}}
 @media(max-width:480px){.pillar::after{display:none}}
-.pillar-icon{width:56px;height:56px;margin:0 auto 22px;color:var(--text-dark);opacity:0.85}
+.pillar-icon{width:64px;height:64px;margin:0 auto 22px;color:var(--text-dark);opacity:0.85;display:flex;align-items:center;justify-content:center}
 .pillar-icon svg{width:100%;height:100%}
+.pillar-icon img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
 .pillar-title{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dark);margin-bottom:12px}
 .pillar-desc{font-size:14px;color:var(--text-dark-soft);line-height:1.6;max-width:24ch;margin:0 auto}
 
@@ -363,20 +364,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
     <div class="pillars-grid">
       <div class="pillar fade-up">
         <div class="pillar-icon">
-          <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="28" cy="28" r="18"/>
-            <circle cx="28" cy="28" r="7"/>
-          </svg>
+          <img src="/images/donut-icon.png" alt="Donut icon">
         </div>
         <div class="pillar-title">Made to Order</div>
         <div class="pillar-desc">Fresh donuts and corn dogs, prepared when you order.</div>
       </div>
       <div class="pillar fade-up delay-1">
         <div class="pillar-icon">
-          <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <ellipse cx="28" cy="28" rx="10" ry="17"/>
-            <line x1="28" y1="11" x2="28" y2="6"/>
-          </svg>
+          <img src="/images/corn-dog-icon.png" alt="Corn dog icon">
         </div>
         <div class="pillar-title">Korean Corn Dogs</div>
         <div class="pillar-desc">Your choice of fillings, hand-rolled and battered.</div>
@@ -711,7 +706,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
       });
       
       // 카테고리 순서 정렬: Corn Dog → Donut → Beverage
-      var catOrder = {'Corn Dog': 0, 'Donut': 1, 'Beverage': 2};
+      var catOrder = {
+        'Korean Corn Dogs': 0,
+        'Donuts': 1,
+        'Ice Cream Donuts': 2,
+        'Fruit Refreshers': 3,
+        'Fizzy Refreshers': 4,
+        'Ugly Boba': 5,
+        'Coco Sips': 6,
+        'Smoothies': 7
+      };
       bestSellers.sort(function(a, b){
         var ao = catOrder[a.data.category];
         var bo = catOrder[b.data.category];
