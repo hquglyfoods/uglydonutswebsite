@@ -103,3 +103,8 @@ collections:
       - {label: "Phone", name: "phone", widget: "string", required: false}
       - {label: "Hours", name: "hours", widget: "text", required: false, hint: "e.g. Mon-Fri: 11am-9pm"}
       - {label: "Google Maps URL", name: "maps_url", widget: "string", required: false, hint: "Full Google Maps link"}
+      - label: "Order Online URL"
+        name: "order_url"
+        widget: "string"
+        required: false
+        hint: "Toast Online Ordering URL for this location (e.g., https://uglydonutsncorndogs.com/order?utm_source=...&utm_term=american_dream)"
