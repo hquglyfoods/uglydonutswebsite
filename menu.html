@@ -76,7 +76,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   .nav.open{background:var(--bg-cream)}
   .nav.open .nav-left,.nav.open .nav-right{display:flex;flex-direction:column;position:absolute;left:0;right:0;gap:18px;background:var(--bg-cream);align-items:flex-start}
   .nav.open .nav-left{top:100%;padding:24px 24px 12px}
-  .nav.open .nav-right{top:calc(100% + 220px);padding:12px 24px 24px;border-bottom:1px solid var(--border-cream)}
+  .nav.open .nav-right{top:calc(100% + 220px);padding:12px 24px 24px;border-bottom:1px solid var(--border-cream);transition:top 0.3s var(--ease)}
+  .nav.open .nav-left:has(.nav-more.open) ~ .nav-right,
+  .nav.open.more-open .nav-right{top:calc(100% + 440px)}
 }
 
 
@@ -84,7 +86,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .nav-more{position:relative}
 .nav-more-btn{background:none;border:none;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:color 0.2s}
 .nav-more-btn:hover{color:var(--orange)}
-.nav-more-arrow{font-size:9px;transition:transform 0.25s var(--ease);line-height:1;display:inline-block}
+.nav-more-arrow{font-size:11px;transition:transform 0.25s var(--ease);line-height:1;display:inline-block;margin-left:2px}
 .nav-more.open .nav-more-arrow{transform:rotate(180deg)}
 .nav-more-menu{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--bg-cream);border:1px solid var(--border-cream);border-radius:8px;padding:10px 0;min-width:180px;opacity:0;visibility:hidden;transition:opacity 0.2s,transform 0.2s,visibility 0.2s;box-shadow:0 8px 24px rgba(15,26,46,0.08);z-index:100}
 .nav-more.open .nav-more-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
@@ -298,8 +300,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 /* Menu page */
 .menu-page-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 28px;align-items:start}
 @media(max-width:1200px){.menu-page-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:720px){.menu-page-grid{grid-template-columns:repeat(2,1fr);gap:28px 16px}}
-@media(max-width:420px){.menu-page-grid{grid-template-columns:repeat(2,1fr);gap:20px 12px}}
+@media(max-width:720px){.menu-page-grid{grid-template-columns:repeat(2,1fr);gap:24px 12px}}
+@media(max-width:420px){.menu-page-grid{grid-template-columns:repeat(2,1fr);gap:20px 10px}}
+
+/* 모바일 카드 - 작게 */
+@media(max-width:720px){
+  .menu-card-photo{margin-bottom:12px;border-radius:3px}
+  .menu-card-cat{font-size:9px;letter-spacing:0.14em;margin-bottom:4px}
+  .menu-card-name{font-size:0.95rem;margin-bottom:4px;line-height:1.2}
+  .menu-card-desc{font-size:11px;line-height:1.45;-webkit-line-clamp:2}
+}
 
 /* MENU LAYOUT - sidebar + main */
 .menu-layout{display:grid;grid-template-columns:240px 1fr;gap:64px;max-width:1320px;margin:0 auto}
@@ -518,6 +528,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
     moreBtn.addEventListener('click', function(e){
       e.stopPropagation();
       moreEl.classList.toggle('open');
+      // 모바일에서 nav-right 위치 조정 위해 nav에도 클래스 동기화
+      nav.classList.toggle('more-open', moreEl.classList.contains('open'));
       moreBtn.setAttribute('aria-expanded', moreEl.classList.contains('open') ? 'true' : 'false');
     });
     // 외부 클릭 시 닫기 (데스크탑)

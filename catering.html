@@ -137,7 +137,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
     align-items: flex-start;
   }
   .nav.open .nav-left { top: 100%; padding: 24px 24px 12px; }
-  .nav.open .nav-right { top: calc(100% + 220px); padding: 12px 24px 24px; border-bottom: 1px solid var(--border-cream); }
+  .nav.open .nav-right { top: calc(100% + 220px); padding: 12px 24px 24px; border-bottom: 1px solid var(--border-cream); transition: top 0.3s var(--ease); }
+  .nav.open.more-open .nav-right { top: calc(100% + 440px); }
 }
 
 
@@ -145,7 +146,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 .nav-more { position: relative; }
 .nav-more-btn { background: none; border: none; color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; }
 .nav-more-btn:hover { color: var(--orange); }
-.nav-more-arrow { font-size: 9px; transition: transform 0.25s var(--ease); line-height: 1; display: inline-block; }
+.nav-more-arrow { font-size: 11px; transition: transform 0.25s var(--ease); line-height: 1; display: inline-block; margin-left: 2px; }
 .nav-more.open .nav-more-arrow { transform: rotate(180deg); }
 .nav-more-menu { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-8px); background: var(--bg-cream); border: 1px solid var(--border-cream); border-radius: 8px; padding: 10px 0; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity 0.2s, transform 0.2s, visibility 0.2s; box-shadow: 0 8px 24px rgba(15,26,46,0.08); z-index: 100; }
 .nav-more.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
@@ -724,6 +725,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
     moreBtn.addEventListener('click', function(e) {
       e.stopPropagation();
       moreEl.classList.toggle('open');
+      nav.classList.toggle('more-open', moreEl.classList.contains('open'));
       moreBtn.setAttribute('aria-expanded', moreEl.classList.contains('open') ? 'true' : 'false');
     });
     document.addEventListener('click', function(e) {
