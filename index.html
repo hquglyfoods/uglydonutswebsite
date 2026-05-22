@@ -464,24 +464,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   </div>
 </section>
 
-<!-- MENU -->
+<!-- BEST SELLERS -->
 <section class="menu-section section-cream" id="menu">
   <div class="container">
     <div class="menu-section-head">
-      <div class="eyebrow fade-up">The Menu</div>
-      <h2 class="fade-up delay-1">Korean corn dogs <span class="serif-italic">&amp; handmade donuts.</span></h2>
+      <div class="eyebrow fade-up">Best Sellers</div>
+      <h2 class="fade-up delay-1">What everyone's <span class="serif-italic">ordering.</span></h2>
       <p class="fade-up delay-2">
-        Signature corn dogs, handmade donuts, and house drinks. Items and prices vary by location.
+        Our most-loved items, picked fresh from every store.
       </p>
     </div>
     <div class="menu-empty fade-up" id="menu-empty">
       <p>The full menu is coming soon. Until then, <a href="/locations.html" class="text-link">visit one of our stores</a>.</p>
-    </div>
-    <div class="menu-tabs fade-up" id="menu-tabs" style="display:none">
-      <button class="menu-tab is-active" data-cat="all">All</button>
-      <button class="menu-tab" data-cat="Corn Dog">Corn Dogs</button>
-      <button class="menu-tab" data-cat="Donut">Donuts</button>
-      <button class="menu-tab" data-cat="Beverage">Drinks</button>
     </div>
     <div class="menu-grid" id="menu-grid" style="display:none"></div>
     <div class="section-cta" id="menu-see-all" style="display:none">
@@ -662,70 +656,45 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
       items = items.filter(function(i){return i && i.data && i.data.name;});
       if(!items.length) return;
       
-      // ALL 탭에서 표시할 때 카테고리 순서 정렬: Corn Dog → Donut → Beverage
+      // 베스트셀러만 필터링 (best_seller: true 인 메뉴)
+      var bestSellers = items.filter(function(it){
+        return it.data.best_seller === true || it.data.best_seller === 'true';
+      });
+      
+      // 카테고리 순서 정렬: Corn Dog → Donut → Beverage
       var catOrder = {'Corn Dog': 0, 'Donut': 1, 'Beverage': 2};
-      items.sort(function(a, b){
+      bestSellers.sort(function(a, b){
         var ao = catOrder[a.data.category];
         var bo = catOrder[b.data.category];
         if(ao === undefined) ao = 99;
         if(bo === undefined) bo = 99;
         return ao - bo;
       });
+      
       var grid = document.getElementById('menu-grid');
       var empty = document.getElementById('menu-empty');
-      var tabs = document.getElementById('menu-tabs');
       var seeAll = document.getElementById('menu-see-all');
       
-      // 현재 선택된 카테고리 (기본: 'all')
-      var currentCat = 'all';
+      // 베스트셀러 없으면 fallback: 전체 메뉴 4개
+      var display = bestSellers.length ? bestSellers.slice(0, 4) : items.slice(0, 4);
       
-      function renderCards(cat){
-        var filtered = (cat === 'all') ? items : items.filter(function(it){
-          return (it.data.category || '') === cat;
-        });
-        var total = filtered.length;
-        var display = filtered.slice(0, 8);
-        
-        if(!display.length){
-          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 24px;color:var(--text-dark-soft)">No items in this category yet.</div>';
-        } else {
-          grid.innerHTML = display.map(function(it){
-            var d = it.data;
-            var photo = d.photo ? '<img src="'+d.photo+'" alt="'+(d.name||'')+'" loading="lazy">' : '';
-            return '<a href="/menu.html" class="menu-card">' +
-              '<div class="menu-card-photo">' + photo + '</div>' +
-              '<div class="menu-card-cat">' + (d.category||'') + '</div>' +
-              '<h4 class="menu-card-name">' + (d.name||'') + '</h4>' +
-              '<p class="menu-card-desc">' + (d.description||'') + '</p>' +
-              '</a>';
-          }).join('');
-        }
-        
-        // See Full Menu 버튼: 현재 카테고리에 8개 이상 있을 때만
-        if(seeAll) seeAll.style.display = (total > 8) ? '' : 'none';
-      }
+      if(!display.length) return;
       
-      // 초기 렌더
+      grid.innerHTML = display.map(function(it){
+        var d = it.data;
+        var photo = d.photo ? '<img src="'+d.photo+'" alt="'+(d.name||'')+'" loading="lazy">' : '';
+        return '<a href="/menu.html" class="menu-card">' +
+          '<div class="menu-card-photo">' + photo + '</div>' +
+          '<div class="menu-card-cat">' + (d.category||'') + '</div>' +
+          '<h4 class="menu-card-name">' + (d.name||'') + '</h4>' +
+          '<p class="menu-card-desc">' + (d.description||'') + '</p>' +
+          '</a>';
+      }).join('');
+      
       grid.style.display = '';
       if(empty) empty.style.display = 'none';
-      if(tabs) tabs.style.display = '';
-      renderCards('all');
-      
-      // 탭 클릭 핸들러
-      if(tabs){
-        tabs.addEventListener('click', function(e){
-          var btn = e.target.closest('.menu-tab');
-          if(!btn) return;
-          var cat = btn.getAttribute('data-cat');
-          if(cat === currentCat) return;
-          currentCat = cat;
-          // 활성 상태 토글
-          tabs.querySelectorAll('.menu-tab').forEach(function(b){b.classList.remove('is-active');});
-          btn.classList.add('is-active');
-          // 재렌더
-          renderCards(cat);
-        });
-      }
+      // See Full Menu 버튼은 항상 표시 (전체 메뉴는 더 많을 거니까)
+      if(seeAll) seeAll.style.display = '';
     });
   });
 
