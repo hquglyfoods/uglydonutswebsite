@@ -46,7 +46,15 @@ collections:
       - label: "Category"
         name: "category"
         widget: "select"
-        options: ["Corn Dog", "Donut", "Beverage"]
+        options:
+          - "Korean Corn Dogs"
+          - "Donuts"
+          - "Ice Cream Donuts"
+          - "Fruit Refreshers"
+          - "Fizzy Refreshers"
+          - "Ugly Boba"
+          - "Coco Sips"
+          - "Smoothies"
         default: "Corn Dog"
       - {label: "Photo", name: "photo", widget: "image", required: false, hint: "Square photo works best (1:1 ratio)"}
       - {label: "Description", name: "description", widget: "text", required: false, hint: "1-2 sentences. Keep it short and tasty."}
