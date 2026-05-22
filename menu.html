@@ -23,7 +23,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg-cream:#F5EFE3;--bg-cream-warm:#EFE7D5;--bg-cream-deep:#E8DFC8;
@@ -33,11 +33,15 @@
   --orange:#E1661A;--orange-light:#F07A2D;
   --border-cream:rgba(15,26,46,0.1);--border-navy:rgba(245,240,230,0.1);
   --ease:cubic-bezier(0.22,1,0.36,1);
-  --serif:'Fraunces',Georgia,serif;--sans:'Inter',-apple-system,system-ui,sans-serif;
+  --serif:'Arapey',Georgia,serif;--sans:'Quicksand',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:var(--sans);background:var(--bg-cream);color:var(--text-dark);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* Arapey 헤더 - serif 우아함 살리기 */
+h1, h2, h3, h4 { font-family: var(--serif); }
+.serif-italic { font-style: italic; }
+
 img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:none;background:transparent;color:inherit}
@@ -73,12 +77,17 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   .nav-left,.nav-right{display:none}
   .nav-center{flex:1;text-align:left}
   .nav-toggle{display:block}
+/* MOBILE - Order Online 별도 버튼 + 햄버거 메뉴 단순화 */
+.nav-order-mobile{display:none}
+@media(max-width:960px){
+  .nav-order-mobile{display:inline-flex;align-items:center;font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);border:1.5px solid var(--orange);border-radius:100px;padding:7px 14px;margin-right:10px;line-height:1;transition:all 0.2s var(--ease)}
+  .nav-order-mobile:hover{background:var(--orange);color:#fff}
+}
   .nav.open{background:var(--bg-cream)}
-  .nav.open .nav-left,.nav.open .nav-right{display:flex;flex-direction:column;position:absolute;left:0;right:0;gap:18px;background:var(--bg-cream);align-items:flex-start}
-  .nav.open .nav-left{top:100%;padding:24px 24px 12px}
-  .nav.open .nav-right{top:calc(100% + 220px);padding:12px 24px 24px;border-bottom:1px solid var(--border-cream);transition:top 0.3s var(--ease)}
-  .nav.open .nav-left:has(.nav-more.open) ~ .nav-right,
-  .nav.open.more-open .nav-right{top:calc(100% + 440px)}
+  .nav.open .nav-left{display:flex;flex-direction:column;position:absolute;left:0;right:0;gap:18px;background:var(--bg-cream);align-items:flex-start;top:100%;padding:24px 24px 24px;border-bottom:1px solid var(--border-cream)}
+  /* 햄버거 메뉴 안에서 Order Online (nav-right) 숨김 - 별도 모바일 버튼으로 대체 */
+  .nav-right{display:flex}
+  .nav.open .nav-right{display:none}
 }
 
 
@@ -98,8 +107,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   .nav-more{width:100%}
   .nav-more-btn{width:100%;justify-content:flex-start;padding:0}
   .nav-more-menu{position:static;transform:none;opacity:1;visibility:visible;background:none;border:none;box-shadow:none;padding:0;margin-top:0;max-height:0;overflow:hidden;transition:max-height 0.3s var(--ease)}
-  .nav-more.open .nav-more-menu{max-height:280px}
-  .nav-more-link{padding:10px 0 10px 18px;font-size:11px}
+  .nav-more.open .nav-more-menu{max-height:280px;margin-top:12px;padding-left:16px;border-left:2px solid var(--border-cream)}
+  .nav-more-link{padding:8px 0;font-size:13px;color:var(--text-dark);font-weight:500;letter-spacing:0.08em}
+  .nav-more-link:hover{background:transparent;color:var(--orange)}
 }
 
 /* ============ BUTTONS ============ */
@@ -419,6 +429,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   <div class="nav-right">
     <a href="https://uglydonutsncorndogs.com/order?utm_source=undefined&utm_content=home&utm_medium=toast_sites&utm_campaign=undefined&utm_term=nav" class="nav-cta">Order Online</a>
   </div>
+  <a href="https://uglydonutsncorndogs.com/order?utm_source=undefined&utm_content=home&utm_medium=toast_sites&utm_campaign=undefined&utm_term=nav_mobile" class="nav-order-mobile">Order</a>
   <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
 </nav>
 <section class="page-header">
