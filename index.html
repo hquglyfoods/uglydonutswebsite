@@ -77,12 +77,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   .nav-left,.nav-right{display:none}
   .nav-center{flex:1;text-align:left}
   .nav-toggle{display:block}
-/* MOBILE - Order Online 별도 버튼 + 햄버거 메뉴 단순화 */
-.nav-order-mobile{display:none !important}
-@media(max-width:960px){
-  .nav-order-mobile{display:inline-flex !important;align-items:center;font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);border:1.5px solid var(--orange);border-radius:100px;padding:7px 14px;margin-right:10px;line-height:1;transition:all 0.2s var(--ease)}
-  .nav-order-mobile:hover{background:var(--orange);color:#fff}
-}
+
   .nav.open{background:var(--bg-cream)}
   .nav.open .nav-left{display:flex;flex-direction:column;position:absolute;left:0;right:0;gap:18px;background:var(--bg-cream);align-items:flex-start;top:100%;padding:24px 24px 24px;border-bottom:1px solid var(--border-cream)}
   /* 모바일에서는 nav-right (Order Online) 완전 숨김 - 별도 ORDER 버튼으로 대체 */
@@ -305,6 +300,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.9s var(--ease),transform 0.9s var(--ease)}
 .fade-up.in{opacity:1;transform:translateY(0)}
 .delay-1{transition-delay:0.1s}.delay-2{transition-delay:0.2s}.delay-3{transition-delay:0.3s}
+
+/* === MOBILE ORDER BUTTON (final override) === */
+nav.nav .nav-order-mobile{display:none !important}
+@media(max-width:960px){
+  nav.nav .nav-order-mobile{display:inline-flex !important;align-items:center;font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);border:1.5px solid var(--orange);border-radius:100px;padding:7px 14px;margin-right:10px;line-height:1;text-decoration:none}
+}
 </style>
 </head>
 <body>
@@ -318,10 +319,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
     <div class="nav-more">
       <button class="nav-link nav-more-btn" type="button" aria-expanded="false" aria-haspopup="true">More <span class="nav-more-arrow">&#9662;</span></button>
       <div class="nav-more-menu">
-        <a href="/catering.html" class="nav-more-link">Catering</a>
-        <a href="/careers.html" class="nav-more-link">Careers</a>
-        <a href="https://uglydonutsncorndogsfranchise.com/" target="_blank" rel="noopener" class="nav-more-link">Franchise</a>
-        <a href="/contact.html" class="nav-more-link">Contact</a>
+        <a href="/catering.html" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Catering</a>
+        <a href="/careers.html" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Careers</a>
+        <a href="https://uglydonutsncorndogsfranchise.com/" target="_blank" rel="noopener" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Franchise</a>
+        <a href="/contact.html" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Contact</a>
       </div>
     </div>
   </div>

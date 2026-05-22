@@ -133,19 +133,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   .nav-left, .nav-right { display: none; }
   .nav-center { flex: 1; text-align: left; }
   .nav-toggle { display: block; }
-/* MOBILE - Order Online 별도 버튼 */
-.nav-order-mobile { display: none !important; }
-@media (max-width: 960px) {
-  .nav-order-mobile {
-    display: inline-flex !important; align-items: center;
-    font-size: 10px; font-weight: 600; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--orange);
-    border: 1.5px solid var(--orange); border-radius: 100px;
-    padding: 7px 14px; margin-right: 10px; line-height: 1;
-    transition: all 0.2s var(--ease);
-  }
-  .nav-order-mobile:hover { background: var(--orange); color: #fff; }
-}
+
   .nav.open .nav-left {
     display: flex; flex-direction: column;
     position: absolute; left: 0; right: 0;
@@ -479,6 +467,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   .page-image{padding:0 0 40px}
   .page-image-inner{padding:0 20px}
 }
+
+/* === MOBILE ORDER BUTTON (final override) === */
+nav.nav .nav-order-mobile { display: none !important; }
+@media (max-width: 960px) {
+  nav.nav .nav-order-mobile {
+    display: inline-flex !important; align-items: center;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--orange);
+    border: 1.5px solid var(--orange); border-radius: 100px;
+    padding: 7px 14px; margin-right: 10px; line-height: 1;
+    text-decoration: none;
+  }
+}
 </style>
 </head>
 <body>
@@ -492,10 +493,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
     <div class="nav-more">
       <button class="nav-link nav-more-btn" type="button" aria-expanded="false" aria-haspopup="true">More <span class="nav-more-arrow">&#9662;</span></button>
       <div class="nav-more-menu">
-        <a href="/catering.html" class="nav-more-link">Catering</a>
-        <a href="/careers.html" class="nav-more-link">Careers</a>
-        <a href="https://uglydonutsncorndogsfranchise.com/" target="_blank" rel="noopener" class="nav-more-link">Franchise</a>
-        <a href="/contact.html" class="nav-more-link">Contact</a>
+        <a href="/catering.html" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Catering</a>
+        <a href="/careers.html" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Careers</a>
+        <a href="https://uglydonutsncorndogsfranchise.com/" target="_blank" rel="noopener" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Franchise</a>
+        <a href="/contact.html" class="nav-more-link" style="color:#0F1A2E !important;font-weight:600;font-size:14px;display:block;padding:10px 0 10px 16px">Contact</a>
       </div>
     </div>
   </div>
