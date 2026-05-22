@@ -2,6 +2,7 @@
 title: "A Taste of Love: Korean Corn Dogs"
 published_date: 2026-05-20
 category: The Brand
+cover: /uploads/kakaotalk_20240314_162019462_03.jpg
 excerpt: At Ugly Donuts & Corn Dogs, we believe food is more than just a
   meal—it’s an experience that brings people together.
 read_time: 3 min read
