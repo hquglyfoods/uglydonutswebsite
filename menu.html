@@ -277,6 +277,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .menu-page-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px 28px;max-width:1240px;margin:0 auto}
 @media(max-width:1000px){.menu-page-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:720px){.menu-page-grid{grid-template-columns:repeat(2,1fr);gap:28px 16px}}
+
+/* ============ MENU TABS ============ */
+.menu-tabs{display:flex;justify-content:center;gap:8px;margin:0 auto 56px;max-width:1240px;flex-wrap:wrap}
+.menu-tab{background:transparent;border:1px solid var(--border-cream);border-radius:100px;padding:11px 24px;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dark-soft);cursor:pointer;transition:all 0.25s var(--ease);white-space:nowrap}
+.menu-tab:hover{color:var(--text-dark);border-color:var(--text-dark-soft)}
+.menu-tab.is-active{background:var(--text-dark);color:var(--bg-cream);border-color:var(--text-dark)}
+@media(max-width:540px){
+  .menu-tabs{gap:6px;margin-bottom:40px}
+  .menu-tab{padding:9px 18px;font-size:11px;letter-spacing:0.12em}
+}
 @media(max-width:420px){.menu-page-grid{grid-template-columns:1fr}}
 .menu-category-block{margin-bottom:96px}
 .menu-category-block:last-child{margin-bottom:0}
@@ -350,19 +360,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
       <p>The full menu is being photographed and added now. For the live menu and current prices, <a href="/locations.html" class="text-link">visit one of our stores</a>.</p>
     </div>
 
-    <div id="menu-page-categories" style="display:none">
-      <div class="menu-category-block" id="cat-corn-dog" style="display:none">
-        <div class="menu-category-head"><h2>Corn Dogs</h2></div>
-        <div class="menu-page-grid" id="grid-corn-dog"></div>
+    <div id="menu-page-content" style="display:none">
+      <div class="menu-tabs" id="menu-page-tabs">
+        <button class="menu-tab is-active" data-cat="all">All</button>
+        <button class="menu-tab" data-cat="Corn Dog">Corn Dogs</button>
+        <button class="menu-tab" data-cat="Donut">Donuts</button>
+        <button class="menu-tab" data-cat="Beverage">Drinks</button>
       </div>
-      <div class="menu-category-block" id="cat-donut" style="display:none">
-        <div class="menu-category-head"><h2>Donuts</h2></div>
-        <div class="menu-page-grid" id="grid-donut"></div>
-      </div>
-      <div class="menu-category-block" id="cat-beverage" style="display:none">
-        <div class="menu-category-head"><h2>Drinks</h2></div>
-        <div class="menu-page-grid" id="grid-beverage"></div>
-      </div>
+      <div class="menu-page-grid" id="menu-page-grid"></div>
     </div>
 
     <div style="text-align:center;margin-top:96px">
@@ -452,19 +457,21 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
       items = items.filter(function(i){return i && i.data && i.data.name;});
       if(!items.length) return;
 
-      var categories = {'Corn Dog': [], 'Donut': [], 'Beverage': []};
-      items.forEach(function(it){
-        var cat = it.data.category || 'Corn Dog';
-        if(!categories[cat]) categories[cat] = [];
-        categories[cat].push(it);
-      });
+      var grid = document.getElementById('menu-page-grid');
+      var empty = document.getElementById('menu-page-empty');
+      var content = document.getElementById('menu-page-content');
+      var tabs = document.getElementById('menu-page-tabs');
+      var currentCat = 'all';
 
-      function renderCategory(catName, gridId, blockId){
-        var list = categories[catName] || [];
-        if(!list.length) return;
-        var grid = document.getElementById(gridId);
-        var block = document.getElementById(blockId);
-        grid.innerHTML = list.map(function(it){
+      function renderCards(cat){
+        var filtered = (cat === 'all') ? items : items.filter(function(it){
+          return (it.data.category || '') === cat;
+        });
+        if(!filtered.length){
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 24px;color:var(--text-dark-soft)">No items in this category yet.</div>';
+          return;
+        }
+        grid.innerHTML = filtered.map(function(it){
           var d = it.data;
           var photo = d.photo ? '<img src="'+d.photo+'" alt="'+(d.name||'')+'" loading="lazy">' : '<div class="location-detail-photo-placeholder">'+(d.name||'')+'</div>';
           return '<div class="menu-card">' +
@@ -474,15 +481,46 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
             '<p class="menu-card-desc">' + (d.description||'') + '</p>' +
             '</div>';
         }).join('');
-        block.style.display = '';
       }
 
-      renderCategory('Corn Dog', 'grid-corn-dog', 'cat-corn-dog');
-      renderCategory('Donut', 'grid-donut', 'cat-donut');
-      renderCategory('Beverage', 'grid-beverage', 'cat-beverage');
+      function setActiveTab(cat){
+        tabs.querySelectorAll('.menu-tab').forEach(function(b){
+          if(b.getAttribute('data-cat') === cat) b.classList.add('is-active');
+          else b.classList.remove('is-active');
+        });
+      }
 
-      document.getElementById('menu-page-empty').style.display = 'none';
-      document.getElementById('menu-page-categories').style.display = '';
+      // URL 해시로 들어온 카테고리 (예: /menu.html#cat-corn-dog)
+      var hashToCat = {
+        '#cat-corn-dog': 'Corn Dog',
+        '#cat-donut': 'Donut',
+        '#cat-beverage': 'Beverage'
+      };
+      var initialCat = hashToCat[window.location.hash] || 'all';
+      currentCat = initialCat;
+      setActiveTab(initialCat);
+
+      empty.style.display = 'none';
+      content.style.display = '';
+      renderCards(initialCat);
+
+      // 탭 클릭 핸들러
+      tabs.addEventListener('click', function(e){
+        var btn = e.target.closest('.menu-tab');
+        if(!btn) return;
+        var cat = btn.getAttribute('data-cat');
+        if(cat === currentCat) return;
+        currentCat = cat;
+        setActiveTab(cat);
+        renderCards(cat);
+        // URL 해시 업데이트 (선택, 브라우저 뒤로가기 지원)
+        if(cat === 'all'){
+          history.replaceState(null, '', window.location.pathname);
+        } else {
+          var hashMap = {'Corn Dog':'#cat-corn-dog', 'Donut':'#cat-donut', 'Beverage':'#cat-beverage'};
+          if(hashMap[cat]) history.replaceState(null, '', hashMap[cat]);
+        }
+      });
     });
   });
 })();
