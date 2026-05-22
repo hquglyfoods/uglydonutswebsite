@@ -78,16 +78,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   .nav-center{flex:1;text-align:left}
   .nav-toggle{display:block}
 /* MOBILE - Order Online 별도 버튼 + 햄버거 메뉴 단순화 */
-.nav-order-mobile{display:none}
+.nav-order-mobile{display:none !important}
 @media(max-width:960px){
-  .nav-order-mobile{display:inline-flex;align-items:center;font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);border:1.5px solid var(--orange);border-radius:100px;padding:7px 14px;margin-right:10px;line-height:1;transition:all 0.2s var(--ease)}
+  .nav-order-mobile{display:inline-flex !important;align-items:center;font-size:10px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);border:1.5px solid var(--orange);border-radius:100px;padding:7px 14px;margin-right:10px;line-height:1;transition:all 0.2s var(--ease)}
   .nav-order-mobile:hover{background:var(--orange);color:#fff}
 }
   .nav.open{background:var(--bg-cream)}
   .nav.open .nav-left{display:flex;flex-direction:column;position:absolute;left:0;right:0;gap:18px;background:var(--bg-cream);align-items:flex-start;top:100%;padding:24px 24px 24px;border-bottom:1px solid var(--border-cream)}
-  /* 햄버거 메뉴 안에서 Order Online (nav-right) 숨김 - 별도 모바일 버튼으로 대체 */
-  .nav-right{display:flex}
-  .nav.open .nav-right{display:none}
+  /* 모바일에서는 nav-right (Order Online) 완전 숨김 - 별도 ORDER 버튼으로 대체 */
+  .nav-right{display:none !important}
 }
 
 
@@ -108,7 +107,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   .nav-more-btn{width:100%;justify-content:flex-start;padding:0}
   .nav-more-menu{position:static;transform:none;opacity:1;visibility:visible;background:none;border:none;box-shadow:none;padding:0;margin-top:0;max-height:0;overflow:hidden;transition:max-height 0.3s var(--ease)}
   .nav-more.open .nav-more-menu{max-height:280px;margin-top:12px;padding-left:16px;border-left:2px solid var(--border-cream)}
-  .nav-more-link{padding:8px 0;font-size:13px;color:var(--text-dark);font-weight:500;letter-spacing:0.08em}
+  .nav-more-link{padding:10px 0 !important;font-size:14px !important;color:#0F1A2E !important;font-weight:600 !important;letter-spacing:0.08em !important;text-transform:uppercase !important;display:block !important;opacity:1 !important;visibility:visible !important}
   .nav-more-link:hover{background:transparent;color:var(--orange)}
 }
 
