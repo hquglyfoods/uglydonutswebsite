@@ -4,4 +4,5 @@ category: Korean Corn Dogs
 description: Corn dog topped with Korean sweet and spicy in-house made sauce,
   chopped peanuts, and parsley
 best_seller: false
+order: 7
 ---
