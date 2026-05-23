@@ -64,6 +64,11 @@ collections:
         default: false
         required: false
         hint: "Toggle on to show this item on the homepage Best Sellers section (max 4 displayed)"
+        - label: "Order"
+        name: "order"
+        widget: "number"
+        required: false
+        hint: "메뉴 표시 순서. 작은 숫자가 먼저. 비워두면 끝에 표시. 예: 10, 20, 30 (나중에 끼워넣기 쉽게 띄어쓰기)"
 
   # ----------------------------------------
   # ARTICLES / JOURNAL
