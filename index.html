@@ -793,7 +793,13 @@ nav.nav .nav-order-mobile{display:none !important}
         var bo = catOrder[b.data.category];
         if(ao === undefined) ao = 99;
         if(bo === undefined) bo = 99;
-        return ao - bo;
+        if(ao !== bo) return ao - bo;
+        // 2단계: order 필드
+        var aOrder = (a.data.order !== undefined && a.data.order !== null && a.data.order !== '') ? Number(a.data.order) : 9999;
+        var bOrder = (b.data.order !== undefined && b.data.order !== null && b.data.order !== '') ? Number(b.data.order) : 9999;
+        if(isNaN(aOrder)) aOrder = 9999;
+        if(isNaN(bOrder)) bOrder = 9999;
+        return aOrder - bOrder;
       });
       
       var grid = document.getElementById('menu-grid');
