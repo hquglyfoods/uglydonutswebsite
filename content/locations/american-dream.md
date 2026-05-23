@@ -10,4 +10,5 @@ maps_url: https://www.google.com/maps/search/Ugly+Donuts+Corn+Dogs+American+Drea
 order: 1
 hours: ""
 region_tag: Flagship
+order_url: https://order.toasttab.com/online/ugly-donuts-and-corndogs-american-dream-mall-1-american-dream-way-a274
 ---
