@@ -62,6 +62,7 @@ collections:
         name: "best_seller"
         widget: "boolean"
         default: false
+        required: false
         hint: "Toggle on to show this item on the homepage Best Sellers section (max 4 displayed)"
 
   # ----------------------------------------
