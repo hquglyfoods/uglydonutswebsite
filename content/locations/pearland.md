@@ -1,13 +1,14 @@
 ---
-name: "Pearland"
-city: "Pearland"
-state: "TX"
+name: Pearland
+city: Pearland
+state: TX
 address: ""
-store_type: "Standalone store"
-region_tag: "Texas"
+store_type: Standalone store
 photo: ""
 phone: ""
-hours: ""
-maps_url: "https://www.google.com/maps/search/Ugly+Donuts+Corn+Dogs+Pearland+Texas"
+maps_url: https://www.google.com/maps/search/Ugly+Donuts+Corn+Dogs+Pearland+Texas
 order: 4
+hours: ""
+region_tag: Texas
+order_url: https://order.toasttab.com/online/ugly-donuts-and-corndogs-pearland-11200-broadway-street-1210
 ---

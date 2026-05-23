@@ -1,6 +1,6 @@
 ---
-name: testesetsetsetse
-category: Corn Dog
-photo: /uploads/cheese-gurguer.jpg
-description: testsetset
+name: Premium Pizza Corn Dog
+category: Korean Corn Dogs
+photo: ""
+description: Corn dog topped with pizza sauce, basil pesto, garlic powder, and pesto
 ---
