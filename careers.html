@@ -457,8 +457,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 }
 
 /* ============ NAV WORDMARK ============ */
-.nav-wordmark{display:inline-block}
-.nav-wordmark img{width:95px;height:auto;display:block}
+.nav-wordmark{display:inline-flex;align-items:center;justify-content:center;line-height:0;position:relative}
+.nav-wordmark img{width:95px;height:auto;display:block;line-height:0}
+.nav-wordmark .wordmark-dark-img,.nav-wordmark .wordmark-light-img{display:block}
+.nav-wordmark .wordmark-dark-img{position:absolute;top:0;left:0;width:95px;height:auto;opacity:0;transition:opacity 0.4s var(--ease)}
+.nav.scrolled .nav-wordmark .wordmark-dark-img{opacity:1}
+.nav.scrolled .nav-wordmark .wordmark-light-img{opacity:0}
+.nav-wordmark .wordmark-light-img{transition:opacity 0.4s var(--ease)}
 @media(max-width:960px){.nav-wordmark img{width:72px}}
 
 /* ============ FOOTER WORDMARK ============ */
@@ -508,11 +513,6 @@ nav.nav .nav-order-mobile { display: none !important; }
 }
 
 
-/* === WORDMARK TOGGLE === */
-.nav-wordmark .wordmark-dark-img { display: none; }
-.nav-wordmark .wordmark-light-img { display: inline-block; }
-.nav.scrolled .nav-wordmark .wordmark-dark-img { display: inline-block; }
-.nav.scrolled .nav-wordmark .wordmark-light-img { display: none; }
 
 
 /* === 햄버거 펼침 시 nav-left 는 cream 배경 - 글자는 어두운 색 === */
