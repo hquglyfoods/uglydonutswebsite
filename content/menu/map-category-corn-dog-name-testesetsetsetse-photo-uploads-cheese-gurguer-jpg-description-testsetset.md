@@ -2,5 +2,5 @@
 name: Premium Pizza Corn Dog
 category: Korean Corn Dogs
 photo: ""
-description: testsetset
+description: Corn dog topped with pizza sauce, basil pesto, garlic powder, and pesto
 ---
