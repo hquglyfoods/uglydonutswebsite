@@ -1,6 +1,6 @@
 ---
-name: testesetsetsetse
-category: Corn Dog
-photo: /uploads/cheese-gurguer.jpg
+name: Premium Pizza Corn Dog
+category: Korean Corn Dogs
+photo: ""
 description: testsetset
 ---
