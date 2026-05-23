@@ -64,7 +64,7 @@ collections:
         default: false
         required: false
         hint: "Toggle on to show this item on the homepage Best Sellers section (max 4 displayed)"
-        - label: "Order"
+      - label: "Order"
         name: "order"
         widget: "number"
         required: false
