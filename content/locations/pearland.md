@@ -4,7 +4,7 @@ city: Pearland
 state: TX
 address: ""
 store_type: Standalone store
-photo: ""
+photo: /uploads/img_0764.jpg
 phone: ""
 maps_url: https://www.google.com/maps/search/Ugly+Donuts+Corn+Dogs+Pearland+Texas
 order: 4
