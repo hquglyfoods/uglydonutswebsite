@@ -28,19 +28,23 @@ collections:
     folder: "content/menu"
     create: true
     delete: true
-    slug: "{{slug}}"
+    slug: "{{fields.name}}"
+    slug_length: 50
     summary: "{{name}} · {{category}}"
-    sortable_fields: ["name", "category"]
+    sortable_fields: ["order", "name", "category"]
     view_filters:
-      - label: "Corn Dogs"
+      - label: "Korean Corn Dogs"
         field: category
-        pattern: "Corn Dog"
+        pattern: "Korean Corn Dogs"
       - label: "Donuts"
         field: category
-        pattern: "Donut"
+        pattern: "Donuts"
+      - label: "Ice Cream Donuts"
+        field: category
+        pattern: "Ice Cream Donuts"
       - label: "Beverages"
         field: category
-        pattern: "Beverage"
+        pattern: "Refreshers"
     fields:
       - {label: "Name", name: "name", widget: "string", hint: "e.g. Hot Cheetos Corn Dog"}
       - label: "Category"
@@ -55,7 +59,7 @@ collections:
           - "Ugly Boba"
           - "Coco Sips"
           - "Smoothies"
-        default: "Corn Dog"
+        default: "Korean Corn Dogs"
       - {label: "Photo", name: "photo", widget: "image", required: false, hint: "Square photo works best (1:1 ratio)"}
       - {label: "Description", name: "description", widget: "text", required: false, hint: "1-2 sentences. Keep it short and tasty."}
       - label: "Best Seller"
@@ -68,6 +72,7 @@ collections:
         name: "order"
         widget: "number"
         required: false
+        value_type: "int"
         hint: "메뉴 표시 순서. 작은 숫자가 먼저. 비워두면 끝에 표시. 예: 10, 20, 30 (나중에 끼워넣기 쉽게 띄어쓰기)"
 
   # ----------------------------------------
@@ -79,7 +84,8 @@ collections:
     folder: "content/articles"
     create: true
     delete: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{fields.title}}"
+    slug_length: 60
     summary: "{{title}} · {{published_date}}"
     sortable_fields: ["published_date", "title"]
     fields:
@@ -105,7 +111,8 @@ collections:
     folder: "content/locations"
     create: true
     delete: true
-    slug: "{{slug}}"
+    slug: "{{fields.name}}"
+    slug_length: 50
     summary: "{{name}} · {{city}}, {{state}}"
     sortable_fields: ["name"]
     fields:
