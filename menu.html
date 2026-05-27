@@ -376,6 +376,11 @@ nav.nav .nav-order-mobile{display:none !important}
 /* 메뉴 그리드 - 가로형 카드 (텍스트 왼쪽 + 사진 오른쪽) */
 .menu-page-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; column-gap: 48px; align-items: start; width: 100%; }
 
+/* 카테고리 헤더 (All 탭에서만 표시) */
+.menu-cat-header { grid-column: 1 / -1; padding: 40px 0 12px; border-bottom: 1px solid var(--border-cream); margin-bottom: 8px; }
+.menu-cat-header:first-child { padding-top: 8px; }
+.menu-cat-title { font-family: var(--serif); font-size: 1.75rem; font-weight: 400; color: var(--text-dark); margin: 0; letter-spacing: -0.01em; line-height: 1.1; }
+
 /* 가로형 카드 */
 .menu-page-grid .menu-card { display: grid; grid-template-columns: 1fr 140px; gap: 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--border-cream); cursor: default; }
 .menu-page-grid .menu-card-text { min-width: 0; }
@@ -432,6 +437,9 @@ nav.nav .nav-order-mobile{display:none !important}
   .menu-page-grid .menu-card-name { font-size: 1.1rem; margin-bottom: 6px; }
   .menu-page-grid .menu-card-desc { font-size: 12px; -webkit-line-clamp: 2; }
   .menu-page-grid .menu-card-photo { width: 110px; height: 110px; border-radius: 6px; }
+  /* 카테고리 헤더 모바일 */
+  .menu-cat-header { padding: 32px 0 8px; margin-bottom: 4px; }
+  .menu-cat-title { font-size: 1.4rem; }
 }
 
 @media (max-width: 540px) {
@@ -728,7 +736,8 @@ nav.nav .nav-order-mobile{display:none !important}
           grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 24px;color:var(--text-dark-soft)">No items in this category yet.</div>';
           return;
         }
-        grid.innerHTML = filtered.map(function(it){
+        
+        function cardHtml(it){
           var d = it.data;
           var photo = d.photo ? '<img src="'+d.photo+'" alt="'+(d.name||'')+'" loading="lazy">' : '';
           return '<div class="menu-card">' +
@@ -738,7 +747,26 @@ nav.nav .nav-order-mobile{display:none !important}
             '</div>' +
             '<div class="menu-card-photo">' + photo + '</div>' +
             '</div>';
-        }).join('');
+        }
+        
+        if(cat === 'all'){
+          // All 탭: 카테고리별 그룹화 + 헤더 표시
+          var html = '';
+          var currentCat = null;
+          filtered.forEach(function(it){
+            var itemCat = it.data.category || 'Other';
+            if(itemCat !== currentCat){
+              // 새 카테고리 헤더
+              html += '<div class="menu-cat-header"><h3 class="menu-cat-title">' + itemCat + '</h3></div>';
+              currentCat = itemCat;
+            }
+            html += cardHtml(it);
+          });
+          grid.innerHTML = html;
+        } else {
+          // 특정 카테고리 탭: 카드만 표시 (헤더 없음)
+          grid.innerHTML = filtered.map(cardHtml).join('');
+        }
       }
 
       function setActiveTab(cat){
