@@ -140,6 +140,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .hero-slideshow{position:absolute;inset:0;z-index:0}
 .hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s var(--ease)}
 .hero-slide.is-active{opacity:1}
+.hero-slide.slide-midnight{background-position:center bottom}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,26,46,0.7) 0%,rgba(15,26,46,0.5) 35%,rgba(15,26,46,0.15) 70%,rgba(15,26,46,0) 100%);z-index:1}
 .hero .container{position:relative;z-index:2}
 .hero-text{max-width:640px}
@@ -155,8 +156,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
   .hero{height:auto;min-height:auto;padding:0;display:block}
   .hero-slideshow{position:relative;width:100%;height:auto;aspect-ratio:1/1;background:var(--bg-navy)}
   .hero-slide{background-size:cover;background-repeat:no-repeat;background-color:var(--bg-navy)}
-  .hero-slide.slide-right{background-position:right center}
-  .hero-slide.slide-left{background-position:left center}
+  .hero-slide.slide-hotcheetos{background-position:75% center}
+  .hero-slide.slide-donuts{background-position:right center}
+  .hero-slide.slide-cheesepull{background-position:center center}
+  .hero-slide.slide-midnight{background-position:right bottom}
   .hero-overlay{display:none}
   .hero .container{background:var(--bg-navy);padding:24px 24px 48px}
   .hero-text{margin:0 auto;max-width:100%;text-align:center}
@@ -400,10 +403,10 @@ nav.nav .nav-order-mobile{display:none !important}
 <section class="hero section-cream" id="top">
   <!-- 슬라이드쇼 배경 -->
   <div class="hero-slideshow" id="hero-slideshow">
-    <div class="hero-slide is-active slide-right" style="background-image:url('/images/hero/01-hot-cheetos.png')"></div>
-    <div class="hero-slide slide-right" style="background-image:url('/images/hero/02-donuts.png')"></div>
-    <div class="hero-slide slide-left" style="background-image:url('/images/hero/03-cheese-pull.png')"></div>
-    <div class="hero-slide slide-right" style="background-image:url('/images/hero/04-midnight-lemonade.png')"></div>
+    <div class="hero-slide is-active slide-hotcheetos" style="background-image:url('/images/hero/01-hot-cheetos.png')"></div>
+    <div class="hero-slide slide-donuts" style="background-image:url('/images/hero/02-donuts.png')"></div>
+    <div class="hero-slide slide-cheesepull" style="background-image:url('/images/hero/03-cheese-pull.png')"></div>
+    <div class="hero-slide slide-midnight" style="background-image:url('/images/hero/04-midnight-lemonade.png')"></div>
     <!-- 그라데이션 오버레이 (왼쪽 어둡게 - 텍스트 가독성) -->
     <div class="hero-overlay"></div>
   </div>
