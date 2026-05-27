@@ -136,7 +136,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 .section-cta{text-align:center;margin-top:56px}
 
 /* ============ HERO ============ */
-.hero{height:70vh;min-height:560px;padding:0;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero{height:90vh;min-height:720px;padding:0;display:flex;align-items:center;position:relative;overflow:hidden}
 .hero-slideshow{position:absolute;inset:0;z-index:0}
 .hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s var(--ease)}
 .hero-slide.is-active{opacity:1}
@@ -153,10 +153,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 
 @media(max-width:960px){
   .hero{height:auto;min-height:auto;padding:0;display:block}
-  .hero-slideshow{position:relative;width:100%;height:auto;aspect-ratio:4/3;background:var(--bg-navy)}
-  .hero-slide{background-size:contain;background-position:center;background-repeat:no-repeat;background-color:var(--bg-navy)}
+  .hero-slideshow{position:relative;width:100%;height:auto;aspect-ratio:1/1;background:var(--bg-navy)}
+  .hero-slide{background-size:cover;background-repeat:no-repeat;background-color:var(--bg-navy)}
+  .hero-slide.slide-right{background-position:right center}
+  .hero-slide.slide-left{background-position:left center}
   .hero-overlay{display:none}
-  .hero .container{background:var(--bg-navy);padding:48px 24px 64px}
+  .hero .container{background:var(--bg-navy);padding:24px 24px 48px}
   .hero-text{margin:0 auto;max-width:100%;text-align:center}
   .hero h1{font-size:clamp(2.4rem,8vw,3.6rem);margin-bottom:24px}
   .hero-sub{margin:0 auto 32px;max-width:38ch}
@@ -164,9 +166,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:transparent;col
 }
 
 /* ============ BRAND ANCHOR ============ */
-.brand-anchor{padding:120px 0;text-align:center;border-top:1px solid var(--border-cream)}
+.brand-anchor{padding:140px 0;text-align:center;border-top:1px solid var(--border-cream)}
 .brand-anchor-statement{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.1;letter-spacing:-0.02em;color:var(--text-dark);margin:0;font-weight:400}
-@media(max-width:600px){.brand-anchor{padding:80px 0}}
+@media(max-width:600px){.brand-anchor{padding:120px 24px}.brand-anchor-statement{font-size:clamp(2rem,8vw,2.8rem)}}
 
 /* ============ PILLARS ============ */
 .pillars{padding:96px 0;border-top:1px solid var(--border-cream)}
@@ -398,10 +400,10 @@ nav.nav .nav-order-mobile{display:none !important}
 <section class="hero section-cream" id="top">
   <!-- 슬라이드쇼 배경 -->
   <div class="hero-slideshow" id="hero-slideshow">
-    <div class="hero-slide is-active" style="background-image:url('/images/hero/01-hot-cheetos.png')"></div>
-    <div class="hero-slide" style="background-image:url('/images/hero/02-donuts.png')"></div>
-    <div class="hero-slide" style="background-image:url('/images/hero/03-cheese-pull.png')"></div>
-    <div class="hero-slide" style="background-image:url('/images/hero/04-midnight-lemonade.png')"></div>
+    <div class="hero-slide is-active slide-right" style="background-image:url('/images/hero/01-hot-cheetos.png')"></div>
+    <div class="hero-slide slide-right" style="background-image:url('/images/hero/02-donuts.png')"></div>
+    <div class="hero-slide slide-left" style="background-image:url('/images/hero/03-cheese-pull.png')"></div>
+    <div class="hero-slide slide-right" style="background-image:url('/images/hero/04-midnight-lemonade.png')"></div>
     <!-- 그라데이션 오버레이 (왼쪽 어둡게 - 텍스트 가독성) -->
     <div class="hero-overlay"></div>
   </div>
