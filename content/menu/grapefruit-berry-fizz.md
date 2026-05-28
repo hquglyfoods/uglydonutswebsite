@@ -1,8 +1,8 @@
 ---
-name: Grapefruit Berry Fizz
+name: Grapefruit Ade
 category: Fizzy Refreshers
-description: A sparkling refresher made with premium real fruit strawberry and
-  grapefruit syrup
+photo: /uploads/grapefruit.png
+description: A sparkling refresher made with premium real fruit grapefruit syrup
 best_seller: false
 order: 30
 ---
