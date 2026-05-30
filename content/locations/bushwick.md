@@ -2,7 +2,7 @@
 name: Bushwick
 city: Brooklyn
 state: NY
-address: ""
+address: 398 Knickerbocker ave, Brooklyn, NY, 11237
 store_type: Standalone store
 photo: /uploads/d65d86f4-0f01-4610-a01a-54a4a851fe23.jpg
 phone: ""
