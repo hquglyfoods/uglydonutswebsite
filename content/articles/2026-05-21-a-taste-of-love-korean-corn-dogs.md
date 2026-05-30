@@ -2,7 +2,7 @@
 title: "A Taste of Love: Korean Corn Dogs"
 published_date: 2026-05-20
 category: The Brand
-cover: /uploads/cheese-pull-potato-corn-dog.jpg
+cover: /uploads/3.png
 excerpt: At Ugly Donuts & Corn Dogs, we believe food is more than just a
   meal—it’s an experience that brings people together.
 read_time: 3 min read
