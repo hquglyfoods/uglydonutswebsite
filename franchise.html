@@ -419,9 +419,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   grid-template-columns: 1.5fr 1fr 1fr 1fr;
   gap: 56px;
   margin-bottom: 56px;
-  align-items: center;
+  align-items: start;
 }
-@media (max-width: 880px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
+.footer-col { padding-top: 56px; }
+@media (max-width: 880px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; } .footer-col { padding-top: 0; } }
 @media (max-width: 540px) { .footer-grid { grid-template-columns: 1fr; text-align: center; } .footer-brand, .footer-col { align-items: center; } .footer-col ul { padding-left: 0; } .footer-bottom { flex-direction: column; gap: 8px; text-align: center; } }
 .footer-brand-name {
   font-family: var(--serif); font-size: 22px; font-weight: 500;
