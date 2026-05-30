@@ -2,7 +2,7 @@
 name: Pearland
 city: Pearland
 state: TX
-address: ""
+address: 11200 Broadway St, Pearland, TX 77584
 store_type: Standalone store
 photo: /uploads/img_0764.jpg
 phone: ""
