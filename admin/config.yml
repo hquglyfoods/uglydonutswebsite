@@ -38,13 +38,25 @@ collections:
         pattern: "Korean Corn Dogs"
       - label: "Donuts"
         field: category
-        pattern: "Donuts"
+        pattern: "^Donuts$"
       - label: "Ice Cream Donuts"
         field: category
         pattern: "Ice Cream Donuts"
-      - label: "Beverages"
+      - label: "Fruit Refreshers"
         field: category
-        pattern: "Refreshers"
+        pattern: "Fruit Refreshers"
+      - label: "Fizzy Refreshers"
+        field: category
+        pattern: "Fizzy Refreshers"
+      - label: "Ugly Boba"
+        field: category
+        pattern: "Ugly Boba"
+      - label: "Coco Sips"
+        field: category
+        pattern: "Coco Sips"
+      - label: "Smoothies"
+        field: category
+        pattern: "Smoothies"
     fields:
       - {label: "Name", name: "name", widget: "string", hint: "e.g. Hot Cheetos Corn Dog"}
       - label: "Category"
