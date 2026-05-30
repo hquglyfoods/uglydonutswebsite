@@ -2,6 +2,7 @@
 title: "Warning: This Corn Dog Is Seriously Addictive"
 published_date: 2026-05-23
 category: Menu
+cover: /uploads/2.png
 excerpt: The bold, fiery, cheese-covered showstopper that’s become our
   best-selling corn dog.
 read_time: 1 min read

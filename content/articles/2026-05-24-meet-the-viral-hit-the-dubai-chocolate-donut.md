@@ -2,6 +2,7 @@
 title: "Meet the Viral Hit: The Dubai Chocolate Donut"
 published_date: 2026-05-23
 category: Menu
+cover: /uploads/1.png
 excerpt: At Ugly Donuts & Corn Dogs, we’re always chasing the next flavor
   moment—and this one’s gone global.
 read_time: 2 min read
