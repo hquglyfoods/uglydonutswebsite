@@ -34,21 +34,21 @@
 
 <style>
 :root {
-  --bg-navy: #0F1A2E;
-  --bg-navy-deep: #08111F;
+  --bg-navy: #091018;
+  --bg-navy-deep: #05090F;
   --bg-black: #050810;
   --bg-cream: #F5EFE3;
   --bg-cream-deep: #EDE5D3;
-  --border-cream: rgba(15, 26, 46, 0.08);
-  --border-form: rgba(15, 26, 46, 0.15);
+  --border-cream: rgba(9, 16, 24, 0.08);
+  --border-form: rgba(9, 16, 24, 0.15);
   --text-light: #F5EFE3;
   --text-light-soft: rgba(245, 240, 230, 0.72);
   --text-light-mute: rgba(245, 240, 230, 0.42);
   --text-dark: #1A2438;
   --text-dark-soft: rgba(26, 36, 56, 0.72);
   --text-dark-mute: rgba(26, 36, 56, 0.5);
-  --orange: #E1661A;
-  --orange-light: #F07A2D;
+  --orange: #B8470C;
+  --orange-light: #CE5512;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --serif: 'Arapey', Georgia, serif;
   --sans: 'Quicksand', sans-serif;
@@ -95,7 +95,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   padding: 22px 36px;
   display: flex; align-items: center; justify-content: space-between;
-  background: rgba(15, 26, 46, 0.96); backdrop-filter: blur(20px);
+  background: rgba(9, 16, 24, 0.96); backdrop-filter: blur(20px);
   backdrop-filter: blur(0);
   transition: all 0.4s var(--ease);
   border-bottom: 1px solid transparent;
@@ -161,10 +161,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 .nav-more-btn:hover { color: var(--orange); }
 .nav-more-arrow { font-size: 11px; transition: transform 0.25s var(--ease); line-height: 1; display: inline-block; margin-left: 2px; }
 .nav-more.open .nav-more-arrow { transform: rotate(180deg); }
-.nav-more-menu { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-8px); background: var(--bg-cream); border: 1px solid var(--border-cream); border-radius: 8px; padding: 10px 0; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity 0.2s, transform 0.2s, visibility 0.2s; box-shadow: 0 8px 24px rgba(15,26,46,0.08); z-index: 100; }
+.nav-more-menu { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-8px); background: var(--bg-cream); border: 1px solid var(--border-cream); border-radius: 8px; padding: 10px 0; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity 0.2s, transform 0.2s, visibility 0.2s; box-shadow: 0 8px 24px rgba(9,16,24,0.08); z-index: 100; }
 .nav-more.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 .nav-more-link { display: block; padding: 10px 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dark-soft); transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.nav-more-link:hover { background: rgba(225,102,26,0.06); color: var(--orange); }
+.nav-more-link:hover { background: rgba(184,71,12,0.06); color: var(--orange); }
 
 @media (max-width: 960px) {
   .nav-more { width: 100%; }
@@ -190,7 +190,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 .btn-primary { background: var(--orange); color: #fff; border: none; }
 .btn-primary:hover:not(:disabled) {
   background: var(--orange-light); transform: translateY(-2px);
-  box-shadow: 0 12px 32px -8px rgba(225, 102, 26, 0.5);
+  box-shadow: 0 12px 32px -8px rgba(184, 71, 12, 0.5);
 }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-outline {
@@ -283,7 +283,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 .form-textarea:focus {
   outline: none;
   border-color: var(--orange);
-  box-shadow: 0 0 0 3px rgba(225, 102, 26, 0.12);
+  box-shadow: 0 0 0 3px rgba(184, 71, 12, 0.12);
 }
 .form-input::placeholder, .form-textarea::placeholder {
   color: var(--text-dark-mute);
@@ -322,7 +322,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   transition: all 0.2s ease;
   user-select: none;
 }
-.form-radio:hover, .form-check:hover { border-color: rgba(225, 102, 26, 0.4); }
+.form-radio:hover, .form-check:hover { border-color: rgba(184, 71, 12, 0.4); }
 .form-radio input, .form-check input {
   accent-color: var(--orange);
   width: 16px; height: 16px;
@@ -331,7 +331,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 }
 .form-radio.checked, .form-check.checked {
   border-color: var(--orange);
-  background: rgba(225, 102, 26, 0.04);
+  background: rgba(184, 71, 12, 0.04);
 }
 .form-hint {
   font-size: 12px;
@@ -353,7 +353,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 }
 .form-file:hover {
   border-color: var(--orange);
-  background: rgba(225, 102, 26, 0.03);
+  background: rgba(184, 71, 12, 0.03);
 }
 .form-file input[type=file] { display: none; }
 .form-file-label .filename {
@@ -380,8 +380,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   display: none;
   text-align: center;
   padding: 80px 32px;
-  background: rgba(225, 102, 26, 0.04);
-  border: 1px solid rgba(225, 102, 26, 0.2);
+  background: rgba(184, 71, 12, 0.04);
+  border: 1px solid rgba(184, 71, 12, 0.2);
   border-radius: 8px;
   margin: 40px 0;
 }
@@ -437,7 +437,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   font-size: 13px; color: var(--text-light-soft);
   line-height: 1.65; max-width: 30ch;
 }
-.footer-col h4 {
+.footer-col h3 {
   font-size: 11px; font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--text-light); margin-bottom: 20px;
@@ -530,9 +530,12 @@ nav.nav .nav-order-mobile { display: none !important; }
   .nav.open .nav-left .nav-more-link:hover { color: var(--orange) !important; }
 }
 
+.skip-to-content{position:absolute;left:-9999px;top:0;z-index:9999;background:var(--bg-navy,#091018);color:#fff;padding:12px 20px;border-radius:0 0 8px 0;font-size:14px;text-decoration:none}
+.skip-to-content:focus{left:0}
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-to-content">Skip to content</a>
 
 <nav class="nav" id="nav">
   <div class="nav-left">
@@ -561,6 +564,7 @@ nav.nav .nav-order-mobile { display: none !important; }
   <a href="https://uglydonutsandcorndogsknickerbocker.toast.site/order?showAllLocations=true" class="nav-order-mobile">Order</a>
   <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
 </nav>
+<main id="main-content">
 
 
 <section class="page-header">
@@ -596,27 +600,27 @@ nav.nav .nav-order-mobile { display: none !important; }
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">First Name <span class="req">*</span></label>
-            <input class="form-input" type="text" name="first_name" required>
+            <label for="first_name" class="form-label">First Name <span class="req">*</span></label>
+            <input class="form-input" type="text" name="first_name" required id="first_name">
           </div>
           <div class="form-group">
-            <label class="form-label">Last Name <span class="req">*</span></label>
-            <input class="form-input" type="text" name="last_name" required>
+            <label for="last_name" class="form-label">Last Name <span class="req">*</span></label>
+            <input class="form-input" type="text" name="last_name" required id="last_name">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Email <span class="req">*</span></label>
-            <input class="form-input" type="email" name="email" required>
+            <label for="email" class="form-label">Email <span class="req">*</span></label>
+            <input class="form-input" type="email" name="email" required id="email">
           </div>
           <div class="form-group">
-            <label class="form-label">Phone <span class="req">*</span></label>
-            <input class="form-input" type="tel" name="phone" required>
+            <label for="phone" class="form-label">Phone <span class="req">*</span></label>
+            <input class="form-input" type="tel" name="phone" required id="phone">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">City, State <span class="req">*</span></label>
-          <input class="form-input" type="text" name="city_state" placeholder="e.g. Los Angeles, CA" required>
+          <label for="city_state" class="form-label">City, State <span class="req">*</span></label>
+          <input class="form-input" type="text" name="city_state" placeholder="e.g. Los Angeles, CA" required id="city_state">
         </div>
       </div>
 
@@ -626,15 +630,15 @@ nav.nav .nav-order-mobile { display: none !important; }
         <div class="form-section-desc">Where, when, and how big.</div>
 
         <div class="form-group">
-          <label class="form-label">Interested Territories <span class="req">*</span></label>
-          <input class="form-input" type="text" name="territories" placeholder="e.g. LA county, Orange County, San Diego" required>
+          <label for="territories" class="form-label">Interested Territories <span class="req">*</span></label>
+          <input class="form-input" type="text" name="territories" placeholder="e.g. LA county, Orange County, San Diego" required id="territories">
           <div class="form-hint">List specific cities or regions you would like to operate in.</div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Timeline to Open</label>
-            <select class="form-select" name="timeline">
+            <label for="timeline" class="form-label">Timeline to Open</label>
+            <select class="form-select" name="timeline" id="timeline">
     <option value="" disabled selected>Select timeline</option>
     <option value="Immediately">Immediately</option>
     <option value="3–6 months">3–6 months</option>
@@ -644,8 +648,8 @@ nav.nav .nav-order-mobile { display: none !important; }
   </select>
           </div>
           <div class="form-group">
-            <label class="form-label">How many units?</label>
-            <select class="form-select" name="units_interest">
+            <label for="units_interest" class="form-label">How many units?</label>
+            <select class="form-select" name="units_interest" id="units_interest">
     <option value="" disabled selected>Select number</option>
     <option value="1">1</option>
     <option value="2–5">2–5</option>
@@ -662,8 +666,8 @@ nav.nav .nav-order-mobile { display: none !important; }
         <div class="form-section-desc">Used only to determine fit — kept strictly confidential.</div>
 
         <div class="form-group">
-          <label class="form-label">Personal Net Worth <span class="req">*</span></label>
-          <select class="form-select" name="net_worth" required>
+          <label for="net_worth" class="form-label">Personal Net Worth <span class="req">*</span></label>
+          <select class="form-select" name="net_worth" required id="net_worth">
     <option value="" disabled selected>Select range</option>
     <option value="Under $250,000">Under $250,000</option>
     <option value="$250,000–$500,000">$250,000–$500,000</option>
@@ -674,8 +678,8 @@ nav.nav .nav-order-mobile { display: none !important; }
         </div>
 
         <div class="form-group">
-          <label class="form-label">Available Liquid Cash <span class="req">*</span></label>
-          <select class="form-select" name="liquid_cash" required>
+          <label for="liquid_cash" class="form-label">Available Liquid Cash <span class="req">*</span></label>
+          <select class="form-select" name="liquid_cash" required id="liquid_cash">
     <option value="" disabled selected>Select range</option>
     <option value="Under $100,000">Under $100,000</option>
     <option value="$100,000–$250,000">$100,000–$250,000</option>
@@ -688,19 +692,19 @@ nav.nav .nav-order-mobile { display: none !important; }
         <div class="form-group">
           <label class="form-label">Are your funds currently available?</label>
           <div class="form-radios">
-    <label class="form-radio"><input type="radio" name="funds_available" value="Yes"><span>Yes</span></label>
-    <label class="form-radio"><input type="radio" name="funds_available" value="No"><span>No</span></label>
-    <label class="form-radio"><input type="radio" name="funds_available" value="Partially"><span>Partially</span></label>
-    <label class="form-radio"><input type="radio" name="funds_available" value="In process"><span>In process</span></label>
+    <label class="form-radio"><input type="radio" name="funds_available" value="Yes" aria-label="Yes"><span>Yes</span></label>
+    <label class="form-radio"><input type="radio" name="funds_available" value="No" aria-label="No"><span>No</span></label>
+    <label class="form-radio"><input type="radio" name="funds_available" value="Partially" aria-label="Partially"><span>Partially</span></label>
+    <label class="form-radio"><input type="radio" name="funds_available" value="In process" aria-label="In process"><span>In process</span></label>
   </div>
         </div>
 
         <div class="form-group">
           <label class="form-label">Are you applying solo or with a partner?</label>
           <div class="form-radios">
-    <label class="form-radio"><input type="radio" name="partnership" value="Solo"><span>Solo</span></label>
-    <label class="form-radio"><input type="radio" name="partnership" value="With a partner"><span>With a partner</span></label>
-    <label class="form-radio"><input type="radio" name="partnership" value="Seeking a partner"><span>Seeking a partner</span></label>
+    <label class="form-radio"><input type="radio" name="partnership" value="Solo" aria-label="Solo"><span>Solo</span></label>
+    <label class="form-radio"><input type="radio" name="partnership" value="With a partner" aria-label="With a partner"><span>With a partner</span></label>
+    <label class="form-radio"><input type="radio" name="partnership" value="Seeking a partner" aria-label="Seeking a partner"><span>Seeking a partner</span></label>
   </div>
         </div>
       </div>
@@ -712,45 +716,45 @@ nav.nav .nav-order-mobile { display: none !important; }
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Years of food / restaurant experience <span class="req">*</span></label>
-            <input class="form-input" type="number" name="food_experience_years" min="0" required>
+            <label for="food_experience_years" class="form-label">Years of food / restaurant experience <span class="req">*</span></label>
+            <input class="form-input" type="number" name="food_experience_years" min="0" required id="food_experience_years">
           </div>
           <div class="form-group">
-            <label class="form-label">Years of franchise experience</label>
-            <input class="form-input" type="number" name="franchise_experience_years" min="0">
+            <label for="franchise_experience_years" class="form-label">Years of franchise experience</label>
+            <input class="form-input" type="number" name="franchise_experience_years" min="0" id="franchise_experience_years">
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Current businesses you own or operate</label>
-          <textarea class="form-textarea" name="current_businesses" placeholder="List your active businesses, brands, or operations."></textarea>
+          <label for="current_businesses" class="form-label">Current businesses you own or operate</label>
+          <textarea class="form-textarea" name="current_businesses" placeholder="List your active businesses, brands, or operations." id="current_businesses"></textarea>
         </div>
 
         <div class="form-group">
           <label class="form-label">Multi-unit operating experience?</label>
           <div class="form-radios">
-    <label class="form-radio"><input type="radio" name="multi_unit" value="Yes"><span>Yes</span></label>
-    <label class="form-radio"><input type="radio" name="multi_unit" value="No"><span>No</span></label>
+    <label class="form-radio"><input type="radio" name="multi_unit" value="Yes" aria-label="Yes"><span>Yes</span></label>
+    <label class="form-radio"><input type="radio" name="multi_unit" value="No" aria-label="No"><span>No</span></label>
   </div>
         </div>
 
         <div class="form-group">
           <label class="form-label">Who will operate the store day-to-day?</label>
           <div class="form-radios">
-    <label class="form-radio"><input type="radio" name="operator" value="Myself"><span>Myself</span></label>
-    <label class="form-radio"><input type="radio" name="operator" value="Family member"><span>Family member</span></label>
-    <label class="form-radio"><input type="radio" name="operator" value="Hired manager"><span>Hired manager</span></label>
-    <label class="form-radio"><input type="radio" name="operator" value="Operating partner"><span>Operating partner</span></label>
-    <label class="form-radio"><input type="radio" name="operator" value="Not sure yet"><span>Not sure yet</span></label>
+    <label class="form-radio"><input type="radio" name="operator" value="Myself" aria-label="Myself"><span>Myself</span></label>
+    <label class="form-radio"><input type="radio" name="operator" value="Family member" aria-label="Family member"><span>Family member</span></label>
+    <label class="form-radio"><input type="radio" name="operator" value="Hired manager" aria-label="Hired manager"><span>Hired manager</span></label>
+    <label class="form-radio"><input type="radio" name="operator" value="Operating partner" aria-label="Operating partner"><span>Operating partner</span></label>
+    <label class="form-radio"><input type="radio" name="operator" value="Not sure yet" aria-label="Not sure yet"><span>Not sure yet</span></label>
   </div>
         </div>
 
         <div class="form-group">
           <label class="form-label">Do you already have a location/site in mind?</label>
           <div class="form-radios">
-    <label class="form-radio"><input type="radio" name="site_status" value="Yes"><span>Yes</span></label>
-    <label class="form-radio"><input type="radio" name="site_status" value="No"><span>No</span></label>
-    <label class="form-radio"><input type="radio" name="site_status" value="Currently searching"><span>Currently searching</span></label>
+    <label class="form-radio"><input type="radio" name="site_status" value="Yes" aria-label="Yes"><span>Yes</span></label>
+    <label class="form-radio"><input type="radio" name="site_status" value="No" aria-label="No"><span>No</span></label>
+    <label class="form-radio"><input type="radio" name="site_status" value="Currently searching" aria-label="Currently searching"><span>Currently searching</span></label>
   </div>
         </div>
       </div>
@@ -761,13 +765,13 @@ nav.nav .nav-order-mobile { display: none !important; }
         <div class="form-section-desc">The part that matters most.</div>
 
         <div class="form-group">
-          <label class="form-label">Why this brand specifically? <span class="req">*</span></label>
-          <textarea class="form-textarea" name="why_us" placeholder="What drew you to Ugly Donuts? What about our brand fits your goals?" required></textarea>
+          <label for="why_us" class="form-label">Why this brand specifically? <span class="req">*</span></label>
+          <textarea class="form-textarea" name="why_us" placeholder="What drew you to Ugly Donuts? What about our brand fits your goals?" required id="why_us"></textarea>
         </div>
 
         <div class="form-group">
-          <label class="form-label">How did you hear about us?</label>
-          <select class="form-select" name="source">
+          <label for="source" class="form-label">How did you hear about us?</label>
+          <select class="form-select" name="source" id="source">
     <option value="" disabled selected>Select source</option>
     <option value="Social Media">Social Media</option>
     <option value="Google Search">Google Search</option>
@@ -795,6 +799,7 @@ nav.nav .nav-order-mobile { display: none !important; }
 </section>
 
 
+</main>
 <footer class="footer section-black">
   <div class="container">
     <div class="footer-grid">
@@ -809,7 +814,7 @@ nav.nav .nav-order-mobile { display: none !important; }
         </div>
       </div>
       <div class="footer-col">
-        <h4>Visit</h4>
+        <h3>Visit</h3>
         <ul>
           <li><a href="/locations.html">Locations</a></li>
           <li><a href="/menu.html">Menu</a></li>
@@ -818,7 +823,7 @@ nav.nav .nav-order-mobile { display: none !important; }
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Brand</h4>
+        <h3>Brand</h3>
         <ul>
           <li><a href="/story.html">Our Story</a></li>
           <li><a href="/journal.html">Journal</a></li>
@@ -827,7 +832,7 @@ nav.nav .nav-order-mobile { display: none !important; }
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Connect</h4>
+        <h3>Connect</h3>
         <ul>
           <li><a href="/contact.html">Contact</a></li>
           <li><a href="https://www.instagram.com/uglydonutsncorndogs" target="_blank" rel="noopener">Instagram</a></li>

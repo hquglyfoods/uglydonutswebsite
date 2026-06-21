@@ -34,21 +34,21 @@
 
 <style>
 :root {
-  --bg-navy: #0F1A2E;
-  --bg-navy-deep: #08111F;
+  --bg-navy: #091018;
+  --bg-navy-deep: #05090F;
   --bg-black: #050810;
   --bg-cream: #F5EFE3;
   --bg-cream-deep: #EDE5D3;
-  --border-cream: rgba(15, 26, 46, 0.08);
-  --border-form: rgba(15, 26, 46, 0.15);
+  --border-cream: rgba(9, 16, 24, 0.08);
+  --border-form: rgba(9, 16, 24, 0.15);
   --text-light: #F5EFE3;
   --text-light-soft: rgba(245, 240, 230, 0.72);
   --text-light-mute: rgba(245, 240, 230, 0.42);
   --text-dark: #1A2438;
   --text-dark-soft: rgba(26, 36, 56, 0.72);
   --text-dark-mute: rgba(26, 36, 56, 0.5);
-  --orange: #E1661A;
-  --orange-light: #F07A2D;
+  --orange: #B8470C;
+  --orange-light: #CE5512;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --serif: 'Arapey', Georgia, serif;
   --sans: 'Quicksand', sans-serif;
@@ -95,7 +95,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   padding: 22px 36px;
   display: flex; align-items: center; justify-content: space-between;
-  background: rgba(15, 26, 46, 0.96); backdrop-filter: blur(20px);
+  background: rgba(9, 16, 24, 0.96); backdrop-filter: blur(20px);
   backdrop-filter: blur(0);
   transition: all 0.4s var(--ease);
   border-bottom: 1px solid transparent;
@@ -161,10 +161,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 .nav-more-btn:hover { color: var(--orange); }
 .nav-more-arrow { font-size: 11px; transition: transform 0.25s var(--ease); line-height: 1; display: inline-block; margin-left: 2px; }
 .nav-more.open .nav-more-arrow { transform: rotate(180deg); }
-.nav-more-menu { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-8px); background: var(--bg-cream); border: 1px solid var(--border-cream); border-radius: 8px; padding: 10px 0; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity 0.2s, transform 0.2s, visibility 0.2s; box-shadow: 0 8px 24px rgba(15,26,46,0.08); z-index: 100; }
+.nav-more-menu { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-8px); background: var(--bg-cream); border: 1px solid var(--border-cream); border-radius: 8px; padding: 10px 0; min-width: 180px; opacity: 0; visibility: hidden; transition: opacity 0.2s, transform 0.2s, visibility 0.2s; box-shadow: 0 8px 24px rgba(9,16,24,0.08); z-index: 100; }
 .nav-more.open .nav-more-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 .nav-more-link { display: block; padding: 10px 22px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dark-soft); transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.nav-more-link:hover { background: rgba(225,102,26,0.06); color: var(--orange); }
+.nav-more-link:hover { background: rgba(184,71,12,0.06); color: var(--orange); }
 
 @media (max-width: 960px) {
   .nav-more { width: 100%; }
@@ -190,7 +190,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 .btn-primary { background: var(--orange); color: #fff; border: none; }
 .btn-primary:hover:not(:disabled) {
   background: var(--orange-light); transform: translateY(-2px);
-  box-shadow: 0 12px 32px -8px rgba(225, 102, 26, 0.5);
+  box-shadow: 0 12px 32px -8px rgba(184, 71, 12, 0.5);
 }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-outline {
@@ -283,7 +283,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 .form-textarea:focus {
   outline: none;
   border-color: var(--orange);
-  box-shadow: 0 0 0 3px rgba(225, 102, 26, 0.12);
+  box-shadow: 0 0 0 3px rgba(184, 71, 12, 0.12);
 }
 .form-input::placeholder, .form-textarea::placeholder {
   color: var(--text-dark-mute);
@@ -322,7 +322,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   transition: all 0.2s ease;
   user-select: none;
 }
-.form-radio:hover, .form-check:hover { border-color: rgba(225, 102, 26, 0.4); }
+.form-radio:hover, .form-check:hover { border-color: rgba(184, 71, 12, 0.4); }
 .form-radio input, .form-check input {
   accent-color: var(--orange);
   width: 16px; height: 16px;
@@ -331,7 +331,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 }
 .form-radio.checked, .form-check.checked {
   border-color: var(--orange);
-  background: rgba(225, 102, 26, 0.04);
+  background: rgba(184, 71, 12, 0.04);
 }
 .form-hint {
   font-size: 12px;
@@ -353,7 +353,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
 }
 .form-file:hover {
   border-color: var(--orange);
-  background: rgba(225, 102, 26, 0.03);
+  background: rgba(184, 71, 12, 0.03);
 }
 .form-file input[type=file] { display: none; }
 .form-file-label .filename {
@@ -380,8 +380,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   display: none;
   text-align: center;
   padding: 80px 32px;
-  background: rgba(225, 102, 26, 0.04);
-  border: 1px solid rgba(225, 102, 26, 0.2);
+  background: rgba(184, 71, 12, 0.04);
+  border: 1px solid rgba(184, 71, 12, 0.2);
   border-radius: 8px;
   margin: 40px 0;
 }
@@ -437,7 +437,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: transp
   font-size: 13px; color: var(--text-light-soft);
   line-height: 1.65; max-width: 30ch;
 }
-.footer-col h4 {
+.footer-col h3 {
   font-size: 11px; font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--text-light); margin-bottom: 20px;
@@ -530,9 +530,12 @@ nav.nav .nav-order-mobile { display: none !important; }
   .nav.open .nav-left .nav-more-link:hover { color: var(--orange) !important; }
 }
 
+.skip-to-content{position:absolute;left:-9999px;top:0;z-index:9999;background:var(--bg-navy,#091018);color:#fff;padding:12px 20px;border-radius:0 0 8px 0;font-size:14px;text-decoration:none}
+.skip-to-content:focus{left:0}
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-to-content">Skip to content</a>
 
 <nav class="nav" id="nav">
   <div class="nav-left">
@@ -561,6 +564,7 @@ nav.nav .nav-order-mobile { display: none !important; }
   <a href="https://uglydonutsandcorndogsknickerbocker.toast.site/order?showAllLocations=true" class="nav-order-mobile">Order</a>
   <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
 </nav>
+<main id="main-content">
 
 
 <section class="page-header">
@@ -593,27 +597,27 @@ nav.nav .nav-order-mobile { display: none !important; }
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">First Name <span class="req">*</span></label>
-            <input class="form-input" type="text" name="first_name" required>
+            <label for="first_name" class="form-label">First Name <span class="req">*</span></label>
+            <input class="form-input" type="text" name="first_name" required id="first_name">
           </div>
           <div class="form-group">
-            <label class="form-label">Last Name <span class="req">*</span></label>
-            <input class="form-input" type="text" name="last_name" required>
+            <label for="last_name" class="form-label">Last Name <span class="req">*</span></label>
+            <input class="form-input" type="text" name="last_name" required id="last_name">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Email <span class="req">*</span></label>
-            <input class="form-input" type="email" name="email" required>
+            <label for="email" class="form-label">Email <span class="req">*</span></label>
+            <input class="form-input" type="email" name="email" required id="email">
           </div>
           <div class="form-group">
-            <label class="form-label">Phone</label>
-            <input class="form-input" type="tel" name="phone">
+            <label for="phone" class="form-label">Phone</label>
+            <input class="form-input" type="tel" name="phone" id="phone">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Company / Organization</label>
-          <input class="form-input" type="text" name="company">
+          <label for="company" class="form-label">Company / Organization</label>
+          <input class="form-input" type="text" name="company" id="company">
         </div>
       </div>
 
@@ -621,8 +625,8 @@ nav.nav .nav-order-mobile { display: none !important; }
         <div class="form-section-title">What is this about?</div>
 
         <div class="form-group">
-          <label class="form-label">Inquiry Type <span class="req">*</span></label>
-          <select class="form-select" name="inquiry_type" required>
+          <label for="inquiry_type" class="form-label">Inquiry Type <span class="req">*</span></label>
+          <select class="form-select" name="inquiry_type" required id="inquiry_type">
     <option value="" disabled selected>Select inquiry type</option>
     <option value="General Question">General Question</option>
     <option value="Customer Feedback">Customer Feedback</option>
@@ -635,8 +639,8 @@ nav.nav .nav-order-mobile { display: none !important; }
         </div>
 
         <div class="form-group">
-          <label class="form-label">Location Related To</label>
-          <select class="form-select" name="location">
+          <label for="location" class="form-label">Location Related To</label>
+          <select class="form-select" name="location" id="location">
     <option value="" disabled selected>Select location</option>
     <option value="American Dream">American Dream</option>
     <option value="Brooklyn (Bushwick)">Brooklyn (Bushwick)</option>
@@ -647,13 +651,13 @@ nav.nav .nav-order-mobile { display: none !important; }
         </div>
 
         <div class="form-group">
-          <label class="form-label">Subject <span class="req">*</span></label>
-          <input class="form-input" type="text" name="subject" required>
+          <label for="subject" class="form-label">Subject <span class="req">*</span></label>
+          <input class="form-input" type="text" name="subject" required id="subject">
         </div>
 
         <div class="form-group">
-          <label class="form-label">Message <span class="req">*</span></label>
-          <textarea class="form-textarea" name="message" placeholder="Tell us more…" required></textarea>
+          <label for="message" class="form-label">Message <span class="req">*</span></label>
+          <textarea class="form-textarea" name="message" placeholder="Tell us more…" required id="message"></textarea>
         </div>
       </div>
 
@@ -672,6 +676,7 @@ nav.nav .nav-order-mobile { display: none !important; }
 </section>
 
 
+</main>
 <footer class="footer section-black">
   <div class="container">
     <div class="footer-grid">
@@ -686,7 +691,7 @@ nav.nav .nav-order-mobile { display: none !important; }
         </div>
       </div>
       <div class="footer-col">
-        <h4>Visit</h4>
+        <h3>Visit</h3>
         <ul>
           <li><a href="/locations.html">Locations</a></li>
           <li><a href="/menu.html">Menu</a></li>
@@ -695,7 +700,7 @@ nav.nav .nav-order-mobile { display: none !important; }
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Brand</h4>
+        <h3>Brand</h3>
         <ul>
           <li><a href="/story.html">Our Story</a></li>
           <li><a href="/journal.html">Journal</a></li>
@@ -704,7 +709,7 @@ nav.nav .nav-order-mobile { display: none !important; }
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Connect</h4>
+        <h3>Connect</h3>
         <ul>
           <li><a href="/contact.html">Contact</a></li>
           <li><a href="https://www.instagram.com/uglydonutsncorndogs" target="_blank" rel="noopener">Instagram</a></li>
