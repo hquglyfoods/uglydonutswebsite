@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Admin and CMS internals should not be indexed
+Disallow: /admin
+Disallow: /content/
+
+Sitemap: https://www.uglydonutsncorndogs.com/sitemap.xml
