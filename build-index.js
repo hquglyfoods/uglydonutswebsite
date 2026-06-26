@@ -334,7 +334,10 @@ if (fs.existsSync(JPATH)) {
     html = html.replace('<div class="journal-page-grid" id="journal-page-grid"></div>',
       '<div class="journal-page-grid" id="journal-page-grid"><!--AUTO-ARTICLE-CARDS:START-->\n' + cards + '\n<!--AUTO-ARTICLE-CARDS:END--></div>');
   }
-  html = html.replace(/<div id="journal-page-empty" class="journal-empty-page"[^>]*>/, '<div id="journal-page-empty" class="journal-empty-page"' + (hasArticles ? ' style="display:none"' : '') + '>');
+  html = html.replace(/<div id="journal-page-empty" class="journal-empty-page"[^>]*>[\s\S]*?<\/div>/,
+    hasArticles
+      ? '<div id="journal-page-empty" class="journal-empty-page" style="display:none"></div>'
+      : '<div id="journal-page-empty" class="journal-empty-page">\n      <p>The first issue is coming soon. Stories on how we make our doughs, why we fry to order, and how we open each store.</p>\n    </div>');
 
   const itemList = {
     '@context': 'https://schema.org', '@type': 'ItemList', name: 'Ugly Donuts & Corn Dogs Journal',
@@ -347,6 +350,50 @@ if (fs.existsSync(JPATH)) {
   fs.writeFileSync(JPATH, html);
   console.log('[ok]   journal.html (' + articles.length + ' cards)');
 }
+
+/* ===================== 2b. index.html home previews ===================== */
+
+(function () {
+  const fp = path.join(ROOT, 'index.html');
+  if (!fs.existsSync(fp)) return;
+  let html = fs.readFileSync(fp, 'utf8');
+
+  let menu = readItems('content/menu').filter(function (it) { return it.data && it.data.name; });
+  const best = menu.filter(function (it) { return it.data.best_seller === true || it.data.best_seller === 'true'; });
+  const pick = (best.length ? best : menu).slice(0, 4);
+  const menuCards = pick.map(function (it) {
+    const d = it.data;
+    const photo = d.photo ? '<img src="' + d.photo + '" alt="' + attrEscape(d.name || '') + '" loading="lazy">' : '';
+    return '<a href="/menu.html" class="menu-card"><div class="menu-card-photo">' + photo + '</div>' +
+      '<div class="menu-card-cat">' + escapeHtml(d.category || '') + '</div>' +
+      '<h4 class="menu-card-name">' + escapeHtml(d.name || '') + '</h4>' +
+      '<p class="menu-card-desc">' + escapeHtml(d.description || '') + '</p></a>';
+  }).join('\n');
+
+  const jpick = articles.slice(0, 3);
+  const journalCards = jpick.map(function (it) {
+    const d = it.data;
+    const cover = d.cover ? '<img src="' + d.cover + '" alt="' + attrEscape(d.title || '') + '" loading="lazy">' : '';
+    return '<a href="' + articleUrlPath(it.slug) + '" class="journal-card"><div class="journal-card-photo">' + cover + '</div>' +
+      '<div class="journal-card-meta">' + escapeHtml(d.category || 'Journal') + '<span class="sep">&middot;</span>' + escapeHtml(d.read_time || '3 min read') + '</div>' +
+      '<h3>' + escapeHtml(d.title || '') + '</h3><p>' + escapeHtml(d.excerpt || '') + '</p></a>';
+  }).join('\n');
+
+  if (pick.length) {
+    html = setInner(html, /<div class="menu-grid" id="menu-grid"[^>]*>/, '<!--AUTO-HOME-MENU:START-->', '<!--AUTO-HOME-MENU:END-->', menuCards);
+    html = html.replace(/<div class="menu-grid" id="menu-grid"[^>]*>/, '<div class="menu-grid" id="menu-grid">');
+    html = html.replace(/<div class="menu-empty fade-up" id="menu-empty"[^>]*>[\s\S]*?<\/div>/, '<div class="menu-empty fade-up" id="menu-empty" style="display:none"></div>');
+    html = html.replace(/<div class="section-cta" id="menu-see-all"[^>]*>/, '<div class="section-cta" id="menu-see-all">');
+  }
+  if (jpick.length) {
+    html = setInner(html, /<div class="journal-grid" id="journal-grid"[^>]*>/, '<!--AUTO-HOME-JOURNAL:START-->', '<!--AUTO-HOME-JOURNAL:END-->', journalCards);
+    html = html.replace(/<div class="journal-grid" id="journal-grid"[^>]*>/, '<div class="journal-grid" id="journal-grid">');
+    html = html.replace(/<div class="journal-empty fade-up" id="journal-empty"[^>]*>[\s\S]*?<\/div>/, '<div class="journal-empty fade-up" id="journal-empty" style="display:none"></div>');
+    html = html.replace(/<div class="section-cta" id="journal-see-all"[^>]*>/, '<div class="section-cta" id="journal-see-all">');
+  }
+  fs.writeFileSync(fp, html);
+  console.log('[ok]   index.html home previews (' + pick.length + ' items, ' + jpick.length + ' articles)');
+})();
 
 /* ===================== 3. menu.html ===================== */
 
@@ -384,7 +431,10 @@ if (fs.existsSync(MPATH)) {
   html = setInner(html, /<div class="menu-page-grid" id="menu-page-grid"[^>]*>/,
     '<!--AUTO-MENU-CARDS:START-->', '<!--AUTO-MENU-CARDS:END-->', grid);
   html = html.replace(/<div id="menu-page-content"[^>]*>/, '<div id="menu-page-content"' + (has ? '' : ' style="display:none"') + '>');
-  html = html.replace(/<div id="menu-page-empty" class="menu-empty-page"[^>]*>/, '<div id="menu-page-empty" class="menu-empty-page"' + (has ? ' style="display:none"' : '') + '>');
+  html = html.replace(/<div id="menu-page-empty" class="menu-empty-page"[^>]*>[\s\S]*?<\/div>/,
+    has
+      ? '<div id="menu-page-empty" class="menu-empty-page" style="display:none"></div>'
+      : '<div id="menu-page-empty" class="menu-empty-page">\n      <p>The full menu is being photographed and added now. For the live menu and current prices, <a href="/locations.html" class="text-link">visit one of our stores</a>.</p>\n    </div>');
 
   // Menu structured data (restaurant menu rich result), grouped by category.
   const secMap = {}, secOrder = [];
