@@ -730,6 +730,10 @@ nav.nav .nav-order-mobile{display:none !important}
     c.innerHTML = '<div class="article-error"><h1>Article not found</h1><p>This article may have been moved or removed. <a href="/journal.html">Browse the journal</a> for the latest stories.</p></div>';
   }
   
+  var __prerendered = document.getElementById('article-content');
+  if(__prerendered && __prerendered.getAttribute('data-prerendered') === 'true'){
+    return;
+  }
   var slug = getSlug();
   if(!slug){
     showError();
