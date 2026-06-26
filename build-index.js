@@ -25,6 +25,46 @@ const path = require('path');
 
 const ROOT = __dirname;
 const SITE = 'https://www.uglydonutsncorndogs.com';
+const OG_IMAGE = SITE + '/og-image.jpg';
+
+/* ===================== SEO helpers ===================== */
+
+function extractHead(html) {
+  const t = (html.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || 'Ugly Donuts &amp; Corn Dogs';
+  const c = (html.match(/<link rel="canonical" href="([^"]+)"/) || [])[1] || (SITE + '/');
+  const d = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || '';
+  return { title: t.trim(), canonical: c, description: d };
+}
+function meta(prop, val, useName) {
+  return '<meta ' + (useName ? 'name' : 'property') + '="' + prop + '" content="' + val + '">';
+}
+function stripSocial(html) {
+  return html.replace(/[ \t]*<meta (?:property="og:[^"]*"|name="twitter:[^"]*")[^>]*>\n?/g, '');
+}
+function ensureManifest(html) {
+  if (html.indexOf('rel="manifest"') !== -1) return html;
+  return html.replace('<meta name="theme-color"', '<link rel="manifest" href="/site.webmanifest">\n<meta name="theme-color"');
+}
+function socialBlock(m, ogType) {
+  return '\n' + [
+    meta('og:site_name', 'Ugly Donuts &amp; Corn Dogs'),
+    meta('og:type', ogType || 'website'),
+    meta('og:url', m.canonical),
+    meta('og:title', m.title),
+    meta('og:description', m.description),
+    meta('og:image', OG_IMAGE),
+    meta('og:image:width', '1200'),
+    meta('og:image:height', '630'),
+    meta('twitter:card', 'summary_large_image', true),
+    meta('twitter:title', m.title, true),
+    meta('twitter:description', m.description, true),
+    meta('twitter:image', OG_IMAGE, true)
+  ].join('\n') + '\n';
+}
+function jsonLd(obj) { return '<script type="application/ld+json">' + JSON.stringify(obj) + '</script>'; }
+function glob_html() {
+  return fs.readdirSync(ROOT).filter(function (f) { return f.endsWith('.html') && f !== 'cookie-banner-snippet.html'; });
+}
 
 /* ===================== shared helpers ===================== */
 
@@ -206,7 +246,7 @@ if (fs.existsSync(APATH)) {
       '<meta name="description" content="' + attrEscape(d.excerpt || '') + '">');
     page = page.replace('<link rel="canonical" href="https://www.uglydonutsncorndogs.com/article.html">',
       '<link rel="canonical" href="' + url + '">');
-    page = page.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="article">');
+    page = page.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="article">\n<meta property="og:site_name" content="Ugly Donuts &amp; Corn Dogs">');
     page = page.replace('<meta property="og:url" content="https://www.uglydonutsncorndogs.com/">',
       '<meta property="og:url" content="' + url + '">');
     page = page.replace('<meta property="og:title" content="Korean Corn Dogs &amp; Handmade Donuts · Ugly Donuts">',
@@ -214,8 +254,20 @@ if (fs.existsSync(APATH)) {
       (d.cover ? '\n<meta property="og:image" content="' + SITE + d.cover + '">' : ''));
     page = page.replace('<meta property="og:description" content="Made to order. Fried in 100% avocado oil.">',
       '<meta property="og:description" content="' + attrEscape(d.excerpt || '') + '">');
+    page = page.replace('<meta name="twitter:card" content="summary_large_image">',
+      '<meta name="twitter:card" content="summary_large_image">\n' +
+      '<meta name="twitter:title" content="' + attrEscape(d.title || '') + '">\n' +
+      '<meta name="twitter:description" content="' + attrEscape(d.excerpt || '') + '">' +
+      (d.cover ? '\n<meta name="twitter:image" content="' + SITE + d.cover + '">' : ''));
+    const crumbs = {
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Journal', item: SITE + '/journal.html' },
+        { '@type': 'ListItem', position: 3, name: d.title || '', item: url }
+      ]
+    };
     page = injectBetween(page, '<!--AUTO-ARTICLE-JSONLD:START-->', '<!--AUTO-ARTICLE-JSONLD:END-->',
-      '\n<script type="application/ld+json">' + JSON.stringify(ld) + '</script>\n', '</head>');
+      '\n' + jsonLd(ld) + '\n' + jsonLd(crumbs) + '\n', '</head>');
 
     fs.writeFileSync(path.join(outDir, it.slug + '.html'), page);
   });
@@ -297,6 +349,23 @@ if (fs.existsSync(MPATH)) {
     '<!--AUTO-MENU-CARDS:START-->', '<!--AUTO-MENU-CARDS:END-->', grid);
   html = html.replace(/<div id="menu-page-content"[^>]*>/, '<div id="menu-page-content"' + (has ? '' : ' style="display:none"') + '>');
   html = html.replace(/<div id="menu-page-empty" class="menu-empty-page"[^>]*>/, '<div id="menu-page-empty" class="menu-empty-page"' + (has ? ' style="display:none"' : '') + '>');
+
+  // Menu structured data (restaurant menu rich result), grouped by category.
+  const secMap = {}, secOrder = [];
+  items.forEach(function (it) {
+    const cat = it.data.category || 'Other';
+    if (!secMap[cat]) { secMap[cat] = []; secOrder.push(cat); }
+    const mi = { '@type': 'MenuItem', name: it.data.name || '' };
+    if (it.data.description) mi.description = it.data.description;
+    if (it.data.photo) mi.image = SITE + it.data.photo;
+    secMap[cat].push(mi);
+  });
+  const menuLd = {
+    '@context': 'https://schema.org', '@type': 'Menu', name: 'Ugly Donuts & Corn Dogs Menu',
+    hasMenuSection: secOrder.map(function (c) { return { '@type': 'MenuSection', name: c, hasMenuItem: secMap[c] }; })
+  };
+  html = injectBetween(html, '<!--AUTO-MENU-SCHEMA:START-->', '<!--AUTO-MENU-SCHEMA:END-->', '\n' + jsonLd(menuLd) + '\n', '</head>');
+
   fs.writeFileSync(MPATH, html);
   console.log('[ok]   menu.html (' + items.length + ' items)');
 }
@@ -336,6 +405,31 @@ if (fs.existsSync(LPATH)) {
     html = setInner(html, /<div class="location-list" id="locations-list"[^>]*>/,
       '<!--AUTO-LOC-CARDS:START-->', '<!--AUTO-LOC-CARDS:END-->', cards);
   }
+
+  // Restaurant + per-location department structured data, regenerated from markdown.
+  const dept = items.map(function (it) {
+    const d = it.data;
+    const r = {
+      '@type': 'Restaurant', name: 'Ugly Donuts & Corn Dogs - ' + (d.name || ''),
+      servesCuisine: ['Korean Corn Dogs', 'Donuts'], priceRange: '$$', url: SITE + '/locations.html',
+      address: { '@type': 'PostalAddress', streetAddress: d.address || '', addressLocality: d.city || '', addressRegion: d.state || '', addressCountry: 'US' }
+    };
+    if (d.photo) r.image = SITE + d.photo;
+    if (d.maps_url) r.hasMap = d.maps_url;
+    if (d.order_url) r.potentialAction = { '@type': 'OrderAction', target: d.order_url };
+    return r;
+  });
+  const restLd = {
+    '@context': 'https://schema.org', '@type': 'Restaurant', name: 'Ugly Donuts & Corn Dogs',
+    description: 'Premium Korean corn dogs and fresh handmade donuts, made to order. Fried in 100% avocado oil.',
+    url: SITE, servesCuisine: ['Korean', 'Korean Street Food', 'Korean Corn Dogs', 'Donuts'],
+    priceRange: '$$', email: 'hq@uglydonutsncorndogs.com', image: OG_IMAGE, department: dept
+  };
+  if (html.indexOf('<!--AUTO-LOC-SCHEMA:START-->') === -1) {
+    html = html.replace(/<script type="application\/ld\+json">[^<]*"department"[^<]*<\/script>\s*/, '');
+  }
+  html = injectBetween(html, '<!--AUTO-LOC-SCHEMA:START-->', '<!--AUTO-LOC-SCHEMA:END-->', '\n' + jsonLd(restLd) + '\n', '</head>');
+
   fs.writeFileSync(LPATH, html);
   console.log('[ok]   locations.html (' + items.length + ' locations)');
 }
@@ -355,5 +449,67 @@ if (fs.existsSync(SPATH)) {
   fs.writeFileSync(SPATH, xml);
   console.log('[ok]   sitemap.xml (' + articles.length + ' article urls)');
 }
+
+/* ===================== 6. social meta + manifest (all listing pages) ===================== */
+
+const SEO_PAGES = ['index.html', 'menu.html', 'locations.html', 'story.html', 'journal.html', 'faq.html',
+  'careers.html', 'catering.html', 'contact.html', 'franchise.html',
+  'privacy-policy.html', 'terms-of-service.html', 'refund-policy.html', 'accessibility.html'];
+SEO_PAGES.forEach(function (p) {
+  const fp = path.join(ROOT, p);
+  if (!fs.existsSync(fp)) return;
+  let html = fs.readFileSync(fp, 'utf8');
+  const m = extractHead(html);
+  html = stripSocial(html);
+  html = ensureManifest(html);
+  html = injectBetween(html, '<!--AUTO-SEO:START-->', '<!--AUTO-SEO:END-->', socialBlock(m, 'website'), '</head>');
+  fs.writeFileSync(fp, html);
+});
+console.log('[ok]   social meta + manifest on ' + SEO_PAGES.length + ' pages');
+
+/* ===================== 7. Organization + WebSite (index.html) ===================== */
+
+(function () {
+  const fp = path.join(ROOT, 'index.html');
+  if (!fs.existsSync(fp)) return;
+  let html = fs.readFileSync(fp, 'utf8');
+  const org = {
+    '@context': 'https://schema.org', '@type': 'Organization',
+    name: 'Ugly Donuts & Corn Dogs', url: SITE,
+    logo: SITE + '/images/favicon/android-chrome-512x512.png',
+    image: OG_IMAGE, email: 'hq@uglydonutsncorndogs.com',
+    sameAs: ['https://www.instagram.com/uglydonutsncorndogs']
+  };
+  const web = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Ugly Donuts & Corn Dogs', url: SITE };
+  const block = '\n' + jsonLd(org) + '\n' + jsonLd(web) + '\n';
+  html = injectBetween(html, '<!--AUTO-ORG-SCHEMA:START-->', '<!--AUTO-ORG-SCHEMA:END-->', block, '</head>');
+  fs.writeFileSync(fp, html);
+  console.log('[ok]   Organization + WebSite schema on index.html');
+})();
+
+/* ===================== 8. FAQ internal link (footer) + sitemap ===================== */
+
+glob_html().forEach(function (p) {
+  const fp = path.join(ROOT, p);
+  let html = fs.readFileSync(fp, 'utf8');
+  if (html.indexOf('<li><a href="/journal.html">Journal</a></li>') === -1) return;
+  if (html.indexOf('<li><a href="/faq.html">FAQ</a></li>') !== -1) return;
+  html = html.replace('<li><a href="/journal.html">Journal</a></li>',
+    '<li><a href="/journal.html">Journal</a></li>\n          <li><a href="/faq.html">FAQ</a></li>');
+  fs.writeFileSync(fp, html);
+});
+(function () {
+  const sp = path.join(ROOT, 'sitemap.xml');
+  if (!fs.existsSync(sp)) return;
+  let xml = fs.readFileSync(sp, 'utf8');
+  if (xml.indexOf('/faq.html') === -1) {
+    const entry = '  <url>\n    <loc>' + SITE + '/faq.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n';
+    const anchor = xml.indexOf('<!--AUTO-ARTICLES:START-->');
+    if (anchor !== -1) xml = xml.slice(0, anchor) + entry + xml.slice(anchor);
+    else xml = xml.replace('</urlset>', entry + '</urlset>');
+    fs.writeFileSync(sp, xml);
+  }
+})();
+console.log('[ok]   FAQ internal links + sitemap entry');
 
 console.log('Build complete.');

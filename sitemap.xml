@@ -65,6 +65,11 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/faq.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 <!--AUTO-ARTICLES:START-->
   <url>
     <loc>https://www.uglydonutsncorndogs.com/journal/2026-05-30-welcome-spring-with-our-matcha-strawberry-seasonal-collection.html</loc>
