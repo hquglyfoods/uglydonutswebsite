@@ -1,0 +1,109 @@
+<!-- ============================================================
+     UGLY DONUTS COOKIE CONSENT BANNER
+     Paste this block immediately before </body> on every page.
+     Self-contained: own styles + script. No external dependencies.
+     Behavior: opt-OUT model. Essential cookies always run.
+     Non-essential (analytics/ads) run only if the visitor has not
+     opted out AND has not sent a Global Privacy Control (GPC) signal.
+     ============================================================ -->
+<div id="ud-cookie-banner" class="ud-cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie notice" hidden>
+  <div class="ud-cookie-inner">
+    <p class="ud-cookie-text">
+      We use cookies to run this site and, with your permission, to measure how it is used so we can make it better. You can accept analytics cookies or continue with only the essentials. Learn more in our <a href="/privacy-policy.html">Privacy Policy</a>.
+    </p>
+    <div class="ud-cookie-actions">
+      <button type="button" class="ud-cookie-btn ud-cookie-decline" id="ud-cookie-decline">Essentials only</button>
+      <button type="button" class="ud-cookie-btn ud-cookie-accept" id="ud-cookie-accept">Accept analytics</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.ud-cookie-banner{position:fixed;left:0;right:0;bottom:0;z-index:9998;background:var(--bg-navy,#091018);color:var(--text-light,#F5EFE3);box-shadow:0 -8px 32px rgba(0,0,0,0.25);font-family:var(--sans,'Quicksand',sans-serif)}
+.ud-cookie-banner[hidden]{display:none}
+.ud-cookie-inner{max-width:1280px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;gap:28px;flex-wrap:wrap;justify-content:space-between}
+.ud-cookie-text{font-size:14px;line-height:1.65;color:rgba(245,239,227,0.85);margin:0;max-width:760px}
+.ud-cookie-text a{color:var(--orange-light,#CE5512);text-decoration:underline;text-underline-offset:2px}
+.ud-cookie-text a:hover{color:#fff}
+.ud-cookie-actions{display:flex;gap:12px;flex-shrink:0}
+.ud-cookie-btn{font-family:var(--sans,'Quicksand',sans-serif);font-size:13px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;padding:11px 22px;border-radius:40px;border:none;cursor:pointer;transition:background 0.2s,border-color 0.2s,color 0.2s}
+.ud-cookie-decline{background:transparent;color:rgba(245,239,227,0.9);border:1px solid rgba(245,239,227,0.4)}
+.ud-cookie-decline:hover{border-color:rgba(245,239,227,0.9);color:#fff}
+.ud-cookie-accept{background:var(--orange,#B8470C);color:#fff}
+.ud-cookie-accept:hover{background:var(--orange-light,#CE5512)}
+@media (max-width:720px){
+  .ud-cookie-inner{flex-direction:column;align-items:stretch;gap:16px;padding:18px 20px}
+  .ud-cookie-actions{justify-content:stretch}
+  .ud-cookie-btn{flex:1;text-align:center}
+}
+</style>
+
+<script>
+(function(){
+  var STORE_KEY = 'ud_cookie_consent'; // values: 'accepted' | 'declined'
+  var banner = document.getElementById('ud-cookie-banner');
+  if(!banner){return;}
+
+  // Read a stored choice from a first-party cookie.
+  function getStored(){
+    var match = document.cookie.match(/(?:^|;\s*)ud_cookie_consent=([^;]+)/);
+    return match ? decodeURIComponent(match[1]) : null;
+  }
+  // Persist the visitor's choice for one year.
+  function setStored(value){
+    var d = new Date();
+    d.setFullYear(d.getFullYear() + 1);
+    document.cookie = STORE_KEY + '=' + encodeURIComponent(value) +
+      ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+  }
+
+  // Respect Global Privacy Control. If the browser signals GPC,
+  // treat it as an opt-out and do not load non-essential cookies.
+  var gpc = (navigator && navigator.globalPrivacyControl === true);
+
+  // Placeholder for loading analytics/marketing scripts.
+  // Only called when the visitor has affirmatively accepted and GPC is off.
+  function enableNonEssential(){
+    if(gpc){return;}
+    // TODO: initialize Google Analytics / Meta Pixel here, e.g.:
+    // gtag('consent','update',{analytics_storage:'granted'});
+    // window._udAnalyticsEnabled = true;
+  }
+
+  var choice = getStored();
+
+  if(gpc){
+    // GPC present: honor it silently, do not load non-essential, hide banner.
+    banner.hidden = true;
+    return;
+  }
+
+  if(choice === 'accepted'){
+    enableNonEssential();
+    banner.hidden = true;
+  } else if(choice === 'declined'){
+    banner.hidden = true;
+  } else {
+    // No choice yet and no GPC: show the banner.
+    banner.hidden = false;
+  }
+
+  var acceptBtn = document.getElementById('ud-cookie-accept');
+  var declineBtn = document.getElementById('ud-cookie-decline');
+
+  if(acceptBtn){
+    acceptBtn.addEventListener('click', function(){
+      setStored('accepted');
+      enableNonEssential();
+      banner.hidden = true;
+    });
+  }
+  if(declineBtn){
+    declineBtn.addEventListener('click', function(){
+      setStored('declined');
+      banner.hidden = true;
+    });
+  }
+})();
+</script>
+<!-- ============== END COOKIE CONSENT BANNER ============== -->
