@@ -111,6 +111,10 @@ body {
 
 @media (max-width: 880px) {
   .nav-left { display: none; }
+  .nav-toggle { display: block; }
+  .nav.open .nav-left { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-cream); padding: 24px 20px; border-bottom: 1px solid rgba(26,36,56,0.08); box-shadow: 0 12px 24px rgba(9,16,24,0.06); }
+  .nav.open .nav-more { position: static; width: 100%; }
+  .nav.open .nav-more-menu { position: static; opacity: 1; visibility: visible; box-shadow: none; border: none; padding: 4px 0 0; min-width: 0; background: none; }
   .nav-center { position: static; transform: none; }
   .nav-right { display: none; }
   .nav-order-mobile { display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; background: var(--orange); padding: 9px 18px; border-radius: 40px; text-decoration: none; }
@@ -150,6 +154,7 @@ body {
     <a href="https://uglydonutsandcorndogsknickerbocker.toast.site/order?showAllLocations=true" class="nav-cta">Order Online</a>
   </div>
   <a href="https://uglydonutsandcorndogsknickerbocker.toast.site/order?showAllLocations=true" class="nav-order-mobile">Order</a>
+  <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
 </nav>
 
 <main id="main-content">
@@ -232,7 +237,7 @@ body {
         <li><strong>Essential cookies</strong>, which are needed for the site to function and cannot be switched off in our systems</li>
         <li><strong>Analytics and measurement cookies</strong>, which help us understand how the site is used so we can improve it</li>
       </ul>
-      <p>Some of these technologies are provided by third parties, such as our website analytics provider and advertising platforms, and they may collect information about your activity over time and across sites. You can opt out of non-essential cookies at any time using the cookie banner on our site, or by adjusting your browser settings to refuse cookies.</p>
+      <p>Some of these technologies may be provided by a third-party website analytics provider, which helps us understand how visitors use the site so we can improve it. You can opt out of non-essential cookies at any time using the cookie banner on our site, or by adjusting your browser settings to refuse cookies.</p>
       <div class="doc-callout">
         <p>We honor recognized browser-based opt-out signals, including the Global Privacy Control (GPC), as a valid request to opt out of the sale or sharing of personal information where applicable law requires it.</p>
       </div>
@@ -349,6 +354,14 @@ body {
     </div>
   </div>
 </footer>
+<script>
+(function(){
+  var nav = document.getElementById('nav');
+  if(!nav){return;}
+  var t = document.querySelector('.nav-toggle');
+  if(t){ t.addEventListener('click', function(){ nav.classList.toggle('open'); }); }
+})();
+</script>
 <!-- ============================================================
      UGLY DONUTS COOKIE CONSENT BANNER
      Paste this block immediately before </body> on every page.

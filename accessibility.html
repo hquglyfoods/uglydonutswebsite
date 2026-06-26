@@ -111,6 +111,10 @@ body {
 
 @media (max-width: 880px) {
   .nav-left { display: none; }
+  .nav-toggle { display: block; }
+  .nav.open .nav-left { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-cream); padding: 24px 20px; border-bottom: 1px solid rgba(26,36,56,0.08); box-shadow: 0 12px 24px rgba(9,16,24,0.06); }
+  .nav.open .nav-more { position: static; width: 100%; }
+  .nav.open .nav-more-menu { position: static; opacity: 1; visibility: visible; box-shadow: none; border: none; padding: 4px 0 0; min-width: 0; background: none; }
   .nav-center { position: static; transform: none; }
   .nav-right { display: none; }
   .nav-order-mobile { display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; background: var(--orange); padding: 9px 18px; border-radius: 40px; text-decoration: none; }
@@ -150,6 +154,7 @@ body {
     <a href="https://uglydonutsandcorndogsknickerbocker.toast.site/order?showAllLocations=true" class="nav-cta">Order Online</a>
   </div>
   <a href="https://uglydonutsandcorndogsknickerbocker.toast.site/order?showAllLocations=true" class="nav-order-mobile">Order</a>
+  <button class="nav-toggle" aria-label="Open menu">&#9776;</button>
 </nav>
 
 <main id="main-content">
@@ -278,6 +283,14 @@ body {
     </div>
   </div>
 </footer>
+<script>
+(function(){
+  var nav = document.getElementById('nav');
+  if(!nav){return;}
+  var t = document.querySelector('.nav-toggle');
+  if(t){ t.addEventListener('click', function(){ nav.classList.toggle('open'); }); }
+})();
+</script>
 <!-- ============================================================
      UGLY DONUTS COOKIE CONSENT BANNER
      Paste this block immediately before </body> on every page.
