@@ -19,6 +19,12 @@
   [headers.values]
     Cache-Control = "public, max-age=300"
 
+# Static images (content-hashed names) can be cached aggressively
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
 # Pretty URLs
 [[redirects]]
   from = "/order"
