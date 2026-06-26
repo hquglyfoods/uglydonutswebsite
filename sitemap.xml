@@ -95,4 +95,43 @@
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
-<!--AUTO-ARTICLES:END--></urlset>
+<!--AUTO-ARTICLES:END-->
+
+  <!--AUTO-LOC-PAGES:START-->
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/locations/new-jersey/american-dream.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/locations/new-york/bushwick.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/locations/new-york/forest-hills.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/locations/texas/pearland.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/locations/new-jersey/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/locations/new-york/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/locations/texas/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!--AUTO-LOC-PAGES:END-->
+</urlset>

@@ -65,6 +65,23 @@ function jsonLd(obj) { return '<script type="application/ld+json">' + JSON.strin
 function glob_html() {
   return fs.readdirSync(ROOT).filter(function (f) { return f.endsWith('.html') && f !== 'cookie-banner-snippet.html'; });
 }
+const US_STATES = {
+  AL: ['alabama', 'Alabama'], AK: ['alaska', 'Alaska'], AZ: ['arizona', 'Arizona'], AR: ['arkansas', 'Arkansas'],
+  CA: ['california', 'California'], CO: ['colorado', 'Colorado'], CT: ['connecticut', 'Connecticut'], DE: ['delaware', 'Delaware'],
+  FL: ['florida', 'Florida'], GA: ['georgia', 'Georgia'], HI: ['hawaii', 'Hawaii'], ID: ['idaho', 'Idaho'],
+  IL: ['illinois', 'Illinois'], IN: ['indiana', 'Indiana'], IA: ['iowa', 'Iowa'], KS: ['kansas', 'Kansas'],
+  KY: ['kentucky', 'Kentucky'], LA: ['louisiana', 'Louisiana'], ME: ['maine', 'Maine'], MD: ['maryland', 'Maryland'],
+  MA: ['massachusetts', 'Massachusetts'], MI: ['michigan', 'Michigan'], MN: ['minnesota', 'Minnesota'], MS: ['mississippi', 'Mississippi'],
+  MO: ['missouri', 'Missouri'], MT: ['montana', 'Montana'], NE: ['nebraska', 'Nebraska'], NV: ['nevada', 'Nevada'],
+  NH: ['new-hampshire', 'New Hampshire'], NJ: ['new-jersey', 'New Jersey'], NM: ['new-mexico', 'New Mexico'], NY: ['new-york', 'New York'],
+  NC: ['north-carolina', 'North Carolina'], ND: ['north-dakota', 'North Dakota'], OH: ['ohio', 'Ohio'], OK: ['oklahoma', 'Oklahoma'],
+  OR: ['oregon', 'Oregon'], PA: ['pennsylvania', 'Pennsylvania'], RI: ['rhode-island', 'Rhode Island'], SC: ['south-carolina', 'South Carolina'],
+  SD: ['south-dakota', 'South Dakota'], TN: ['tennessee', 'Tennessee'], TX: ['texas', 'Texas'], UT: ['utah', 'Utah'],
+  VT: ['vermont', 'Vermont'], VA: ['virginia', 'Virginia'], WA: ['washington', 'Washington'], WV: ['west-virginia', 'West Virginia'],
+  WI: ['wisconsin', 'Wisconsin'], WY: ['wyoming', 'Wyoming'], DC: ['washington-dc', 'Washington DC']
+};
+function stateSlug(abbr) { const s = US_STATES[(abbr || '').toUpperCase()]; return s ? s[0] : (abbr || '').toLowerCase().replace(/[^a-z0-9]+/g, '-'); }
+function stateName(abbr) { const s = US_STATES[(abbr || '').toUpperCase()]; return s ? s[1] : (abbr || ''); }
 
 /* ===================== shared helpers ===================== */
 
@@ -469,6 +486,7 @@ if (fs.existsSync(LPATH)) {
   });
   const cards = items.map(function (it) {
     const d = it.data;
+    const storeUrl = '/locations/' + stateSlug(d.state) + '/' + it.slug + '.html';
     const tag = d.store_type === 'Flagship' ? 'Flagship' : (d.state === 'NY' ? 'New York' : d.state === 'TX' ? 'Texas' : d.state === 'NJ' ? 'New Jersey' : (d.state || ''));
     const url = d.maps_url || ('https://www.google.com/maps/search/Ugly+Donuts+Corn+Dogs+' + encodeURIComponent((d.name || '') + ' ' + (d.city || '')));
     const photo = d.photo ? '<img src="' + d.photo + '" alt="' + attrEscape(d.name || '') + '">' : '<div class="location-detail-photo-placeholder">' + (d.name || '') + '</div>';
@@ -477,10 +495,11 @@ if (fs.existsSync(LPATH)) {
     if (d.phone) meta += '<div><strong>Phone</strong>' + d.phone + '</div>';
     if (d.hours) meta += '<div><strong>Hours</strong>' + String(d.hours).replace(/\n/g, '<br>') + '</div>';
     return '<div class="location-detail"><div class="location-detail-photo">' + photo + '</div>' +
-      '<div class="location-detail-info"><div class="tag">' + tag + '</div><h2>' + (d.name || '') + '</h2>' +
+      '<div class="location-detail-info"><div class="tag">' + tag + '</div><h2><a href="' + storeUrl + '">' + (d.name || '') + '</a></h2>' +
       '<div class="city">' + (d.city || '') + (d.state ? ', ' + d.state : '') + '</div>' +
       '<div class="location-detail-meta">' + meta + '</div>' +
-      '<div class="location-detail-actions"><a href="' + url + '" target="_blank" rel="noopener" class="btn btn-outline">Get Directions</a>' +
+      '<div class="location-detail-actions"><a href="' + storeUrl + '" class="btn btn-outline">Store Details</a>' +
+      '<a href="' + url + '" target="_blank" rel="noopener" class="btn btn-outline">Get Directions</a>' +
       (d.order_url ? '<a href="' + d.order_url + '" target="_blank" rel="noopener" class="btn btn-primary">Order Online</a>' : '') +
       '</div></div></div>';
   }).join('\n');
@@ -597,5 +616,161 @@ glob_html().forEach(function (p) {
   }
 })();
 console.log('[ok]   FAQ internal links + sitemap entry');
+
+/* ===================== 9. location hierarchy (/locations/{state}/{store}) ===================== */
+
+(function () {
+  const items = readItems('content/locations').filter(function (it) { return it.data && it.data.name; });
+  if (!items.length) return;
+  const shellPath = path.join(ROOT, 'faq.html');
+  if (!fs.existsSync(shellPath)) return;
+  const shell = fs.readFileSync(shellPath, 'utf8');
+
+  const locDir = path.join(ROOT, 'locations');
+  if (fs.existsSync(locDir)) fs.rmSync(locDir, { recursive: true, force: true });
+
+  function storePath(it) { return '/locations/' + stateSlug(it.data.state) + '/' + it.slug + '.html'; }
+  function hubPath(ss) { return '/locations/' + ss + '/'; }
+
+  function fillShell(o) {
+    let h = shell;
+    h = h.replace(/<title>[\s\S]*?<\/title>/, '<title>' + o.title + '</title>');
+    h = h.replace(/<link rel="canonical" href="[^"]*">/, '<link rel="canonical" href="' + o.canonical + '">');
+    h = h.replace(/<meta name="description" content="[^"]*">/, '<meta name="description" content="' + attrEscape(o.description) + '">');
+    h = stripSocial(h);
+    h = injectBetween(h, '<!--AUTO-SEO:START-->', '<!--AUTO-SEO:END-->', socialBlock({ title: o.title, canonical: o.canonical, description: attrEscape(o.description) }, 'website'), '</head>');
+    h = h.replace(/<script type="application\/ld\+json">[^<]*"FAQPage"[^<]*<\/script>\s*/, '');
+    h = h.replace('</head>', o.schema.map(jsonLd).join('\n') + '\n</head>');
+    h = h.replace(/<header class="doc-hero">[\s\S]*?<\/header>/,
+      '<header class="doc-hero">\n  <div class="container">\n    <p class="eyebrow">' + o.eyebrow + '</p>\n    <h1>' + o.h1 + '</h1>\n    <p class="updated">' + o.sub + '</p>\n  </div>\n</header>');
+    const toc = (o.toc || []).map(function (t) { return '    <a href="#' + t[0] + '">' + t[1] + '</a>'; }).join('\n');
+    h = h.replace(/(<aside class="doc-toc">\s*<h2>On this page<\/h2>)[\s\S]*?(<\/aside>)/, '$1\n' + toc + '\n  $2');
+    h = h.replace(/(<article class="doc-content">)[\s\S]*?(<\/article>)/, '$1\n' + o.content + '\n  $2');
+    return h;
+  }
+
+  const byState = {};
+  items.forEach(function (it) { const ss = stateSlug(it.data.state); (byState[ss] = byState[ss] || []).push(it); });
+
+  const newUrls = [];
+
+  // ---- store pages ----
+  items.forEach(function (it) {
+    const d = it.data, ss = stateSlug(d.state), sn = stateName(d.state);
+    const url = storePath(it), canonical = SITE + url;
+    const cityState = (d.city || '') + (d.state ? ', ' + d.state : '');
+    const mapsUrl = d.maps_url || ('https://www.google.com/maps/search/' + encodeURIComponent('Ugly Donuts Corn Dogs ' + (d.name || '') + ' ' + (d.city || '')));
+    const mapEmbed = '<div style="margin:28px 0;border-radius:14px;overflow:hidden"><iframe loading="lazy" width="100%" height="360" style="border:0;display:block" referrerpolicy="no-referrer-when-downgrade" title="Map of Ugly Donuts ' + attrEscape(d.name || '') + '" src="https://maps.google.com/maps?q=' + encodeURIComponent(d.address || (d.name + ' ' + d.city)) + '&output=embed"></iframe></div>';
+
+    let visit = '<section id="visit">\n<h2>Visit us in ' + escapeHtml(d.city || sn) + '</h2>\n';
+    if (d.address) visit += '<p><strong>Address:</strong> ' + escapeHtml(d.address) + '</p>\n';
+    if (d.hours) visit += '<p><strong>Hours:</strong> ' + escapeHtml(String(d.hours)).replace(/\n/g, '<br>') + '</p>\n';
+    if (d.store_type) visit += '<p><strong>Store:</strong> ' + escapeHtml(d.store_type) + '</p>\n';
+    visit += '<p><a href="' + mapsUrl + '" target="_blank" rel="noopener" class="text-link">Get directions</a>' +
+      (d.order_url ? ' &nbsp;·&nbsp; <a href="' + d.order_url + '" target="_blank" rel="noopener" class="text-link">Order online</a>' : '') + '</p>\n' + mapEmbed + '</section>';
+
+    const bodyHtml = markdownToHtml(it.body || '');
+
+    let popular = '';
+    if (d.popular) {
+      const links = String(d.popular).split(',').map(function (s) { return s.trim(); }).filter(Boolean)
+        .map(function (n) { return '<a href="/menu.html" class="text-link">' + escapeHtml(n) + '</a>'; }).join(', ');
+      if (links) popular = '<section id="popular">\n<h2>Guest favorites here</h2>\n<p>' + links + '. See the full <a href="/menu.html" class="text-link">menu</a>.</p>\n</section>';
+    }
+
+    const note = '<p class="doc-note">Explore the full <a href="/menu.html">menu</a>, plan an event through <a href="/catering.html">catering</a>, read our <a href="/story.html">story</a>, browse the <a href="/journal.html">Journal</a>, or see all <a href="/locations.html">locations</a>. Interested in opening one? Learn about <a href="/franchise.html">franchising</a>.</p>';
+
+    const content = visit + '\n' + bodyHtml + '\n' + popular + '\n' + note;
+
+    const restaurant = {
+      '@context': 'https://schema.org', '@type': 'Restaurant',
+      name: 'Ugly Donuts & Corn Dogs - ' + (d.name || ''),
+      url: canonical, servesCuisine: ['Korean', 'Korean Corn Dogs', 'Donuts'], priceRange: '$$',
+      address: { '@type': 'PostalAddress', streetAddress: d.address || '', addressLocality: d.city || '', addressRegion: d.state || '', addressCountry: 'US' },
+      parentOrganization: { '@type': 'Organization', name: 'Ugly Donuts & Corn Dogs', url: SITE }
+    };
+    if (d.photo) restaurant.image = SITE + d.photo;
+    if (d.maps_url) restaurant.hasMap = d.maps_url;
+    if (d.order_url) restaurant.potentialAction = { '@type': 'OrderAction', target: d.order_url };
+    const crumbs = {
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Locations', item: SITE + '/locations.html' },
+        { '@type': 'ListItem', position: 3, name: sn, item: SITE + hubPath(ss) },
+        { '@type': 'ListItem', position: 4, name: d.name || '', item: canonical }
+      ]
+    };
+
+    const page = fillShell({
+      title: (d.name || '') + ' | Korean Corn Dogs &amp; Donuts in ' + escapeHtml(d.city || sn) + ' | Ugly Donuts',
+      canonical: canonical,
+      description: 'Ugly Donuts & Corn Dogs in ' + (d.city || '') + ', ' + sn + '. Korean corn dogs battered and fried to order, plus handmade donuts. ' + (d.address || ''),
+      eyebrow: '<a href="/locations.html">Locations</a> · <a href="' + hubPath(ss) + '">' + escapeHtml(sn) + '</a>',
+      h1: escapeHtml(d.name || ''),
+      sub: escapeHtml(cityState),
+      toc: [['visit', 'Visit us'], ['the-neighborhood', 'The neighborhood'], ['parking-and-getting-here', 'Parking'], ['popular', 'Guest favorites']],
+      content: content,
+      schema: [restaurant, crumbs]
+    });
+    const outPath = path.join(ROOT, 'locations', ss, it.slug + '.html');
+    fs.mkdirSync(path.dirname(outPath), { recursive: true });
+    fs.writeFileSync(outPath, page);
+    newUrls.push(canonical);
+  });
+
+  // ---- state hub pages ----
+  Object.keys(byState).forEach(function (ss) {
+    const stores = byState[ss].slice().sort(function (a, b) { return (a.data.name || '').localeCompare(b.data.name || ''); });
+    const sn = stateName(stores[0].data.state);
+    const canonical = SITE + hubPath(ss);
+    const cards = stores.map(function (it) {
+      const d = it.data;
+      return '<p><a href="' + storePath(it) + '" class="text-link"><strong>' + escapeHtml(d.name || '') + '</strong></a> · ' +
+        escapeHtml((d.city || '') + (d.state ? ', ' + d.state : '')) + (d.address ? '<br><span style="color:var(--text-dark-soft)">' + escapeHtml(d.address) + '</span>' : '') + '</p>';
+    }).join('\n');
+    const content = '<p class="doc-intro">Find Ugly Donuts &amp; Corn Dogs across ' + escapeHtml(sn) + '. Every store batters and fries each Korean corn dog to order and finishes every donut by hand.</p>\n' +
+      '<section id="stores">\n<h2>Our ' + escapeHtml(sn) + ' stores</h2>\n' + cards + '\n</section>\n' +
+      '<p class="doc-note">See all <a href="/locations.html">locations</a>, explore the <a href="/menu.html">menu</a>, or read our <a href="/story.html">story</a>.</p>';
+    const itemList = {
+      '@context': 'https://schema.org', '@type': 'ItemList',
+      itemListElement: stores.map(function (it, i) { return { '@type': 'ListItem', position: i + 1, name: it.data.name || '', url: SITE + storePath(it) }; })
+    };
+    const crumbs = {
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Locations', item: SITE + '/locations.html' },
+        { '@type': 'ListItem', position: 3, name: sn, item: canonical }
+      ]
+    };
+    const page = fillShell({
+      title: 'Korean Corn Dogs &amp; Donuts in ' + escapeHtml(sn) + ' | Ugly Donuts',
+      canonical: canonical,
+      description: 'Ugly Donuts & Corn Dogs locations in ' + sn + '. Korean corn dogs made to order and handmade donuts, fresh at every store.',
+      eyebrow: '<a href="/locations.html">Locations</a>',
+      h1: 'Ugly Donuts in ' + escapeHtml(sn),
+      sub: stores.length + (stores.length === 1 ? ' location' : ' locations'),
+      toc: [['stores', 'Our stores']],
+      content: content,
+      schema: [itemList, crumbs]
+    });
+    const outPath = path.join(ROOT, 'locations', ss, 'index.html');
+    fs.mkdirSync(path.dirname(outPath), { recursive: true });
+    fs.writeFileSync(outPath, page);
+    newUrls.push(canonical);
+  });
+
+  // ---- sitemap entries ----
+  const sp = path.join(ROOT, 'sitemap.xml');
+  if (fs.existsSync(sp)) {
+    let xml = fs.readFileSync(sp, 'utf8');
+    xml = xml.replace(/\n?\s*<!--AUTO-LOC-PAGES:START-->[\s\S]*?<!--AUTO-LOC-PAGES:END-->/, '');
+    const block = '\n  <!--AUTO-LOC-PAGES:START-->\n' + newUrls.map(function (u) {
+      return '  <url>\n    <loc>' + u + '</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>';
+    }).join('\n') + '\n  <!--AUTO-LOC-PAGES:END-->';
+    xml = xml.replace('</urlset>', block + '\n</urlset>');
+    fs.writeFileSync(sp, xml);
+  }
+  console.log('[ok]   location hierarchy (' + items.length + ' stores, ' + Object.keys(byState).length + ' state hubs)');
+})();
 
 console.log('Build complete.');
