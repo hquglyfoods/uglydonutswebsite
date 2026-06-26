@@ -184,6 +184,42 @@ function setInner(html, openRe, startMark, endMark, payload) {
   return html.slice(0, openEnd) + startMark + '\n' + payload + '\n' + endMark + html.slice(closeStart);
 }
 
+/* ===================== 0. extract inline base64 images (perf) ===================== */
+/* Pages may keep images inline as base64 so the repo is self-contained and never
+   shows broken images. On each deploy this extracts them to content-hashed files
+   under /images/extracted and rewrites references, so the served pages stay light. */
+
+(function () {
+  const crypto = require('crypto');
+  const EXT = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/jpg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif' };
+  const dir = path.join(ROOT, 'images', 'extracted');
+  const re = /data:(image\/[a-zA-Z0-9.+-]+);base64,([A-Za-z0-9+/=]+)/g;
+  const map = {};
+  let pages = glob_html();
+  const jdir = path.join(ROOT, 'journal');
+  if (fs.existsSync(jdir)) pages = pages.concat(fs.readdirSync(jdir).filter(function (f) { return f.endsWith('.html'); }).map(function (f) { return 'journal/' + f; }));
+  let count = 0;
+  pages.forEach(function (rel) {
+    const fp = path.join(ROOT, rel);
+    let html = fs.readFileSync(fp, 'utf8'), changed = false;
+    html = html.replace(re, function (m, mime, data) {
+      if (!map[m]) {
+        const buf = Buffer.from(data, 'base64');
+        const hash = crypto.createHash('sha256').update(buf).digest('hex').slice(0, 12);
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        const out = path.join(dir, hash + '.' + (EXT[mime] || 'bin'));
+        if (!fs.existsSync(out)) fs.writeFileSync(out, buf);
+        map[m] = '/images/extracted/' + hash + '.' + (EXT[mime] || 'bin');
+        count++;
+      }
+      changed = true;
+      return map[m];
+    });
+    if (changed) fs.writeFileSync(fp, html);
+  });
+  if (count) console.log('[ok]   extracted ' + count + ' inline image(s) to /images/extracted');
+})();
+
 /* ===================== 1. _index.json ===================== */
 
 ['content/menu', 'content/articles', 'content/locations'].forEach(function (dir) {
