@@ -65,4 +65,29 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-</urlset>
+<!--AUTO-ARTICLES:START-->
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/article.html?slug=2026-05-30-welcome-spring-with-our-matcha-strawberry-seasonal-collection</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/article.html?slug=2026-05-24-meet-the-viral-hit-the-dubai-chocolate-donut</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/article.html?slug=2026-05-24-warning-this-corn-dog-is-seriously-addictive</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.uglydonutsncorndogs.com/article.html?slug=2026-05-21-a-taste-of-love-korean-corn-dogs</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+<!--AUTO-ARTICLES:END--></urlset>
