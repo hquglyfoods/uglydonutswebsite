@@ -2,7 +2,7 @@
 title: "Made-to-Order vs Pre-Made Donuts: Why Fresh Matters"
 published_date: 2026-06-27
 category: Behind the Scenes
-cover: /uploads/chatgpt-image-jun-27-2026-01_40_21-pm.png
+cover: /uploads/chatgpt-image-jun-27-2026-01_58_00-pm.png
 excerpt: Most donuts you buy were made hours earlier and have been sitting in a
   case. Made-to-order donuts are finished the moment you order. Here is why that
   difference changes everything about how a donut tastes.
