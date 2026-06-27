@@ -2,7 +2,7 @@
 title: Best Korean Corn Dogs Near American Dream Mall
 published_date: 2026-06-27
 category: The Brand
-cover: /uploads/chatgpt-image-jun-27-2026-01_44_43-pm.png
+cover: /uploads/chatgpt-image-jun-27-2026-01_49_56-pm.png
 excerpt: Looking for Korean corn dogs at American Dream in East Rutherford, New
   Jersey? Here is where to find them, what to order, and what makes them worth
   the stop.
